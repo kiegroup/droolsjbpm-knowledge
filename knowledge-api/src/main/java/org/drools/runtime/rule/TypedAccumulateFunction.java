@@ -16,18 +16,16 @@
 
 package org.drools.runtime.rule;
 
-import java.util.Collection;
+/**
+ * An interface for accumulate function implementations
+ * that allows the inspection of the result type.
+ */ 
+public interface TypedAccumulateFunction extends AccumulateFunction {
 
-public interface AgendaGroup {
     /**
+     * Returns the class type of the result of this function 
      * @return
-     *      The AgendaGroup name
      */
-    public String getName();
+    public Class<?> getResultType();
 
-    public void clear();
-
-    public void setFocus();
-    
-    //public Collection<Activation> getActivations();
 }
