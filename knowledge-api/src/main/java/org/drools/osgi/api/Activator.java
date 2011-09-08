@@ -42,7 +42,7 @@ public class Activator
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     public void start(BundleContext bc) throws Exception {
-		this.logger.debug("registering api services");
+        this.logger.debug("registering api services");
 
         this.serviceRegistry = bc.registerService( ServiceRegistry.class.getName(),
                                                    ServiceRegistryImpl.getInstance(),
@@ -62,7 +62,7 @@ public class Activator
         
         this.marshallerProviderTracker.open();
         
-		this.logger.debug("api drools services registered");
+        this.logger.debug("api drools services registered");
     }
 
     public void stop(BundleContext bc) throws Exception {
@@ -76,7 +76,7 @@ public class Activator
         ServiceTrackerCustomizer {
         private BundleContext bc;
         private Activator     activator;
-		private Logger logger = LoggerFactory.getLogger(getClass());
+        private Logger logger = LoggerFactory.getLogger(getClass());
 
         public DroolsServiceTracker(BundleContext bc,
                                     Activator activator) {
@@ -86,7 +86,7 @@ public class Activator
 
         public Object addingService(ServiceReference ref) {
             Service service = (Service) this.bc.getService( ref );
-			this.logger.debug("registering api : " + service + " : "
+            this.logger.debug("registering api : " + service + " : "
 					+ service.getClass().getInterfaces()[0]);
 
             Dictionary dic = new Hashtable();
@@ -114,7 +114,7 @@ public class Activator
         public void removedService(ServiceReference ref,
                                    Object arg1) {
             Service service = (Service) this.bc.getService( ref );
-			this.logger.debug("unregistering : " + service + " : "
+            this.logger.debug("unregistering : " + service + " : "
 					+ service.getClass().getInterfaces()[0]);
 
             Dictionary dic = new Hashtable();
