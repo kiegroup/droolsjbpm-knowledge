@@ -22,6 +22,12 @@ package org.drools.builder;
 public interface KnowledgeBuilderProblem {
     
     /**
+     * Returns the problem severity
+     * @return
+     */
+    ProblemSeverity getProblemSeverity();
+    
+    /**
      * Returns the error message
      */
     String getMessage();
