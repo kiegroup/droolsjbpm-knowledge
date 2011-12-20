@@ -732,11 +732,21 @@ f.newPath("init")
     </section>
   </section>
   <section>
-    <title>Eclipse plugin</title>
+    <title>Known Issues</title>
     <section>
       <title>Breakpoints in Rule RHS are not working with Java dialect</title>
 
       <para>Debugging with Java is not working. Debugging with MVEL is not affected. This will be fixed in the future releases before 5.4.0.Final</para> 
+    </section>
+    <section>
+      <title>OSGi Modules are not stable</title>
+   
+      <para>They will be fixed for 5.4.0.Beta2</para>
+    </section>
+    <section>
+      <title>Test Scenarios in Guvnor are not working</title>
+
+      <para>When running the test scenarios. An error pops up saying that the work items could not be loaded. This will be fixed in Beta2.</para>
     </section>
   </section>
 </section>
