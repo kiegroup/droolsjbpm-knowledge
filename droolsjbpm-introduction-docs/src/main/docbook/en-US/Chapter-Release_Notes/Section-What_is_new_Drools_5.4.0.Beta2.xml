@@ -7,6 +7,10 @@
   <title>What is New and Noteworthy in Drools 5.4.0.Beta2</title>
 
   <section>
+    <title>Knowledge API</title>
+    <para>5.4.0.Final will be the last release to keep API compatability for classes outside of knowledge-api. This means that the classes inside of core and compiler will change in the future.</para>
+  </section>
+  <section>
     <title>Drools Expert</title>
 
     <section>
@@ -111,6 +115,10 @@
       <para>A working version of Wumpus World, an AI example covered in in the book "Artificial Intelligence : A Modern
        Approach", is now available among the other examples. A more detailed overview of Wumpus World can be found
       <link xlink:href="http://www.cis.temple.edu/~giorgio/cis587/readings/wumpus.shtml">here</link></para>
+    </section>
+    <section>
+      <title>Usage of '#' for commenting will be dropped in 5.4.0.Final </title>
+      <para>This feature hasn't been documented, but writing comments with '#' is currently possible. This feature will be dropped before 5.4.0.Final.</para>
     </section>
   </section>
 
@@ -361,6 +369,14 @@ end
 
       <para>The Benchmarker can now read and write the input and output files from any format, through the
       <literal>ProblemIO</literal> interface. The default is still an XStream implementation.</para>
+    </section>
+  </section>
+  <section>
+    <title>Eclipse plugin</title>
+    <section>
+      <title>Breakpoints in Rule RHS are not working with Java dialect</title>
+
+      <para>Debugging with Java is not working. Debugging with MVEL is not affected. This will be fixed in the future releases before 5.4.0.Final</para> 
     </section>
   </section>
 </section>
