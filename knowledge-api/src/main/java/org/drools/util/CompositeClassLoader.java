@@ -150,12 +150,8 @@ public class CompositeClassLoader extends ClassLoader {
                 enumerations.addEnumeration( e );
             }
         }
-
-        if ( enumerations.size() == 0 ) {
-            return null;
-        } else {
-            return enumerations;
-        }
+        
+        return enumerations;
     }
 
     public void dumpStats() {
