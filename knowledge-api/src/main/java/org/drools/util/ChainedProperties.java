@@ -161,6 +161,14 @@ public class ChainedProperties
         this.props.add( 0, properties );
     }
 
+    /**
+     * Add properties to the end of the list. So these properties will be default values for 'props'.
+     * @param properties
+     */
+    public void addPropertiesLast(Properties properties) {
+        this.props.add( properties );
+    }
+
     public String getProperty(String key,
                               String defaultValue) {
         String value = null;
