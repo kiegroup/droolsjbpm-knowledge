@@ -22,7 +22,12 @@ public class ClassLoaderUtil {
                                                       final boolean enableCache) {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         ClassLoader currentClassLoader = (cls != null) ? cls.getClassLoader() : ClassLoaderUtil.class.getClassLoader();
-        ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+        
+    //	TODO: Gae invalid method - stackoverflow
+        //ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
+        ClassLoader systemClassLoader = null;
+        if ((System.getProperties().get("com.google.appengine.application.id")==null))
+        	systemClassLoader = ClassLoader.getSystemClassLoader();
 
         CompositeClassLoader cl = new CompositeClassLoader( );
 
