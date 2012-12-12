@@ -17,9 +17,9 @@
 package org.kie.runtime.rule;
 
 import org.kie.definition.rule.Rule;
-import org.kie.runtime.KnowledgeContext;
+import org.kie.runtime.KieContext;
 
-public interface RuleContext extends KnowledgeContext {
+public interface RuleContext extends KieContext {
     
     /**
      * Returns the active Rule for the current context
@@ -29,11 +29,11 @@ public interface RuleContext extends KnowledgeContext {
     Rule getRule();
 
     /**
-     * Returns the current Activation for the current context
+     * Returns the current Match for the current context
      * 
      * @return
      */
-    Activation getActivation();
+    Match getMatch();
     
     /**
      * Logically inserts a fact into the KnowledgeSession, justified by the current
@@ -55,18 +55,18 @@ public interface RuleContext extends KnowledgeContext {
      * This is an experimental feature that must be explicitly enabled via DeclarativeAgendaOption, which is off by default. This method may change or disable at any time.
      * @param match
      */
-    void blockActivation(Activation match);
+    void blockMatch(Match match);
     
     /** 
      * This is an experimental feature that must be explicitly enabled via DeclarativeAgendaOption, which is off by default. This method may change or disable at any time.
      * @param match
      */    
-    public void unblockAllActivations(Activation match);
+    public void unblockAllMatches(Match match);
     
     /** 
      * This is an experimental feature that must be explicitly enabled via DeclarativeAgendaOption, which is off by default. This method may change or disable at any time.
      * @param match
      */    
-    public void cancelActivation(Activation match);
+    public void cancelMatch(Match match);
     
 }

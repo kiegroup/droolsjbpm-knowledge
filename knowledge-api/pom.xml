@@ -4,8 +4,8 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.drools</groupId>
-    <artifactId>droolsjbpm-knowledge</artifactId>
+    <groupId>org.kie</groupId>
+    <artifactId>kie-api-parent</artifactId>
     <version>6.0.0-SNAPSHOT</version>
   </parent>
 
@@ -45,7 +45,7 @@
             <Import-Package>!org.drools.*,*;resolution:=optional,com.sun.tools.xjc;resolution:=optional</Import-Package>
             <Export-Package>org.drools.*</Export-Package>
             <DynamicImport-Package>*</DynamicImport-Package>
-            <Bundle-Activator>org.kie.osgi.api.Activator</Bundle-Activator>
+            <Bundle-Activator>org.drools.osgi.api.Activator</Bundle-Activator>
           </instructions>
         </configuration>
       </plugin>
@@ -53,31 +53,31 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
-          <excludePackageNames>org.kie.util*</excludePackageNames>
+          <excludePackageNames>org.drools.util*</excludePackageNames>
           <groups>
             <group>
               <title>Knowledge Base API</title>
-              <packages>org.kie</packages>
+              <packages>org.drools</packages>
             </group>
             <group>
               <title>Builder API</title>
-              <packages>org.kie.builder</packages>
+              <packages>org.drools.builder</packages>
             </group>
             <group>
               <title>Definition API</title>
-              <packages>org.kie.definition*</packages>
+              <packages>org.drools.definition*</packages>
             </group>
             <group>
               <title>Event API</title>
-              <packages>org.kie.event*</packages>
+              <packages>org.drools.event*</packages>
             </group>
             <group>
               <title>Runtime API</title>
-              <packages>org.kie.runtime*</packages>
+              <packages>org.drools.runtime*</packages>
             </group>
             <group>
               <title>Time API</title>
-              <packages>org.kie.time*</packages>
+              <packages>org.drools.time*</packages>
             </group>
           </groups>
           <!--

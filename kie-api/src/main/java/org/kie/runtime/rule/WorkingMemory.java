@@ -24,7 +24,7 @@ import java.util.Collection;
  * interface instead of <code>WorkingMemory</code> interface, specially because of the <code>dispose()</code> method
  * that is only available in the <code>StatefulKnowledgeSession</code> interface.  
  * 
- * @see org.kie.runtime.StatefulKnowledgeSession 
+ * @see org.kie.runtime.KieSession 
  */
 public interface WorkingMemory
     extends
@@ -33,10 +33,10 @@ public interface WorkingMemory
     /**
      * <p>Request the engine to stop firing rules. If the engine is currently firing a rule, it will
      * finish executing this rule's consequence before stopping.</p>
-     * <p>This method will not remove active activations from the Agenda.
+     * <p>This method will not remove active Matches from the Agenda.
      * In case the application later wants to continue firing rules from the point where it stopped,
-     * it should just call <code>org.drools.runtime.StatefulKnowledgeSession.fireAllRules()</code> or 
-     * <code>org.drools.runtime.StatefulKnowledgeSession.fireUntilHalt()</code> again.</p>
+     * it should just call <code>org.kie.runtime.StatefulKnowledgeSession.fireAllRules()</code> or 
+     * <code>org.kie.runtime.StatefulKnowledgeSession.fireUntilHalt()</code> again.</p>
      */
     void halt();
 

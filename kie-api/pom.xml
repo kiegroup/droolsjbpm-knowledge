@@ -5,14 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.kie</groupId>
-    <artifactId>kie-parent</artifactId>
+    <artifactId>kie-api-parent</artifactId>
     <version>6.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>kie-api</artifactId>
 
   <name>KIE API</name>
-  <description>The Drools and jBPM common public API published under the KIE namespace.</description>
+  <description>The Drools and jBPM public API which is backwards compatible between releases.</description>
   
   <build>
     <plugins>
@@ -41,9 +41,9 @@
           <manifestLocation>META-INF</manifestLocation>
           <instructions>
             <_removeheaders>Ignore-Package</_removeheaders>
-            <Bundle-SymbolicName>org.kie.api;singleton:=true</Bundle-SymbolicName>
-            <Import-Package>!org.kie.*,*;resolution:=optional,com.sun.tools.xjc;resolution:=optional</Import-Package>
-            <Export-Package>org.kie.*</Export-Package>
+            <Bundle-SymbolicName>org.drools.api;singleton:=true</Bundle-SymbolicName>
+            <Import-Package>!org.drools.*,*;resolution:=optional,com.sun.tools.xjc;resolution:=optional</Import-Package>
+            <Export-Package>org.drools.*</Export-Package>
             <DynamicImport-Package>*</DynamicImport-Package>
             <Bundle-Activator>org.kie.osgi.api.Activator</Bundle-Activator>
           </instructions>
@@ -56,7 +56,7 @@
           <excludePackageNames>org.kie.util*</excludePackageNames>
           <groups>
             <group>
-              <title>KIE Base API</title>
+              <title>Knowledge Base API</title>
               <packages>org.kie</packages>
             </group>
             <group>
@@ -90,7 +90,7 @@
             - For "tiling", set property "enabled" to "false"
             - Save and close ydoc.cfg
             - Uncomment the lines below. Adjust <docletPath> accordingly.
-            - cd .../droolsjbpm/droolsjbpm-knowledge/knowledge-api
+            - cd .../droolsjbpm/droolsjbpm-knowledge/kie-api
             - mvn clean install -Dfull
             - cd .../droolsjbpm
             - droolsjbpm-build-bootstrap/script/docs/copy-ydoc-output.sh
@@ -112,16 +112,6 @@
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.osgi.compendium</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-xjc</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -158,5 +148,10 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <scope>provided</scope><!-- HACK for OSGi: should be <optional>true</optional> instead -->
+    </dependency>    
   </dependencies>
 </project>

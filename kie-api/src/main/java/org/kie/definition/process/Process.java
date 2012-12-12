@@ -16,9 +16,9 @@
 
 package org.kie.definition.process;
 
-import java.util.Map;
+import org.kie.definition.KieDefinition;
 
-import org.kie.definition.KnowledgeDefinition;
+import java.util.Map;
 
 /**
  * A Process represents one modular piece of business logic that can be executed by
@@ -27,7 +27,7 @@ import org.kie.definition.KnowledgeDefinition;
  */
 public interface Process
     extends
-    KnowledgeDefinition {
+    KieDefinition {
 
 	/**
 	 * The unique id of the Process.
@@ -72,10 +72,5 @@ public interface Process
 	 * Meta data associated with this Node.
 	 */
     Map<String, Object> getMetaData();
-
-	/**
-	 * Meta data associated with this Node.
-	 */
-    @Deprecated Object getMetaData(String name);
 
 }
