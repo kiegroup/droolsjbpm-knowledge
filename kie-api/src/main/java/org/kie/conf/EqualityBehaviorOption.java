@@ -14,15 +14,31 @@
  * limitations under the License.
  */
 
-package org.kie.runtime.conf;
+package org.kie.conf;
 
-import org.kie.conf.Option;
 
 /**
- * A markup interface for KnowledgeSessionConfiguration options
+ * An Enum for AssertBehavior option.
+ * 
+ * drools.assertBehaviour = &lt;identity|equality&gt;
+ * 
+ * DEFAULT = identity
  */
-public interface KnowledgeSessionOption
-    extends
-    Option {
+public enum EqualityBehaviorOption implements SingleValueKieBaseOption {
+    
+    IDENTITY,
+    EQUALITY;
 
+    /**
+     * The property name for the sequential mode option
+     */
+    public static final String PROPERTY_NAME = "drools.equalityBehavior";
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyName() {
+        return PROPERTY_NAME;
+    }
+    
 }
