@@ -49,6 +49,19 @@ public interface ProcessRuntime {
                                  Map<String, Object> parameters);
     
     /**
+     * Start a new process instance.  The process (definition) that should
+     * be used is referenced by the given process id.  Parameters can be passed
+     * to the process instance (as name-value pairs), and these will be set
+     * as variables of the process instance.
+     * 
+     * @param processId  the id of the process that should be started
+     * @param parameters  the process variables that should be set when starting the process instance 
+     * @return the <code>ProcessInstance</code> that represents the instance of the process that was started
+     */
+    ProcessInstance startProcess(String processId, String businessKey,
+                                 Map<String, Object> parameters);
+    
+    /**
      * Creates a new process instance (but does not yet start it).  The process
      * (definition) that should be used is referenced by the given process id.  
      * Parameters can be passed to the process instance (as name-value pairs), 
@@ -61,6 +74,22 @@ public interface ProcessRuntime {
      * @return the <code>ProcessInstance</code> that represents the instance of the process that was created (but not yet started)
      */
     ProcessInstance createProcessInstance(String processId,
+                                          Map<String, Object> parameters);
+    
+    /**
+     * Creates a new process instance (but does not yet start it).  The process
+     * (definition) that should be used is referenced by the given process id.  
+     * Parameters can be passed to the process instance (as name-value pairs), 
+     * and these will be set as variables of the process instance.  You should only
+     * use this method if you need a reference to the process instance before actually
+     * starting it.  Otherwise, use startProcess.
+     * 
+     * @param processId  the id of the process that should be started
+     * @param businessKey custom business key that can be used to identify process instance
+     * @param parameters  the process variables that should be set when creating the process instance 
+     * @return the <code>ProcessInstance</code> that represents the instance of the process that was created (but not yet started)
+     */
+    ProcessInstance createProcessInstance(String processId, String businessKey,
                                           Map<String, Object> parameters);
 
     /**
@@ -127,6 +156,16 @@ public interface ProcessRuntime {
      * @return the process instance with the given id or <code>null</code> if it cannot be found
      */
     ProcessInstance getProcessInstance(long processInstanceId);
+    
+    /**
+     * Returns the process instance with the given id.  Note that only active process instances
+     * will be returned.  If a process instance has been completed already, this method will return
+     * <code>null</code>.
+     * 
+     * @param businessKey the custom business key assigned when process instance was created
+     * @return the process instance with the given id or <code>null</code> if it cannot be found
+     */
+    ProcessInstance getProcessInstance(String businessKey);
 
     /**
      * Aborts the process instance with the given id.  If the process instance has been completed
