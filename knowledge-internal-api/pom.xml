@@ -27,6 +27,7 @@
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
+          <version>${maven-felix-plugin.version}</version>
         <extensions>true</extensions>
         <executions>
           <execution>
@@ -42,9 +43,15 @@
           <instructions>
             <_removeheaders>Ignore-Package</_removeheaders>
             <Bundle-SymbolicName>org.drools.internalapi;singleton:=true</Bundle-SymbolicName>
-            <Require-Bundle>org.drools.api;visibility:=reexport;bundle-version="${drools.osgi.version}"</Require-Bundle>
-            <Import-Package>!org.drools.*,*;resolution:=optional,com.sun.tools.xjc;resolution:=optional</Import-Package>
-            <Export-Package>!org.drools.cdi.*,org.drools.*</Export-Package>
+            <!--<Require-Bundle>org.drools.api;visibility:=reexport;bundle-version="${drools.osgi.version}"</Require-Bundle>-->
+            <Import-Package>
+                !org.drools.*,
+                *;resolution:=optional,
+                com.sun.tools.xjc;resolution:=optional
+            </Import-Package>
+            <Export-Package>
+                !org.drools.cdi.*,
+                org.drools.*</Export-Package>
             <DynamicImport-Package>*</DynamicImport-Package>
           </instructions>
         </configuration>
