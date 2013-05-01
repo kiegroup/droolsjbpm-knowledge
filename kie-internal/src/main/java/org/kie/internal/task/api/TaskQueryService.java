@@ -59,16 +59,26 @@ public interface TaskQueryService {
     
     List<TaskSummary> getTasksAssignedByGroupsByExpirationDate(List<String> groupIds, String language, Date expirationDate);
     
-    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptional(List<String> groupIds, String language, Date expirationDate);
+    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateByTaskName(List<String> groupIds, String language, Date expirationDate, String taskName);
     
+    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptional(List<String> groupIds, String language, Date expirationDate);
+
+    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptionalByTaskName(List<String> groupIds, String language, Date expirationDate, String taskName);
+
     List<TaskSummary> getTasksOwned(String userId, String language);
 
     List<TaskSummary> getTasksOwnedByStatus(String userId, List<Status> status, String language);
+
+    List<TaskSummary> getTasksOwnedByStatusByTaskName(String userId, List<Status> status, String language, String taskName);
     
     List<TaskSummary> getTasksOwnedByExpirationDate(String userId, List<Status> status, Date expirationDate);
-    
+
+    List<TaskSummary> getTasksOwnedByExpirationDateByTaskName(String userId, List<Status> statuses, String language, Date expirationDate, String taskName);
+
     List<TaskSummary> getTasksOwnedByExpirationDateOptional(String userId, List<Status> status, Date expirationDate);
-    
+
+    List<TaskSummary> getTasksOwnedByExpirationDateOptionalByTaskName(String userId, List<Status> statuses, String language, Date expirationDate, String taskName);
+
     List<TaskSummary> getTasksOwnedByExpirationDateBeforeSpecifiedDate(String userId, List<Status> status, Date date);
     
     List<TaskSummary> getSubTasksAssignedAsPotentialOwner(long parentId, String userId, String language);

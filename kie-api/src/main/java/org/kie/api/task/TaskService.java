@@ -61,7 +61,9 @@ public interface TaskService {
     List<TaskSummary> getTasksOwned(String userId, String language);
 
     List<TaskSummary> getTasksOwnedByStatus(String userId, List<Status> status, String language);
-
+    
+    List<TaskSummary> getTasksOwnedByStatusByTaskName(String userId, List<Status> status, String language, String taskName);
+    
     List<TaskSummary> getTasksByStatusByProcessInstanceId(long processInstanceId, List<Status> status, String language);
 
     List<Long> getTasksByProcessInstanceId(long processInstanceId);

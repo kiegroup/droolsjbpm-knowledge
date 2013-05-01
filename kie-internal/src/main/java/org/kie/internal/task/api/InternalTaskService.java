@@ -100,14 +100,22 @@ public interface InternalTaskService extends TaskService {
     List<TaskSummary> getTasksAssignedAsTaskStakeholder(String userId, String language);
 
     List<TaskSummary> getTasksOwnedByExpirationDate(String userId, List<Status> statuses, Date expirationDate);
-    
+
+    List<TaskSummary> getTasksOwnedByExpirationDateByTaskName(String userId, List<Status> statuses, String language, Date expirationDate, String taskName);
+
     List<TaskSummary> getTasksOwnedByExpirationDateOptional(String userId, List<Status> statuses, Date expirationDate);
+    
+    List<TaskSummary> getTasksOwnedByExpirationDateOptionalByTaskName(String userId, List<Status> statuses, String language, Date expirationDate, String taskName);
     
     List<TaskSummary> getTasksOwnedByExpirationDateBeforeSpecifiedDate(String userId, List<Status> status, Date date);
     
     List<TaskSummary> getTasksAssignedByGroupsByExpirationDate(List<String> groupIds, String language, Date expirationDate);
     
+    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateByTaskName(List<String> groupIds, String language, Date expirationDate, String taskName);
+    
     List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptional(List<String> groupIds, String language, Date expirationDate);
+
+    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptionalByTaskName(List<String> groupIds, String language, Date expirationDate, String taskName);
     
     List<TaskSummary> getTasksByStatusByProcessInstanceIdByTaskName(long processInstanceId, List<Status> status, String taskName, String language);
     
