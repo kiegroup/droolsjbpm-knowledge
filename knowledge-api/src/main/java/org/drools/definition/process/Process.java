@@ -19,6 +19,7 @@ package org.drools.definition.process;
 import java.util.Map;
 
 import org.drools.definition.KnowledgeDefinition;
+import org.drools.io.Resource;
 
 /**
  * A Process represents one modular piece of business logic that can be executed by
@@ -78,4 +79,8 @@ public interface Process
 	 */
     @Deprecated Object getMetaData(String name);
 
+
+    Resource getResource();
+
+    void setResource( Resource res );
 }
