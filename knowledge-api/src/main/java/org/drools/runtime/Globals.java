@@ -16,6 +16,8 @@
 
 package org.drools.runtime;
 
+import java.util.Collection;
+
 public interface Globals {
     Object get(String identifier);
 
@@ -23,4 +25,6 @@ public interface Globals {
              Object value);
     
     void setDelegate(Globals delegate);
+
+    public Collection<String> getGlobalKeys();
 }
