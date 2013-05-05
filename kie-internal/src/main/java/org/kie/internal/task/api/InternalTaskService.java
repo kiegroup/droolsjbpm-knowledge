@@ -101,21 +101,21 @@ public interface InternalTaskService extends TaskService {
 
     List<TaskSummary> getTasksOwnedByExpirationDate(String userId, List<Status> statuses, Date expirationDate);
 
-    List<TaskSummary> getTasksOwnedByExpirationDateByTaskName(String userId, List<Status> statuses, String language, Date expirationDate, String taskName);
+    List<TaskSummary> getTasksOwnedByExpirationDateBySearchText(String userId, List<Status> statuses, String language, Date expirationDate, String searchText);
 
     List<TaskSummary> getTasksOwnedByExpirationDateOptional(String userId, List<Status> statuses, Date expirationDate);
     
-    List<TaskSummary> getTasksOwnedByExpirationDateOptionalByTaskName(String userId, List<Status> statuses, String language, Date expirationDate, String taskName);
+    List<TaskSummary> getTasksOwnedByExpirationDateOptionalBySearchText(String userId, List<Status> statuses, String language, Date expirationDate, String searchText);
     
     List<TaskSummary> getTasksOwnedByExpirationDateBeforeSpecifiedDate(String userId, List<Status> status, Date date);
     
     List<TaskSummary> getTasksAssignedByGroupsByExpirationDate(List<String> groupIds, String language, Date expirationDate);
     
-    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateByTaskName(List<String> groupIds, String language, Date expirationDate, String taskName);
+    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateBySearchText(List<String> groupIds, String language, Date expirationDate, String searchText);
     
     List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptional(List<String> groupIds, String language, Date expirationDate);
 
-    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptionalByTaskName(List<String> groupIds, String language, Date expirationDate, String taskName);
+    List<TaskSummary> getTasksAssignedByGroupsByExpirationDateOptionalBySearchText(List<String> groupIds, String language, Date expirationDate, String searchText);
     
     List<TaskSummary> getTasksByStatusByProcessInstanceIdByTaskName(long processInstanceId, List<Status> status, String taskName, String language);
     
@@ -208,4 +208,5 @@ public interface InternalTaskService extends TaskService {
     Comment getCommentById(long commentId);
     
     Map<String, Object> getTaskContent(long taskId);
+    
 }
