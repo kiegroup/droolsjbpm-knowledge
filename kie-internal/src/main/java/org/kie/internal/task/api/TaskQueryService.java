@@ -69,7 +69,6 @@ public interface TaskQueryService {
 
     List<TaskSummary> getTasksOwnedByStatus(String userId, List<Status> status, String language);
 
-    List<TaskSummary> getTasksOwnedByStatusBySearchText(String userId, List<Status> status, String language, String searchText);
     
     List<TaskSummary> getTasksOwnedByExpirationDate(String userId, List<Status> status, Date expirationDate);
 
