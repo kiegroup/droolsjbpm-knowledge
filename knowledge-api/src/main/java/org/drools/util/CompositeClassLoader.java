@@ -267,10 +267,9 @@ public class CompositeClassLoader extends ClassLoader {
                     }
                 }
             }
+            classLoaderResultMap.put( name,
+            		cls );
             if ( cls != null ) {
-                classLoaderResultMap.put( name,
-                                          cls );
-                
                 this.successfulCalls++;
             } else {
                 this.failedCalls++;
