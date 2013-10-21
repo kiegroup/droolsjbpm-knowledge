@@ -81,8 +81,6 @@
         </mediaobject>
       </figure>
 
-      <para/>
-
       <section>
         <title><link xlink:href="https://github.com/droolsjbpm/uberfire">uberfire</link></title>
 
@@ -979,8 +977,8 @@
 
         <para>Upload KJars to Guvnor M2 repository:</para>
 
-        <para>A KJar has a pom.xml (and pom.properties) that define the GAV and POJO model dependencies. If the
-        pom.properties is missing the user is prompted for the GAV and a pom.properties file is appended to the JAR
+        <para>A valid KJar must have a pom.xml (and pom.properties) that define the GAV and POJO model dependencies. If
+        the pom.properties is missing the user is prompted for the GAV and a pom.properties file is appended to the JAR
         before being uploaded to Guvnor M2 repo.</para>
 
         <para/>
@@ -1027,6 +1025,43 @@
         <para>-i,--inputJcrRepository &lt;arg&gt; The Guvnor 5 JCR repository</para>
 
         <para>-o,--outputVfsRepository &lt;arg&gt; The Guvnor 6 VFS repository</para>
+
+        <para/>
+
+        <para>Deploy to Guvnor M2 Repository remotely:</para>
+
+        <para>You can deploy to Guvnor M2 Repository throuse SSH. The example belows show how to deploy to Guvnor M2
+        Repository using wagon-ssh plugin:</para>
+
+        <programlisting>  &lt;build&gt;
+    &lt;extensions&gt;
+      &lt;extension&gt;
+        &lt;groupId&gt;org.apache.maven.wagon&lt;/groupId&gt;
+        &lt;artifactId&gt;wagon-ssh&lt;/artifactId&gt;
+        &lt;version&gt;1.0&lt;/version&gt;
+      &lt;/extension&gt;
+    &lt;/extensions&gt;
+  &lt;/build&gt;    
+  
+  &lt;!-- Enabling the use of FTP --&gt;
+  &lt;distributionManagement&gt;
+    &lt;repository&gt;
+      &lt;id&gt;guvnor-m2-repo&lt;/id&gt;
+      &lt;url&gt;sftp://10.66.16.171/local/dev/jboss-as-7.1.1.Final/bin/repository&lt;/url&gt;
+    &lt;/repository&gt;
+  &lt;/distributionManagement&gt;  </programlisting>
+
+        <para>You may need a login password for scp to work. For example, add following to settings.xml file:</para>
+
+        <programlisting>  &lt;servers&gt;
+    &lt;server&gt;
+      &lt;id&gt;guvnor-m2-repo&lt;/id&gt;
+      &lt;username&gt;yourusername&lt;/username&gt;
+      &lt;password&gt;yourpwd&lt;/password&gt;
+    &lt;/server&gt;
+  &lt;/servers&gt;</programlisting>
+
+        <para/>
 
         <para/>
       </section>
@@ -1121,6 +1156,16 @@
     </section>
 
     <section>
+      <title>Construction heuristics now use selectors</title>
+
+      <para>The construction heuristics now use the selector architecture so they support selection filtering, etc.
+      Sorting can be overwritten at a configuration level (very handy for benchmarking).</para>
+
+      <para>In cases with multiple planning variables (for example period, room and teacher), you can now switch to a
+      far more scalable configuration.</para>
+    </section>
+
+    <section>
       <title>Automatic solution cloning</title>
 
       <para>Implementing the <literal>Solution's</literal> planning <literal>clone</literal> method is now optional.
@@ -1132,25 +1177,11 @@
     </section>
 
     <section>
-      <title>TSP and VRP: Chained variables are more scalable</title>
-
-      <para>Several improvements have made use cases like TSP and VRP more scalable. The code has been optimized to run
-      significantly faster. Also ,<literal>&lt;subChainSelector&gt;</literal> now supports
-      <literal>&lt;maximumSubChainSize&gt;</literal> to scale out better.</para>
-    </section>
-
-    <section>
       <title>New build-in scores</title>
 
       <para>New build-in score definitions include: <literal>HardMediumSoftScore</literal> (3 score levels),
       <literal>BendableScore</literal> (configurable number of score levels), <literal>HardSoftLongScore</literal>,
       <literal>HardSoftDoubleScore</literal>, <literal>HardSoftBigDecimalScore</literal>, ...</para>
-    </section>
-
-    <section>
-      <title>OSGi support</title>
-
-      <para>OptaPlanner now has OSGi support.</para>
     </section>
 
     <section>
@@ -1188,22 +1219,61 @@
     </section>
 
     <section>
-      <title>New Benchmarker statistics</title>
+      <title>TSP and VRP: Chained variables are more scalable</title>
 
-      <para>The best solution mutation statistic shows for every new best solution found, how many variables needed to
-      change to improve the last best solution.</para>
-
-      <para>The step score statistic shows how the step score evolves over time.</para>
+      <para>Several improvements have made use cases like TSP and VRP more scalable. The code has been optimized to run
+      significantly faster. Also ,<literal>&lt;subChainSelector&gt;</literal> now supports
+      <literal>&lt;maximumSubChainSize&gt;</literal> to scale out better.</para>
     </section>
 
     <section>
-      <title>Construction heuristics now use selectors</title>
+      <title>New example: Project job scheduling</title>
 
-      <para>The construction heuristics now use the selector architecture so they support selection filtering, etc.
-      Sorting can be overwritten at a configuration level (very handy for benchmarking).</para>
+      <para>Project job scheduling is a form of job shop scheduling, for example to schedule the production of diverse
+      books, cars or other products to machines and employees (thanks to Lukáš Petrovický).</para>
+    </section>
 
-      <para>In cases with multiple planning variables (for example period, room and teacher), you can now switch to a
-      far more scalable configuration.</para>
+    <section>
+      <title>Benchmarker improvements</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>The best solution mutation statistic shows for every new best solution found, how many variables needed
+          to change to improve the last best solution.</para>
+        </listitem>
+
+        <listitem>
+          <para>The step score statistic shows how the step score evolves over time.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Benchmarker now highlights infeasible solutions with an orange exclamation mark.</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Example improvements</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>The GUI's of course scheduling, exam scheduling, hospital bed planning and sport scheduling have been
+          improved.</para>
+        </listitem>
+
+        <listitem>
+          <para>The optaplanner examples Swing GUI has been redesigned to take up less space.</para>
+        </listitem>
+
+        <listitem>
+          <para>A web variant of the cloud balancing example has been added to optaplanner-webexamples.war.</para>
+        </listitem>
+
+        <listitem>
+          <para>The Benchmarker now shows standard deviation per solver configuration (thanks to Miroslav
+          Svitok).</para>
+        </listitem>
+      </itemizedlist>
     </section>
 
     <section>
@@ -1211,26 +1281,8 @@
 
       <itemizedlist>
         <listitem>
-          <para>VRP subchain selection improved if <literal>maximumSubChainSize</literal> is set.</para>
-        </listitem>
-
-        <listitem>
-          <para>The Benchmarker now highlights infeasible solutions with an orange exclamation mark.</para>
-        </listitem>
-
-        <listitem>
-          <para>The Benchmarker now shows standard deviation per solver configuration (thanks to Miroslav
-          Svitok).</para>
-        </listitem>
-
-        <listitem>
           <para>Domain classes that extend/implement a <literal>@PlanningEntity</literal> class or interface can now be
           used as planning entities.</para>
-        </listitem>
-
-        <listitem>
-          <para><literal>BendableScore</literal> is now compatible with XStream: use
-          <literal>XStreamBendableScoreConverter.</literal></para>
         </listitem>
 
         <listitem>
@@ -1248,6 +1300,18 @@
         <listitem>
           <para>Mimic selection: usefull to create a cartesian product selection of 2 change move selectors that move
           different variables of the <emphasis>same</emphasis> entity</para>
+        </listitem>
+
+        <listitem>
+          <para>KieBase support</para>
+        </listitem>
+
+        <listitem>
+          <para>Nullable variables support improved</para>
+        </listitem>
+
+        <listitem>
+          <para>OSGi support out-of-the-box in the optaplanner jars.</para>
         </listitem>
       </itemizedlist>
     </section>
