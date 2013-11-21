@@ -96,7 +96,10 @@ public class ChainedProperties
                                       confClassLoader ),
                         this.props );
 
-        confClassLoader = ClassLoader.getSystemClassLoader();
+    // 	TODO: Gae invalid method
+        if ((System.getProperties().get("com.google.appengine.application.id")==null))
+        	confClassLoader = ClassLoader.getSystemClassLoader();
+        
         if ( confClassLoader != null && confClassLoader != classLoader ) {
             loadProperties( getResources( "META-INF/drools." + confFileName,
                                           confClassLoader ),
@@ -119,7 +122,10 @@ public class ChainedProperties
                                       confClassLoader ),
                         this.defaultProps );
 
-        confClassLoader = ClassLoader.getSystemClassLoader();
+    // 	TODO: Gae invalid method
+        if ((System.getProperties().get("com.google.appengine.application.id")==null))
+        	confClassLoader = ClassLoader.getSystemClassLoader();
+        
         if ( confClassLoader != null && confClassLoader != classLoader ) {
             loadProperties( getResources( "META-INF/drools.default." + confFileName,
                                           confClassLoader ),

@@ -14,43 +14,18 @@
  * limitations under the License.
  */
 
-package org.kie.internal.utils;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.security.ProtectionDomain;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+package org.kie.util;
 
 public class ClassLoaderUtil {
-    private static final ProtectionDomain  PROTECTION_DOMAIN;
-
-
-    static {
-        PROTECTION_DOMAIN = (ProtectionDomain) AccessController.doPrivileged( new PrivilegedAction() {
-
-            public Object run() {
-                return ClassLoaderUtil.class.getProtectionDomain();
-            }
-        } );
-    }
-    
     public static CompositeClassLoader getClassLoader(final ClassLoader[] classLoaders,
                                                       final Class< ? > cls,
                                                       final boolean enableCache) {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         ClassLoader currentClassLoader = (cls != null) ? cls.getClassLoader() : ClassLoaderUtil.class.getClassLoader();
         
+    //	TODO: Gae invalid method - stackoverflow
+        //ClassLoader systemClassLoader = ClassLoader.getSystemClassLoader();
         ClassLoader systemClassLoader = null;
-        
-    // 	TODO: Gae restricted method ClassLoader.getSystemClassLoader();
         if ((System.getProperties().get("com.google.appengine.application.id")==null))
         	systemClassLoader = ClassLoader.getSystemClassLoader();
 
@@ -87,5 +62,4 @@ public class ClassLoaderUtil {
 
         return cl;
     }
-    
 }
