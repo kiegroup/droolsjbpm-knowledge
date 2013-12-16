@@ -354,4 +354,13 @@ public class CompositeClassLoader extends ClassLoader {
         }
         return classLoader;
     }
+
+    public void dispose() {
+        this.classLoaders.clear();
+
+        Loader loader = this.loader.getAndSet( null );
+        if ( loader != null ) {
+            loader.reset();
+        }
+    }
 }
