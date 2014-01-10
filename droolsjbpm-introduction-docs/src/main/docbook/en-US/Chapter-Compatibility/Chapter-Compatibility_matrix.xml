@@ -27,6 +27,26 @@
 
       <tbody>
         <row>
+            <entry>5.6.0.Final</entry>
+
+            <entry>5.5.0.Final</entry>
+
+            <entry>5.6.0.Final</entry>
+
+            <entry>2.0.Final, 2.1.Final, 2.2.Final, 2.3.Final</entry>
+        </row>
+
+        <row>
+            <entry>5.6.0.CR1</entry>
+
+            <entry>5.5.0.CR1</entry>
+
+            <entry>5.6.0.CR1</entry>
+
+            <entry>2.0.Final, 2.1.Final, 2.2.Final, 2.3.Final</entry>
+        </row>
+
+        <row>
           <entry>5.5.0.Final</entry>
 
           <entry>5.4.0.Final</entry>
