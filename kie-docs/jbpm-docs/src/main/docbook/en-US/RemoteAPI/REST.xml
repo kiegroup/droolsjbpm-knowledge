@@ -17,28 +17,20 @@
     various operations can be found in the <code>(org.kie.remote:)kie-services-client</code> JAR.
   </para>
 
-
-  <!-- add later.. :/ <section> <title>URL overview</title> <table> <title>REST URL overview</title> <tgroup cols="2" align="left" rowsep="1" 
-    colsep="1"> <thead valign="top"> <row> <entry>URL suffix (after <code>http://{server:port}/{applicationId}/rest/</code>)</entry> <entry>Short 
-    functional description</entry> </row> </thead> <tbody valign="top"> <row> <entry><code>/runtime/{deploymentId}/process/{processDefId}/start</code></entry> 
-    <entry>Starts a process</entry> </row> </tbody> </tgroup> </table> </section> -->
-
-  <section>
+  <section xml:id="remote.rest.runtime">
     <title>Runtime calls</title>
 
     <para>This section lists REST calls that interface with </para>
 
-    <para>
-      The
-      <emphasis>deploymentId</emphasis>
-      component of the REST calls below must conform to the following regex:
-      <itemizedlist>
+    <para> The <emphasis>deploymentId</emphasis> component of the REST calls below must conform to
+      the following regular expression:<itemizedlist>
         <listitem>
           <para>
-            <code>[a-zA-Z0-9-:\.]+</code>
+            <code>[\w\.-]+(:[\w\.-]+){2,2}(:[\w\.-]*){0,2}</code>
           </para>
         </listitem>
       </itemizedlist>
+      For information, see the <link linkend="remote.rest.deployment.title">Deployment calls</link> section.
     </para>
 
     <section>
@@ -374,9 +366,10 @@
     <title>History calls</title>
   
     <note>  
-    <para>Between the 6.0.0.Final and 6.0.1.Final releases, the History REST calls were udpated and fixed in order to make them both
-      more robuts and more accessible. While the REST calls that were provided with 6.0.0.Final are still available in 6.0.1.Final, they will 
-      be removed in a future release.</para>
+    <para>Between the 6.0.0.Final and 6.0.1.Final releases, the History REST calls were udpated and
+        fixed in order to make them both more robust and accessible. While the REST calls that were
+        provided with 6.0.0.Final are still available in 6.0.1.Final, they will be removed in a
+        future release.</para>
     </note>
 
     <section>
@@ -760,6 +753,11 @@
   <section>
     <title>Deprecated history calls available in 6.0.0.Final</title>
     
+    <para>Rest calls that contain
+          "<code>rest/runtime/<command>{deploymentId}</command>/history</code>" have been
+        deprecated: the same functionality provided by these calls can be found in the history REST
+        calls described in the previous sections.</para>
+    
     <important>
       <para>If you're using the 6.0.0.Final release, the following applies to the History REST calls:</para>
       
@@ -1045,27 +1043,32 @@
         </listitem>
         <listitem>
           <para>
-            The Task query REST operation, that allows users to query for
-            <code>Task</code> instances
+            The Task query REST operation, that allows users to query for <code>Task</code> instances
           </para>
         </listitem>
         <listitem>
-          <para>Other assorted Task REST operations</para>
+          <para>Other Task REST operations that retrieve information</para>
         </listitem>
-      </itemizedlist>
+      </itemizedlist> 
     </para>
 
-      <important xml:id='remote.rest.task.important'>
-      <para>When calling Task REST operations, in particular the operations that modify tasks and mirror the <code>TaskService</code> interface, 
-        it's important to know that the user used for authentication and authorization will also <emphasis>be used as the user calling the 
-          operation itself</emphasis>. The reasoning behind this is that there are rights associated with each user when interfacing with tasks.
+    <formalpara>
+      <title>Task operation authorizations</title>
+      <para>Task REST operations use the user information (used to authorize and authenticate the HTTP call) to check whether or
+      not the requested operations can happen. This also applies to REST calls that retrieve information, such as the task query 
+      operation. REST calls that request information will only return information about tasks that the user is allowed to see. 
       </para>
-      <para>This does not apply to the Task query operation or other operations that retrieve content.</para>
-    </important>
+    </formalpara>
+    
+    <para>With regards to retrieving information, only users associated with a task may retrieve information about the task. However, 
+    the authorizations of progress and other modifications of task information are more complex. See the 
+      <link linkend="jBPMTaskPermissions">Task Permissions</link> section in the <link linkend="jBPMTaskService">Task Service</link> 
+    documentation for more infomration.</para>    
     
     <note>
       <para>Given that many users have expressed the wish for a "super-task-user" that can execute task REST operations on all tasks, 
-        regardless of the users associated with the task, there are now plans to implement that feature.</para>
+        regardless of the users associated with the task, there are now plans to implement that feature. However, 
+        for the 6.0.x releases, this feature is not available.</para>
     </note>
     
     <section>
@@ -1575,7 +1578,7 @@
               <listitem>
                 <para>process instance id <emphasis>183</emphasis>, potential owner `bob`, status `Created`</para>
               </listitem><listitem>
-                <para>process instance id 201, potential owner `mary`, status `Ready`</para>
+                <para>process instance id 201, potential owner `<emphasis>mary</emphasis>`, status `Ready`</para>
               </listitem><listitem>
                 <para>process instance id 201, potential owner `bob`, status <emphasis>`Complete`</emphasis></para> 
               </listitem>
@@ -1654,7 +1657,7 @@
     </para>
 
     <para>
-      The general idea behind the deploymentId is that it describes it contains the following elements, separated from eachother by a <code>:</code> character: 
+      The above deploymentId regular expression describes an expression that contains the following elements, separated from eachother by a <code>:</code> character: 
       <orderedlist>
         <listitem><para>The group id</para></listitem>
         <listitem><para>The artifact id</para></listitem>
@@ -1719,9 +1722,8 @@
           </para>
         </listitem>
      </itemizedlist>
-      
      </para>
-     
+
      <section>
        <title>Asynchrous deployment calls</title>
  
@@ -2017,30 +2019,15 @@
   <section xml:id="remote.rest.execute">
     <title xml:id="remote.rest.execute.title">Execute calls</title>
 
-    <para>
-      While there is a
-      <code>/runtime/{id}/execute</code>
-      and a
-      <code>task/execute</code>
-      method, both will take all types
-      of commands. This is possible because execute takes a JaxbCommandsRequest object, which contains
-      a list of
-      <code>(org.kie.api.command.)Command</code>
-      objects. The
-      <code>JaxbCommandsRequest</code>
-      has fields to store
-      the proper
-      <code>deploymentId</code>
-      and
-      <code>processInstanceId</code>
-      information.
+    <para>While there is a <code>/runtime/{id}/execute</code> and a <code>task/execute</code> method, both will take all types
+      of commands. This is possible because execute takes a JaxbCommandsRequest object, which contains a list of 
+      <code>(org.kie.api.command.)Command</code> objects. The <code>JaxbCommandsRequest</code> has fields to store the proper 
+      <code>deploymentId</code> and <code>processInstanceId</code> information.
     </para>
 
     <para>
-      Of course, if you send a command that needs this information (
-      <code>deploymentId</code>
-      , for example)
-      and don't fill it in, this will fail.
+      Of course, if you send a request with a command that needs this information (<code>deploymentId</code>, for example) 
+      and don't fill the <code>deploymentId</code> in, the request will fail.
     </para>
 
     <section>
@@ -2048,9 +2035,7 @@
 
       <variablelist>
         <varlistentry>
-          <term>
-            [POST]
-            <command>/task/execute</command>
+          <term>[POST] <command>/task/execute</command>
           </term>
           <listitem>
             <itemizedlist>
@@ -2202,12 +2187,94 @@
       <code>ACCEPT</code> header of your REST call.</para>
     </section>
 
+    <section xml:id="remote.serialization.user.classes">
+      <title>Sending and receiving user class instances</title>
+      
+      <para>Sometimes, users may wish to pass instances of their own classes as parameters to
+        commands sent in a REST request or JMS message. In order to do this, there are a number of requirements. </para>
+      
+      <para>
+        <orderedlist>
+          <listitem>
+            <para>The user-defined class satisfy the following in order to be property serialized
+              and deserialized by the JMS API: <itemizedlist>
+                <listitem>
+                  <para>The user-defined class must be correctly annotated with JAXB annotations,
+                    including the following: <itemizedlist>
+                      <listitem>
+                        <para>The user-defined class must be annotated with a
+                          <code>javax.xml.bind.annotation.XmlRootElement</code> annotation with a
+                          non-empty <code>name</code> value</para>
+                      </listitem>
+                      <listitem>
+                        <para>All fields or getter/setter methods must be annotated with a
+                          <code>javax.xml.bind.annotation.XmlElement</code> or
+                          <code>javax.xml.bind.annotation.XmlAttribute</code> annotations.</para>
+                      </listitem>
+                    </itemizedlist></para>
+                  <para>Furthermore, the following usage of JAXB annotations is recommended: <itemizedlist>
+                    <listitem>
+                      <para>Annotate the user-defined class with a
+                        <code>javax.xml.bind.annotation.XmlAccessorType</code> annotation
+                        specifying that fields should be used,
+                        (<code>javax.xml.bind.annotation.XmlAccessType.FIELD</code>). This also
+                        means that you should annotate the fields (instead of the getter or setter
+                        methods) with <code>@XmlElement</code> or <code>@XmlAttribute</code>
+                        annotations.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Fields annotated with <code>@XmlElement</code> or
+                        <code>@XmlAttribute</code> annotations should also be annotated with
+                        <code>javax.xml.bind.annotation.XmlSchemaType</code> annotations
+                        specifying the type of the field, even if the fields contain primitive
+                        values.</para>
+                    </listitem>
+                    <listitem>
+                      <para>Use objects to store primitive values. For example, use the
+                        <code>java.lang.Integer</code> class for storing an integer value, and
+                        not the <code>int</code> class. This way it will always be obvious if the
+                        field is storing a value. </para>
+                    </listitem>
+                  </itemizedlist></para>
+                </listitem>
+                <listitem>
+                  <para>The user-defined class definition must implement a no-arg
+                    constructor.</para>
+                </listitem>
+                <listitem>
+                  <para>Any fields in the user-defined class must either be object primitives (such
+                    as a <code>Long</code> or <code>String</code>) or otherwise be objects that
+                    satisfy the first 2 requiremends in this list (correct usage of JAXB annotations
+                    and a no-arg constructor).</para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+          <listitem>
+            <para>The class definition must be included in the deployment jar of the deployment that
+              the JMS message content is meant for.</para>
+          </listitem>
+          <listitem>
+            <para>The sender must set a <quote>deploymentId</quote> string property on the JMS bytes
+              message to the name of the deploymentId. This property is necessary in order to be
+              able to load the proper classes from the deployment itself before deserializing the
+              message on the server side.</para>
+          </listitem>
+        </orderedlist>
+      </para>
+      
+      <note>
+        <title>Retrieving process variables</title>
+        <para>While <emphasis>submitting</emphasis> an instance of a user-defined class is possible via both the JMS and REST API's, 
+          <emphasis>retrieving</emphasis> an instance of the process variable is only possible via the REST API.</para>
+      </note>
+    </section>
+    
     <section>
-      <title>Serialization: classes from the deployment/KJar</title>
+      <title>Including the deployment id</title>
 
       <para>When interacting with the Remote API, users may want to pass instances of their own classes as parameters 
-      to certain operations. This will only be possible if the KJar for a deployment includes these classes.</para>
-
+      to certain operations. As mThis will only be possible if the KJar for a deployment includes these classes.</para>
+      
       <para>
         REST calls that involve the <code>TaskService</code> (e.g. that start with <code>/task</code>..), often do not 
         contain any information about the associated deployment. In that case, an extra query parameter will have to be 
