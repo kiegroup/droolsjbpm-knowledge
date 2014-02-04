@@ -92,4 +92,6 @@ public interface TaskService {
 
     Attachment getAttachmentById(long attachId);
     
+    List<TaskSummary> getTasksAssignedAsPotentialOwner(String userId, List<String> groupIds, String language, int firstResult, int maxResults);
+    
 }

@@ -98,8 +98,6 @@ public interface InternalTaskService extends TaskService, CommandExecutor {
 
     List<TaskSummary> getTasksAssignedAsPotentialOwner(String userId, List<String> groupIds, String language);
 
-    List<TaskSummary> getTasksAssignedAsPotentialOwner(String userId, List<String> groupIds, String language, int firstResult, int maxResults);
-
     List<TaskSummary> getTasksAssignedAsPotentialOwnerByStatusByGroup(String userId, List<String> groupIds, List<Status> status, String language);
 
     List<TaskSummary> getTasksAssignedAsRecipient(String userId, String language);
