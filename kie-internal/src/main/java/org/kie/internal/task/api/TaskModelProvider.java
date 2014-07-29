@@ -20,7 +20,8 @@ public class TaskModelProvider {
         if (provider == null) {
             loadProvider();
         }
-        return provider;
+        throw new RuntimeException(provider.getClass().toString());
+        //return provider;
     }
 
     private static void loadProvider() {
