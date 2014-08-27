@@ -88,4 +88,6 @@ public interface TaskService extends CommandExecutor {
     Attachment getAttachmentById(long attachId);
     
     Map<String, Object> getTaskContent(long taskId);
+    
+    List<TaskSummary> getTasksAssignedAsBusinessAdministratorByStatus(String userId, String language ,List<Status> statuses);
 }
