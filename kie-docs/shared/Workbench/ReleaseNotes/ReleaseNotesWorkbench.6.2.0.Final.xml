@@ -449,5 +449,60 @@
 
 
   </section>
+  <section>
+    <title>PlugIn Management</title>
+    <para>A new perspective called <emphasis role="bold">PlugIn Management</emphasis> has been added under
+      <emphasis role="bold">Extensions</emphasis> top level menu. This perspective provides users the ability to
+      create his own workbench plugins. Available features includes creation of perspectives via a programmable 
+      or a drag and drop interface; create new screens, editors, splashscreens and dynamic menus. 
+    </para>
+    
+    <figure>
+    <title>Creation of perspectives via programmable interface</title>
+    <screenshot>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/Workbench/ReleaseNotes/PluginManagement.png"
+            format="PNG"/>
+        </imageobject>
+      </mediaobject>
+    </screenshot>
+    </figure>
+    
+    <figure>
+      <title>Creation of perspectives via drag and drop interface</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/Workbench/ReleaseNotes/PluginManagementDnd.png"
+              format="PNG"/>
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+    
+  </section>
+  
+  <section>
+    <title>Apps</title>
+    <para>A new perspective called <emphasis role="bold">Apps</emphasis> has been added under
+      <emphasis role="bold">Extensions</emphasis> top level menu. This perspective provides users the ability to
+      access and organize his workbench plugins created in PlugIn Management. 
+    </para>
+    
+    <figure>
+      <title>Apps Perspective</title>
+      <screenshot>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/Workbench/ReleaseNotes/AppsPerspective.png"
+              format="PNG"/>
+          </imageobject>
+        </mediaobject>
+      </screenshot>
+    </figure>
+    
+  </section>
+  
 
 </section>
