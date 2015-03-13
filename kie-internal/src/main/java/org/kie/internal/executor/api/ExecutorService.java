@@ -18,6 +18,7 @@ package org.kie.internal.executor.api;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -32,6 +33,13 @@ import java.util.List;
  * @see ExecutorAdminService
  */
 public interface ExecutorService {
+	
+	/**
+	 * Allow to use custom identifiers for the executor instance where default is to rely on local id of clustering of kie
+	 * if present, otherwise use simple 'default-executor'
+	 */
+	public static final String EXECUTOR_ID = System.getProperty("org.kie.executor.id", 
+			System.getProperty("org.uberfire.cluster.local.id", "default-executor"));
 
     public List<RequestInfo> getQueuedRequests();
 
@@ -74,6 +82,10 @@ public interface ExecutorService {
     public int getThreadPoolSize();
 
     public void setThreadPoolSize(int nroOfThreads);
+    
+    public TimeUnit getTimeunit();
+   
+    public void setTimeunit(TimeUnit timeunit);
     
     public List<RequestInfo> getPendingRequests();
 

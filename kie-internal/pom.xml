@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-api-parent</artifactId>
-    <version>6.2.0-SNAPSHOT</version>
+    <version>6.3.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>kie-internal</artifactId>
@@ -14,8 +14,18 @@
 
   <name>KIE Internal</name>
   <description>The Drools and jBPM internal API which is NOT backwards compatible between releases.</description>
-  
+
   <build>
+    <resources>
+      <resource>
+        <filtering>false</filtering>
+        <directory>src/main/resources</directory>
+      </resource>
+      <resource>
+        <filtering>true</filtering>
+        <directory>src/main/filtered-resources</directory>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.apache.felix</groupId>
@@ -30,6 +40,7 @@
               javax.inject.*;resolution:=optional,
               javax.xml.bind;resolution:=optional,
               javax.xml.bind.annotation;resolution:=optional,
+              javax.xml.bind.annotation.adapters;resolution:=optional,
               org.drools.compiler.builder.impl,
               org.drools.core.builder.conf.impl;resolution:=optional,
               org.drools.core.command.impl,
@@ -46,6 +57,7 @@
               org.jbpm.services.task.persistence;resolution:=optional,
               org.kie.api,
               org.kie.api.builder,
+              org.kie.api.builder.model,
               org.kie.api.command,
               org.kie.api.concurrent,
               org.kie.api.conf,
@@ -61,10 +73,12 @@
               org.kie.api.runtime,
               org.kie.api.runtime.conf,
               org.kie.api.runtime.manager,
+              org.kie.api.runtime.manager.audit,
               org.kie.api.runtime.process,
               org.kie.api.runtime.rule,
               org.kie.api.task,
               org.kie.api.task.model,
+              =org.kie.scanner.*;resolution:=optional,
               org.mvel2,
               org.slf4j
             </Import-Package>

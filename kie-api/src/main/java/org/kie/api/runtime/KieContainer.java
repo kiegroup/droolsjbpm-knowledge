@@ -21,6 +21,8 @@ import org.kie.api.KieBaseConfiguration;
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.builder.Results;
 
+import java.util.Collection;
+
 /**
  * A container for all the KieBases of a given KieModule
  */
@@ -49,7 +51,19 @@ public interface KieContainer {
     Results updateToVersion(ReleaseId version);
 
     /**
+     * Returns the names of all the KieBases available in this KieContainer
+     */
+    Collection<String> getKieBaseNames();
+
+    /**
+     * Returns the names of all the KieSessions defined in this KieContainer for the given KieBase
+     */
+    Collection<String> getKieSessionNamesInKieBase(String kBaseName);
+
+    /**
      * Returns the default KieBase in this KieContainer.
+     * The returned KieBase will be managed by this KieContainer and then it will be updated
+     * when the KieContainer itself will be updated to a newer version of the KieModule.
      * @throws RuntimeException if this KieContainer doesn't have any default KieBase
      * @see org.kie.api.builder.model.KieBaseModel#setDefault(boolean)
      */
@@ -57,12 +71,16 @@ public interface KieContainer {
 
     /**
      * Returns the KieBase with the given name in this KieContainer.
+     * The returned KieBase will be managed by this KieContainer and then it will be updated
+     * when the KieContainer itself will be updated to a newer version of the KieModule.
      * @throws RuntimeException if this KieContainer doesn't have any KieBase with the given name
      */
     KieBase getKieBase(String kBaseName);
 
     /**
      * Creates a new default KieBase using the given configuration.
+     * The returned KieBase will be detached from this KieContainer and then will NOT be updated
+     * when the KieContainer itself will be updated to a newer version of the KieModule.
      * @throws RuntimeException if this KieContainer doesn't have any default KieBase
      * @see org.kie.api.builder.model.KieBaseModel#setDefault(boolean)
      */
@@ -70,6 +88,8 @@ public interface KieContainer {
 
     /**
      * Creates a new KieBase with the given name using the given configuration.
+     * The returned KieBase will be detached from this KieContainer and then will NOT be updated
+     * when the KieContainer itself will be updated to a newer version of the KieModule.
      * @throws RuntimeException if this KieContainer doesn't have any KieBase with the given name
      */
     KieBase newKieBase(String kBaseName, KieBaseConfiguration conf);

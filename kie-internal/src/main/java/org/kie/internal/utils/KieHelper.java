@@ -23,10 +23,13 @@ import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.Message;
 import org.kie.api.builder.Results;
+import org.kie.api.builder.model.KieModuleModel;
 import org.kie.api.conf.KieBaseOption;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
+import org.kie.internal.builder.conf.EvaluatorOption;
+import org.kie.internal.builder.conf.KnowledgeBuilderOption;
 
 import java.io.InputStream;
 
@@ -40,13 +43,27 @@ public class KieHelper {
 
     private int counter = 0;
 
-    public KieBase build(KieBaseOption... options) {
-        KieBuilder kieBuilder = ks.newKieBuilder( kfs ).buildAll();
-        Results results = kieBuilder.getResults();
-        if (results.hasMessages(Message.Level.ERROR)) {
-            throw new RuntimeException(results.getMessages().toString());
+    public KieHelper() {}
+
+    public KieHelper( KnowledgeBuilderOption... options ) {
+        if ( options.length > 0 ) {
+            KieModuleModel kmm = KieServices.Factory.get().newKieModuleModel();
+            for ( KnowledgeBuilderOption opt : options ) {
+                if ( opt instanceof EvaluatorOption) {
+                    kmm.setConfigurationProperty( EvaluatorOption.PROPERTY_NAME + opt.getPropertyName(), ( (EvaluatorOption) opt ).getEvaluatorDefinition().getClass().getName() );
+                }
+            }
+            this.setKieModuleModel( kmm );
         }
-        KieContainer kieContainer = ks.newKieContainer(ks.getRepository().getDefaultReleaseId());
+    }
+
+    public KieBase build( KieBaseConfiguration kieBaseConf ) {
+        KieContainer kieContainer = getKieContainer();
+        return kieContainer.newKieBase( kieBaseConf );
+    }
+
+    public KieBase build(KieBaseOption... options) {
+        KieContainer kieContainer = getKieContainer();
         if (options == null || options.length == 0) {
             return kieContainer.getKieBase();
         }
@@ -54,12 +71,28 @@ public class KieHelper {
         for (KieBaseOption option : options) {
             kieBaseConf.setOption(option);
         }
+
         return kieContainer.newKieBase(kieBaseConf);
+    }
+
+    protected KieContainer getKieContainer() {
+        KieBuilder kieBuilder = ks.newKieBuilder( kfs ).buildAll();
+        Results results = kieBuilder.getResults();
+        if (results.hasMessages(Message.Level.ERROR)) {
+            throw new RuntimeException(results.getMessages().toString());
+        }
+        KieContainer kieContainer = ks.newKieContainer(ks.getRepository().getDefaultReleaseId());
+        return kieContainer;
     }
 
     public Results verify() {
         KieBuilder kieBuilder = ks.newKieBuilder( kfs ).buildAll();
         return kieBuilder.getResults();
+    }
+
+    public KieHelper setKieModuleModel(KieModuleModel kieModel) {
+        kfs.writeKModuleXML(kieModel.toXML());
+        return this;
     }
 
     public KieHelper addContent(String content, ResourceType type) {

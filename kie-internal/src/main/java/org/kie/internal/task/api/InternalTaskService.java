@@ -36,6 +36,7 @@ import org.kie.internal.task.api.model.FaultData;
 import org.kie.internal.task.api.model.SubTasksStrategy;
 import org.kie.internal.task.api.model.TaskDef;
 import org.kie.internal.task.api.model.TaskEvent;
+import org.kie.internal.task.query.TaskQueryBuilder;
 
 /**
  * The Task Service Entry Point serves as 
@@ -101,8 +102,6 @@ public interface InternalTaskService extends TaskService {
     List<TaskSummary> getTasksAssignedAsExcludedOwner(String userId);
 
     List<TaskSummary> getTasksAssignedAsPotentialOwner(String userId, List<String> groupIds);
-
-    List<TaskSummary> getTasksAssignedAsPotentialOwner(String userId, List<String> groupIds,  int firstResult, int maxResults);
 
     List<TaskSummary> getTasksAssignedAsPotentialOwnerByStatusByGroup(String userId, List<String> groupIds, List<Status> status);
 
@@ -198,8 +197,6 @@ public interface InternalTaskService extends TaskService {
     
     List<TaskSummary> getTasksAssignedByGroups(List<String> groupIds); 
     
-    
-    
     long addComment(long taskId, Comment comment);
 
     void deleteComment(long taskId, long commentId);
@@ -214,10 +211,9 @@ public interface InternalTaskService extends TaskService {
     
     ContentMarshallerContext getMarshallerContext(Task task);
     
-    List<TaskSummary> getTasksByVariousFields( List<Long> workItemIds, List<Long> taskIds, List<Long> procInstIds, 
-            List<String> busAdmins, List<String> potOwners, List<String> taskOwners, 
-            List<Status> status,  boolean union);
+    TaskQueryBuilder taskQuery(String userId);
     
-    List<TaskSummary> getTasksByVariousFields(Map <String, List<?>> parameters, boolean union);
+    List<TaskSummary> getTasksAssignedAsBusinessAdministratorByStatus(String userId, String language ,List<Status> statuses);
     
+    void executeReminderForTask(long taskId,String fromUser);
 }
