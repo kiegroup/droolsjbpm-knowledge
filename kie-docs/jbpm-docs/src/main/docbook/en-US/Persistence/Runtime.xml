@@ -387,7 +387,7 @@
             <entry>NOT NULL</entry>
           </row>
           <row>
-            <entry><code>ksession?id</code></entry>
+            <entry><code>ksession_id</code></entry>
             <entry>Identifier of the ksession mapped to this context</entry>
             <entry>NOT NULL</entry>
           </row>
