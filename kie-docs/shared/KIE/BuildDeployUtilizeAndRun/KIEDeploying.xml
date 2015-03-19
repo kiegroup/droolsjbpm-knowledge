@@ -93,7 +93,7 @@ kScanner.start( 10000L );</programlisting>
     it automatically downloads the new version and triggers an incremental build of the new
     project. From this moment all the new <code>KieBase</code>s and <code>KieSession</code>s
     created from that <code>KieContainer</code> will use the new project version.</para>
-	<para>The <code>KieScanner</code> will only pickup changes to deployed jars if it is using a SNAPSHOT, version range, or the LATEST setting. 
+	<para>The <code>KieScanner</code> will only pickup changes to deployed jars if it is using a SNAPSHOT, version range, the LATEST, or the RELEASE setting. 
 	Fixed versions will not automatically update at runtime.
 	</para>
   </section>
