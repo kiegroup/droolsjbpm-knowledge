@@ -49,40 +49,23 @@ public class QueryAndParameterAppender {
     }
     
     // "Normal" query parameters --------------------------------------------------------------------------------------------------
-
-    public <T> void addQueryParameters( List<? extends Object> paramList, String listId, Class<T> type, String fieldName,
-            String joinClause, boolean union ) {
+    
+    public <T> void addQueryParameters( List<? extends Object> inputParams, String listId, Class<T> type, String fieldName, boolean union ) {
         List<T> listIdParams;
-        if( paramList != null && paramList.size() > 0 ) {
-            Object inputObject = paramList.get(0);
-            listIdParams = checkAndConvertListToType(paramList, inputObject, listId, type);
+        if( inputParams != null && inputParams.size() > 0 ) {
+            Object inputObject = inputParams.get(0);
+            listIdParams = checkAndConvertListToType(inputParams, inputObject, listId, type);
         } else {
             return;
         }
         String paramName = generateParamName();
-        StringBuilder queryClause = new StringBuilder("( " + fieldName + " IN (:" + paramName + ")");
-        if( joinClause != null ) {
-            queryClause.append(" AND " + joinClause);
-        }
-        queryClause.append(" )");
+        StringBuilder queryClause = new StringBuilder(fieldName + " IN (:" + paramName + ")");
         addToQueryBuilder(queryClause.toString(), union, listIdParams, paramName);
     }
 
-    public <T> void addQueryParameters( Map<String, List<? extends Object>> inputParamsMap, String listId, Class<T> type,
-            String fieldName, boolean union, String joinClause ) {
+    public <T> void addQueryListParameters( Map<String, List<? extends Object>> inputParamsMap, String listId, Class<T> type, String fieldName, boolean union ) {
         List<? extends Object> inputParams = inputParamsMap.get(listId);
-        addQueryParameters(inputParams, listId, type, fieldName, joinClause, union );
-    }
-
-    public <T> void addQueryParameters( List<? extends Object> inputParams, String listId, Class<T> type, String fieldName,
-            boolean union ) {
-        addQueryParameters(inputParams, listId, type, fieldName, null, union );
-    }
-
-    public <T> void addQueryParameters( Map<String, List<? extends Object>> inputParamsMap, String listId, Class<T> type,
-            String fieldName, boolean union ) {
-        List<? extends Object> inputParams = inputParamsMap.get(listId);
-        addQueryParameters(inputParams, listId, type, fieldName, null, union );
+        addQueryParameters(inputParams, listId, type, fieldName, union );
     }
 
     // Range query parameters -----------------------------------------------------------------------------------------------------
