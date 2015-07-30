@@ -13,24 +13,20 @@
  * limitations under the License.
 */
 
-package org.kie.internal.runtime.manager.audit.query;
+package org.kie.internal.task.query;
 
-import org.kie.api.executor.STATUS;
+import org.kie.internal.runtime.manager.audit.query.AuditDateDeleteBuilder;
 
-public interface RequestInfoLogDeleteBuilder extends AuditDateDeleteBuilder<RequestInfoLogDeleteBuilder>{
+
+public interface AuditTaskDeleteBuilder extends AuditDateDeleteBuilder<AuditTaskDeleteBuilder> {
 
     /**
      * Specify one or more deployment ids to use as a criteria.
      * @param deploymentId one or more string deployment ids
      * @return The current query builder instance
      */
-    public RequestInfoLogDeleteBuilder deploymentId(String... deploymentId);
+    public AuditTaskDeleteBuilder deploymentId(String... deploymentId);
     
-    /**
-     * Specify one more statuses (in the form of an int) as criteria.
-     * @param status one or more int statuses
-     * @return The current instance of this query builder
-     */
-    public RequestInfoLogDeleteBuilder status(STATUS... status);
-    
+
+
 }
