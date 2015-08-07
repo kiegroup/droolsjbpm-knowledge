@@ -125,5 +125,12 @@ public interface KieCommands {
 
     Command newAgendaGroupSetFocus(String name);
 
+    Command newClearActivationGroup(String name);
+
+    Command newClearAgenda();
+
+    Command newClearAgendaGroup(String name);
+
+    Command newClearRuleFlowGroup(String name);
 }
 
