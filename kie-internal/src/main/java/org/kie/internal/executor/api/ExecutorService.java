@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.kie.internal.query.QueryContext;
+
 
 /**
  * Top level facade that aggregates operations defined in:
@@ -40,21 +42,77 @@ public interface ExecutorService {
 	 */
 	public static final String EXECUTOR_ID = System.getProperty("org.kie.executor.id", 
 			System.getProperty("org.uberfire.cluster.local.id", "default-executor"));
+	
+	public List<RequestInfo> getQueuedRequests(QueryContext queryContext);
 
+    public List<RequestInfo> getCompletedRequests(QueryContext queryContext);
+
+    public List<RequestInfo> getInErrorRequests(QueryContext queryContext);
+
+    public List<RequestInfo> getCancelledRequests(QueryContext queryContext);
+
+    public List<ErrorInfo> getAllErrors(QueryContext queryContext);
+
+    public List<RequestInfo> getAllRequests(QueryContext queryContext);
+    
+    public List<RequestInfo> getRequestsByStatus(List<STATUS> statuses, QueryContext queryContext);
+    
+    public List<RequestInfo> getRequestsByBusinessKey(String businessKey, QueryContext queryContext);
+    
+    public List<RequestInfo> getRequestsByCommand(String command, QueryContext queryContext);
+    
+    public List<RequestInfo> getPendingRequests(QueryContext queryContext);
+    
+    public List<RequestInfo> getRunningRequests(QueryContext queryContext);
+    
+    public List<RequestInfo> getFutureQueuedRequests(QueryContext queryContext);
+
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getQueuedRequests();
 
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getCompletedRequests();
-
+    
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getInErrorRequests();
 
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getCancelledRequests();
 
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<ErrorInfo> getAllErrors();
 
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getAllRequests();
-    
+
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getRequestsByStatus(List<STATUS> statuses);
-    
+
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getRequestsByBusinessKey(String businessKey);
 
     public int clearAllRequests();
@@ -86,15 +144,27 @@ public interface ExecutorService {
     public TimeUnit getTimeunit();
    
     public void setTimeunit(TimeUnit timeunit);
-    
+
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getPendingRequests();
 
     public List<RequestInfo> getPendingRequestById(Long id);
 
     public Long scheduleRequest(String commandId, Date date, CommandContext ctx);
 
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getRunningRequests();
-    
+
+    /**
+     * @deprecated use same method name with QueryContext argument that supports paging 
+     */
+    @Deprecated
     public List<RequestInfo> getFutureQueuedRequests();
 
     public RequestInfo getRequestById(Long requestId);

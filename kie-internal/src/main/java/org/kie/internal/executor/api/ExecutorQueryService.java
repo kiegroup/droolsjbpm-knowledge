@@ -18,6 +18,8 @@ package org.kie.internal.executor.api;
 
 import java.util.List;
 
+import org.kie.internal.query.QueryContext;
+
 /**
  * Executor query interface that provides runtime access to data.
  *
@@ -26,7 +28,9 @@ public interface ExecutorQueryService {
     /**
      * Returns list of pending execution requests.
      * @return
+    * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getPendingRequests();
     
     /**
@@ -49,7 +53,9 @@ public interface ExecutorQueryService {
      * thus might be in different statuses.
      * @param businessKey - business key of the request
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getRequestByBusinessKey(String businessKey);
     
     /**
@@ -62,56 +68,74 @@ public interface ExecutorQueryService {
     /**
      * Returns all queued requests
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getQueuedRequests();
     
     /**
-     * Returns all comleted requests.
+     * Returns all completed requests.
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getCompletedRequests();
     
     /**
      * Returns all requests that have errors.
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getInErrorRequests();
     
     /**
      * Returns all requests that were cancelled
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getCancelledRequests();
     
     /**
      * Returns all errors.
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<ErrorInfo> getAllErrors(); 
     
     /**
      * Returns all requests
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getAllRequests(); 
     
     /**
      * Returns all currently running requests
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getRunningRequests();
     
     /**
      * Returns requests queued for future execution
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getFutureQueuedRequests();
     
     /**
      * Returns requests based on their status
      * @param statuses - statuses that requests should be in
      * @return
+     * @deprecated use same method name with QueryContext argument that supports paging 
      */
+    @Deprecated
     List<RequestInfo> getRequestsByStatus(List<STATUS> statuses);
     
     /**
@@ -121,4 +145,83 @@ public interface ExecutorQueryService {
      * @return
      */
     RequestInfo getRequestForProcessing();
+    
+    /**
+     * Returns list of pending execution requests.
+     * @return
+     */
+    List<RequestInfo> getPendingRequests(QueryContext queryContext);
+    
+    
+    /**
+     * Returns requests identified by <code>businessKey</code> usually it should be only one with given 
+     * business key but it does not have to as same business key requests can be processed sequentially and 
+     * thus might be in different statuses.
+     * @param businessKey - business key of the request
+     * @return
+     */
+    List<RequestInfo> getRequestByBusinessKey(String businessKey, QueryContext queryContext);
+    
+    /**
+     * Returns requests configured with given <code>command</code> 
+     * @param command - command configured in the request
+     * @return
+     */
+    List<RequestInfo> getRequestByCommand(String command, QueryContext queryContext);
+    
+    
+    /**
+     * Returns all queued requests
+     * @return
+     */
+    List<RequestInfo> getQueuedRequests(QueryContext queryContext);
+    
+    /**
+     * Returns all comleted requests.
+     * @return
+     */
+    List<RequestInfo> getCompletedRequests(QueryContext queryContext);
+    
+    /**
+     * Returns all requests that have errors.
+     * @return
+     */
+    List<RequestInfo> getInErrorRequests(QueryContext queryContext);
+    
+    /**
+     * Returns all requests that were cancelled
+     * @return
+     */
+    List<RequestInfo> getCancelledRequests(QueryContext queryContext);
+    
+    /**
+     * Returns all errors.
+     * @return
+     */
+    List<ErrorInfo> getAllErrors(QueryContext queryContext); 
+    
+    /**
+     * Returns all requests
+     * @return
+     */
+    List<RequestInfo> getAllRequests(QueryContext queryContext); 
+    
+    /**
+     * Returns all currently running requests
+     * @return
+     */
+    List<RequestInfo> getRunningRequests(QueryContext queryContext);
+    
+    /**
+     * Returns requests queued for future execution
+     * @return
+     */
+    List<RequestInfo> getFutureQueuedRequests(QueryContext queryContext);
+    
+    /**
+     * Returns requests based on their status
+     * @param statuses - statuses that requests should be in
+     * @return
+     */
+    List<RequestInfo> getRequestsByStatus(List<STATUS> statuses, QueryContext queryContext);
 }
