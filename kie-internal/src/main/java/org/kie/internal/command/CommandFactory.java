@@ -396,4 +396,12 @@ public class CommandFactory {
     public static Command<FactHandle> fromExternalFactHandleCommand(String factHandleExternalForm, boolean disconnected) {
         return getCommandFactoryProvider().fromExternalFactHandleCommand(factHandleExternalForm, disconnected);
     }
+    
+    public static Command newEnableAuditLog( String directory, String filename ){
+        return getCommandFactoryProvider().newEnableAuditLog( directory, filename );
+    }
+    
+    public static Command newEnableAuditLog( String filename ){
+        return getCommandFactoryProvider().newEnableAuditLog( filename );
+    }
 }
