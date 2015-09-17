@@ -124,10 +124,5 @@ public interface KieCommands {
     Command<FactHandle> fromExternalFactHandleCommand(String factHandleExternalForm, boolean disconnected);
 
     Command newAgendaGroupSetFocus(String name);
-    
-    Command newEnableAuditLog( String directory, String filename );
-    
-    Command newEnableAuditLog( String filename );
 
 }
-
