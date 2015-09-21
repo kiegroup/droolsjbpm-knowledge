@@ -126,4 +126,3 @@ public interface KieCommands {
     Command newAgendaGroupSetFocus(String name);
 
 }
-
