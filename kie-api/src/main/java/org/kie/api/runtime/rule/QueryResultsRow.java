@@ -21,4 +21,18 @@ package org.kie.api.runtime.rule;
  */
 public interface QueryResultsRow extends Row {
 
+    /**
+     * Return the Object for the given Declaration identifier.
+     * @param identifier
+     * @return the Object
+     */
+    public Object get(String identifier);
+
+    /**
+     * Return the {@link FactHandle} for the given Declaration identifier.
+     * @param identifier
+     * @return the {@link FactHandle} instance
+     */
+    public FactHandle getFactHandle(String identifier);
+
 }
