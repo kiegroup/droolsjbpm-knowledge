@@ -73,6 +73,11 @@
         "code": "java.method.addedToInterface",
         "new": "method java.util.Map<java.lang.String, java.lang.Object> org.kie.api.task.model.TaskData::getTaskOutputVariables()",
         "justification": "Provides access to task output variables directly from a task"
+      },
+      {
+        "code" : "java.method.removed",
+        "old" : "method void org.kie.api.runtime.process.EventListener::signalEvent(java.lang.String, java.lang.Object)",
+        "justification" : "The .signalEvent(String, Object) method has been moved to the (parent) EventSignallable interface."
       }
     ]
   }
