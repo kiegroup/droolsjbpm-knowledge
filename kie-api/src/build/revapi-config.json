@@ -25,6 +25,11 @@
         "code" : "java.method.addedToInterface",
         "new" : "method org.kie.api.builder.model.KieSessionModel org.kie.api.runtime.KieContainer::getKieSessionModel(java.lang.String)",
         "justification" : "Enables retrieving the named KieSessionModel directly from KieContainer."
+      },
+      {
+        "code" : "java.method.addedToInterface",
+        "new" : "method org.kie.api.builder.model.KieBaseModel org.kie.api.builder.model.KieModuleModel::newKieBaseModel()",
+        "justification" : "Makes KieBase name optional."
       }
     ]
   }
