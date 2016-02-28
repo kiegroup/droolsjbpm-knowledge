@@ -11,14 +11,11 @@
     <!--<relativePath>../droolsjbpm-build-bootstrap/pom.xml</relativePath>-->
   </parent>
 
-  <groupId>org.kie</groupId>
   <artifactId>kie-api-parent</artifactId>
   <packaging>pom</packaging>
 
-  <name>Drools and jBPM kie multiproject</name>
-  <description>
-    The common API for Drools and jBPM
-  </description>
+  <name>KIE :: API Parent</name>
+  <description>The common API for KIE (Drools, jBPM and OptaPlanner)</description>
 
   <repositories>
     <!-- Bootstrap repository to locate the parent pom when the parent pom has not been build locally. -->
