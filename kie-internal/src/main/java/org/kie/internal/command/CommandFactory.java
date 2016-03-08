@@ -56,6 +56,10 @@ public class CommandFactory {
         return getCommandFactoryProvider().newInsert( object );
     }
 
+    public static Command newDispose() {
+        return getCommandFactoryProvider().newDispose();
+    }
+
     /**
      * Inserts a new instance but references via the outIdentifier, which is returned as part of the ExecutionResults
      *

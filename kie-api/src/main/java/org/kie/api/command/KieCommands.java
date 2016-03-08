@@ -31,6 +31,8 @@ import java.util.Map;
 public interface KieCommands {
     Command newInsert(Object object);
 
+    Command newDispose();
+
     Command newInsert(Object object, String outIdentifier);
 
     Command newInsert(Object object, String outIdentifier, boolean returnObject, String entryPoint);
@@ -134,4 +136,3 @@ public interface KieCommands {
     Command newGetFactHandles(ObjectFilter filter, String outIdentifier);
 
 }
-
