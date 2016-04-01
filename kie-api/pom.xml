@@ -87,9 +87,9 @@
                It logs warning if it can not find the command. -->
           <doclet>org.jboss.apiviz.APIviz</doclet>
           <docletArtifact>
-            <groupId>com.grahamedgecombe.apiviz</groupId>
+            <groupId>org.jboss.apiviz</groupId>
             <artifactId>apiviz</artifactId>
-            <version>1.3.3</version>
+            <version>1.3.2.GA</version>
           </docletArtifact>
           <useStandardDocletOptions>true</useStandardDocletOptions>
           <additionalparam>-sourceclasspath ${project.build.outputDirectory}</additionalparam>
