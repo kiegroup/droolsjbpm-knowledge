@@ -1,0 +1,12 @@
+{
+  "revapi" : {
+    "ignore" : [
+      {
+        "code" : "java.method.addedToInterface",
+        "new" : "method void org.kie.api.runtime.rule.EntryPoint::delete(org.kie.api.runtime.rule.FactHandle, org.kie.api.runtime.rule.FactHandle.State)",
+        "justification" : "Allows to state if the FactHandle has to be removed as an explicitly asserted fact, from the Truth Maintenance System or both."
+      }
+
+    ]
+  }
+}
