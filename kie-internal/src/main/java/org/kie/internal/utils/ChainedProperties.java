@@ -105,46 +105,38 @@ public class ChainedProperties
                         this.props );
         
         // check META-INF directories for all known ClassLoaders
-        ClassLoader confClassLoader = classLoader;
+        //ClassLoader confClassLoader = classLoader;
         loadProperties( getResources( "META-INF/drools." + confFileName,
-                                      confClassLoader ),
-                        this.props, confClassLoader );
+                                      classLoader ),
+                        this.props, classLoader );
         loadProperties( getResources( "/META-INF/drools." + confFileName,
-                                      confClassLoader ),
-                        this.props, confClassLoader );
+                                      classLoader ),
+                        this.props, classLoader );
 
-        confClassLoader = Thread.currentThread().getContextClassLoader();
-        loadPropertiesFromClassLoader( confFileName, classLoader, confClassLoader );
+        loadPropertiesFromClassLoader( confFileName, classLoader, Thread.currentThread().getContextClassLoader() );
 
+        ClassLoader systemClassLoader = null;
         try {
-            confClassLoader = ClassLoader.getSystemClassLoader();
-            loadPropertiesFromClassLoader( confFileName, classLoader, confClassLoader );
-        } catch (Throwable t) {
+            systemClassLoader = ClassLoader.getSystemClassLoader();
+        } catch (SecurityException se) {
             // DROOLS-1125: the system class loader cannot be retrieved in Google App Engine - ignore
         }
+        loadPropertiesFromClassLoader( confFileName, classLoader, systemClassLoader );
 
         if ( !populateDefaults ) {
             return;
         }
 
         // load defaults
-        confClassLoader = classLoader;
         loadProperties( getResources( "META-INF/drools.default." + confFileName,
-                                      confClassLoader ),
-                        this.defaultProps, confClassLoader );
+                                      classLoader ),
+                        this.defaultProps, classLoader );
         loadProperties( getResources( "/META-INF/drools.default." + confFileName,
-                                      confClassLoader ),
-                        this.defaultProps, confClassLoader );
+                                      classLoader ),
+                        this.defaultProps, classLoader );
         
-        confClassLoader = Thread.currentThread().getContextClassLoader();
-        loadDefaultsFromClassLoader( confFileName, classLoader, confClassLoader );
-
-        try {
-            confClassLoader = ClassLoader.getSystemClassLoader();
-            loadDefaultsFromClassLoader( confFileName, classLoader, confClassLoader );
-        } catch (Throwable t) {
-            // DROOLS-1125: the system class loader cannot be retrieved in Google App Engine - ignore
-        }
+        loadDefaultsFromClassLoader( confFileName, classLoader, Thread.currentThread().getContextClassLoader() );
+        loadDefaultsFromClassLoader( confFileName, classLoader, systemClassLoader );
 
         // this happens only in OSGi: for some reason doing ClassLoader.getResources() doesn't work
         // but doing Class.getResourse() does
