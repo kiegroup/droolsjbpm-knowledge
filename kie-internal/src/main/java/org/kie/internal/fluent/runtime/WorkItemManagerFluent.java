@@ -26,7 +26,7 @@ import org.kie.api.runtime.process.WorkItemHandler;
  * should be notified when this work item has been completed
  * (or aborted).
  */
-public interface WorkItemManagerFluent<T,P> {
+public interface WorkItemManagerFluent<T,P,U> {
 
     /**
      * Notifies the work item manager that the work item with the given
@@ -55,6 +55,6 @@ public interface WorkItemManagerFluent<T,P> {
      */
     T registerWorkItemHandler(String workItemName, WorkItemHandler handler);
     
-    KieSessionFluent<P> getKieSession();
+    KieSessionFluent<P, U> getKieSession();
 
 }

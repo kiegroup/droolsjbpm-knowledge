@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2010 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,8 @@
 
 package org.kie.internal.command;
 
-public interface ShadowWorld extends World {
-    //public ShadowContext createContext(String identifier);
-    
-    public ShadowContext getContext(String identifier); 
-    
-    //public ExecutionResults getExecutionResults();
+
+public interface ContextManager{
+    public Context getContext(String identifier);
+    public Context createContext(String identifier);
 }
