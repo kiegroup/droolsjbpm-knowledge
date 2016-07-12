@@ -21,15 +21,13 @@ import java.util.Properties;
 import org.kie.internal.KnowledgeBase;
 import org.kie.internal.utils.ServiceRegistryImpl;
 
-import com.sun.tools.xjc.Options;
-
 /**
  * This factory is used to build the knowledge base resources that are held collectively in
  * KnowledgePackages. The KnowledgePackage also provides the role of 'namespacing'. An optional
  * KnowlegeBuilderConfiguration can be supplied. The KnowledgeBuilderConfiguration is itself
  * created from this factory. The KnowledgeBuilderConfiguration allows you to set the ClassLoader to be used
  * along with other setting like the default dialect and compiler, as well as many other options.
- * 
+ *
  * <pre>
  * KnowledgeBuilder kbuilder = KnowlegeBuilderFactory.newKnowledgeBuilder();
  * </pre>
@@ -88,9 +86,9 @@ public class KnowledgeBuilderFactory {
 
     /**
      * DecisionTable resources require a ResourceConfiguration, that configuration instance is created
-     * here. Note that if you are passing a Reader, you must use an InputStreamReader so the encoding 
-     * can be determined. 
-     * 
+     * here. Note that if you are passing a Reader, you must use an InputStreamReader so the encoding
+     * can be determined.
+     *
      * <pre>
      * KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
      * DecisionTableConfiguration dtconf = KnowledgeBuilderFactory.newDecisionTableConfiguration();
@@ -102,7 +100,7 @@ public class KnowledgeBuilderFactory {
      * assertFalse( kbuilder.hasErrors() );
      * KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
      * </pre>
-     * 
+     *
      * @return
      */
     public static DecisionTableConfiguration newDecisionTableConfiguration() {
@@ -131,12 +129,10 @@ public class KnowledgeBuilderFactory {
         return getKnowledgeBuilderServiceFactory().newScoreCardConfiguration();
     }
 
-    public static JaxbConfiguration newJaxbConfiguration(Options xjcOpts,
-                                                         String systemId) {
-        return getKnowledgeBuilderServiceFactory().newJaxbConfiguration(xjcOpts,
-                                                                        systemId);
+    public static JaxbConfiguration newJaxbConfiguration(String systemId) {
+        return getKnowledgeBuilderServiceFactory().newJaxbConfiguration(systemId);
     }
-    
+
     private static synchronized void setKnowledgeBuilderFactoryService(KnowledgeBuilderFactoryService serviceFactory) {
         KnowledgeBuilderFactory.factoryService = serviceFactory;
     }
