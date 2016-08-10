@@ -11,6 +11,20 @@ public interface ContextFluent<T>{
 
     T set(String name, Scope scope);
 
+    T get(String name);
+
+    T get(String name, Scope scope);
+
+    /**
+     * This sets an instance, for a given cls key, on the registry for commands to execute against.
+     * This method will call "end" if within the context of a given registry command
+     * @param name
+     * @param cls
+     * @param <K>
+     * @return
+     */
+    <K>  K get(String name, Class<K> cls);
+
     /**
      * Indicates that output from the last command should be returned (default is no).
      * <br>
@@ -35,7 +49,7 @@ public interface ContextFluent<T>{
 
     T joinConversation(long id);
 
-    T leaveConversation(long id);
+    T leaveConversation();
 
     T endConversation(long id);
 
