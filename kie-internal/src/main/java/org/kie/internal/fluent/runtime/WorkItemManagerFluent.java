@@ -55,6 +55,6 @@ public interface WorkItemManagerFluent<T,P,U> {
      */
     T registerWorkItemHandler(String workItemName, WorkItemHandler handler);
     
-    KieSessionFluent<P, U> getKieSession();
+    KieSessionFluent getKieSession();
 
 }

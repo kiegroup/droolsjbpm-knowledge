@@ -1,9 +1,9 @@
 package org.kie.internal.fluent;
 
-public interface ContextFluent<T>{
+public interface ContextFluent<T, E>{
 
     /**
-     * The last executed command, if it returns a value, is set to a name in this executing context.
+     * The last executed command result is set to a name in this executing context. Default Scope is Request
      * @param name
      * @return this
      */
@@ -26,16 +26,15 @@ public interface ContextFluent<T>{
     <K>  K get(String name, Class<K> cls);
 
     /**
-     * Indicates that output from the last command should be returned (default is no).
-     * <br>
-     * A call to this method <i>must</i> follow a call to {@link #set(String)} method in order to 
-     * set the name for the result.
+     * The output from the last command should be returned via the out results. It uses the last used name identifer for the previous
+     * get or set.
      * @return this
      */
     T out();
 
     /**
-     * Indicates that the output from the last executed command should be returned and set to the given name in the context
+     * The output from the last executed command should be returned and set to the given name in the context. It uses the specified
+     * named identifierl
      * @param name
      * @return this
      */
@@ -53,4 +52,9 @@ public interface ContextFluent<T>{
 
     T endConversation(long id);
 
+    /**
+     * End the scope of the current Command set
+     * @return
+     */
+    E end();
 } 
