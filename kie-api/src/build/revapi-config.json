@@ -2,6 +2,36 @@
   "revapi" : {
     "ignore" : [
       {
+          "code": "java.method.addedToInterface",
+          "new": "method java.lang.String org.kie.api.management.KieSessionMonitoringMBean::getKieSessionName()",
+          "justification": "KieSession bean is now only aggregated per session name"
+      },
+      {
+          "code": "java.method.addedToInterface",
+          "new": "method long org.kie.api.management.KieSessionMonitoringMBean::getTotalObjectsDeleted()",
+          "justification": "KieSession bean is now only aggregated per session name"
+      },
+      {
+          "code": "java.method.addedToInterface",
+          "new": "method long org.kie.api.management.KieSessionMonitoringMBean::getTotalObjectsInserted()",
+          "justification": "KieSession bean is now only aggregated per session name"
+      },
+      {
+          "code": "java.method.addedToInterface",
+          "new": "method long org.kie.api.management.KieSessionMonitoringMBean::getTotalSessions()",
+          "justification": "KieSession bean is now only aggregated per session name"
+      },
+      {
+          "code": "java.method.removed",
+          "old": "method int org.kie.api.management.KieSessionMonitoringMBean::getKieSessionId()",
+          "justification": "KieSession bean is now only aggregated per session name"
+      },
+      {
+          "code": "java.method.removed",
+          "old": "method long org.kie.api.management.KieSessionMonitoringMBean::getTotalFactCount()",
+          "justification": "KieSession bean is now only aggregated per session name"
+      },
+      {
         "code": "java.method.addedToInterface",
         "new": "method org.kie.api.runtime.KieContainer org.kie.api.KieServices::getKieClasspathContainer(java.lang.String)",
         "justification": "Provide containerId as an optional parameter for user defined container ID (unique ID)"

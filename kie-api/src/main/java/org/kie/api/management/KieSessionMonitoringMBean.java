@@ -42,16 +42,6 @@ public interface KieSessionMonitoringMBean {
     String getKieBaseId();
 
     /**
-     * @return the associated Kie Session ID
-     */
-    int getKieSessionId();
-
-    /**
-     * @return the total fact count current loaded into this session
-     */
-    long getTotalFactCount();
-
-    /**
      * @return the total number of matches fired in this session since last
      * reset.
      */
@@ -108,4 +98,15 @@ public interface KieSessionMonitoringMBean {
     String getStatsForProcessInstance(long processInstanceId);
 
     Map<Long,String> getStatsByProcessInstance();
+
+    String getKieSessionName();
+    long getTotalObjectsInserted();
+    long getTotalObjectsDeleted();
+    
+    /**
+     * Return the total number of KieSession monitored by name by this MBean.
+     * If the type of KieSession monitored is Stateful, this is the total count of Stateful KieSession(s) currently live under the specified KieSession name.
+     * If the type of KieSession monitored is Stateless, this is the total amount of Working Memory created.
+     */
+    long getTotalSessions();
 }
