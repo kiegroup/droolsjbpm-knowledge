@@ -45,7 +45,7 @@ public class BootOnLoadExtension implements Extension {
 
     public <X> void processBean(@Observes final ProcessBean<X> event) {
         if (event.getAnnotated().isAnnotationPresent(BootOnLoad.class)
-                && (event.getAnnotated().isAnnotationPresent(ApplicationScoped.class) 
+                && (event.getAnnotated().isAnnotationPresent(ApplicationScoped.class)
                         || event.getAnnotated().isAnnotationPresent(Singleton.class))) {
             startupBootstrapBeans.add(event.getBean());
 
@@ -64,7 +64,7 @@ public class BootOnLoadExtension implements Extension {
             final List<Bean<?>> orderedBeans) {
 
         for (Bean<?> bean : orderedBeans) {
-            // the call to toString() is a cheat to force the bean to be initialized            
+            // the call to toString() is a cheat to force the bean to be initialized
             manager.getReference(bean, bean.getBeanClass(),
                     manager.createCreationalContext(bean)).toString();
         }

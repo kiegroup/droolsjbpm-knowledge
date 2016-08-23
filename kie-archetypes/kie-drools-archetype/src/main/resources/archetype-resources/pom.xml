@@ -33,7 +33,7 @@
   </dependencyManagement>
 
   <dependencies>
-    
+
     <dependency>
         <groupId>org.drools</groupId>
         <artifactId>drools-compiler</artifactId>
@@ -72,7 +72,7 @@
       </plugin>
     </plugins>
 
-#if( $pomEclipseCompatible == "true" || $pomEclipseCompatible == "y" ||  $pomEclipseCompatible == "yes")  
+#if( $pomEclipseCompatible == "true" || $pomEclipseCompatible == "y" ||  $pomEclipseCompatible == "yes")
     <!-- The following is added to avoid Eclipse ERROR at the pom.xml line defining the kie-maven-plugin, by explicitly telling Eclipse to avoid run the plugin on Eclipse-build, leaving it trigger only when running Maven, eg "mvn package" or "mvn deploy", etc etc , see http://wiki.eclipse.org/M2E_plugin_execution_not_covered -->
     <pluginManagement>
       <plugins>

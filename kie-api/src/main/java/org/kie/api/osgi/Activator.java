@@ -52,14 +52,14 @@ public class Activator
                                                    Service.class.getName(),
                                                    new DroolsServiceTracker( bc,
                                                                              this ) );
-        
+
         registryTracker.open();
-        
+
         this.marshallerProviderTracker = new ServiceTracker( bc,
                 KieMarshallers.class.getName(),
                 new DroolsServiceTracker( bc,
                                           this) );
-        
+
         this.marshallerProviderTracker.open();
 
         logger.info( "api drools services registered" );

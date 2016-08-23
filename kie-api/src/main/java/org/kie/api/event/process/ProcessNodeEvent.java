@@ -27,7 +27,7 @@ public interface ProcessNodeEvent
 
     /**
      * The node instance this event is related to.
-     * 
+     *
      * @return the node instance
      */
     NodeInstance getNodeInstance();

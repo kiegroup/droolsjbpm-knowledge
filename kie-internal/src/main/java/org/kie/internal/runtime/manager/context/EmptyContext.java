@@ -18,7 +18,7 @@ package org.kie.internal.runtime.manager.context;
 import org.kie.api.runtime.manager.Context;
 
 /**
- * Default implementation of <code>Context</code> interface that does not bring any specifics 
+ * Default implementation of <code>Context</code> interface that does not bring any specifics
  * to the RuntimeManager and is usually used for instances of manager that does not deal with
  * contextual information:
  * <ul>
@@ -30,11 +30,11 @@ import org.kie.api.runtime.manager.Context;
 public class EmptyContext implements Context<String> {
 
     protected static final String CONTEXT_ID = "EmptyContext";
-    
+
     protected static final Context<String> INSTANCE = new EmptyContext();
-    
+
     protected EmptyContext() {
-        
+
     }
     @Override
     public String getContextId() {

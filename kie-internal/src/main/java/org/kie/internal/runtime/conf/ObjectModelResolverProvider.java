@@ -42,10 +42,10 @@ public class ObjectModelResolverProvider {
                 }
             }
         }
-        
+
         return resolvers;
     }
-    
+
     /**
      * Returns first resolver that accepts the given resolverId.
      * In case none is found null is returned.
@@ -54,13 +54,13 @@ public class ObjectModelResolverProvider {
      */
     public static ObjectModelResolver get(String resolverId) {
         List<ObjectModelResolver> resolvers = getResolvers();
-        
+
         for (ObjectModelResolver resolver : resolvers) {
             if (resolver.accept(resolverId)) {
                 return resolver;
             }
         }
-        
+
         return null;
     }
 }

@@ -19,7 +19,7 @@ import org.kie.api.task.TaskService;
 
 /**
  * Factory that produces <code>TaskService</code> instances.
- *  
+ *
  */
 public interface TaskServiceFactory {
 
@@ -28,7 +28,7 @@ public interface TaskServiceFactory {
      * @return new instance of <code>TaskService</code>
      */
     TaskService newTaskService();
-    
+
     /**
      * Closes this factory and releases all resources
      */

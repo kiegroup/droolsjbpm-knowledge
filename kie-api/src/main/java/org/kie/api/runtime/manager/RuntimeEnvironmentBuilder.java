@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -44,16 +44,16 @@ public interface RuntimeEnvironmentBuilder {
     public RuntimeEnvironment get();
 
     public RuntimeEnvironmentBuilder classLoader(ClassLoader cl);
-    
-    public RuntimeEnvironmentBuilder schedulerService(Object globalScheduler); 
-    
+
+    public RuntimeEnvironmentBuilder schedulerService(Object globalScheduler);
+
     public static class Factory implements RuntimeEnvironmentBuilderFactory {
         private static RuntimeEnvironmentBuilderFactory INSTANCE;
         private static Logger logger = LoggerFactory.getLogger(Factory.class);
-        
+
         static {
-            try {                
-                INSTANCE = ( RuntimeEnvironmentBuilderFactory ) 
+            try {
+                INSTANCE = ( RuntimeEnvironmentBuilderFactory )
                         Class.forName( "org.jbpm.runtime.manager.impl.RuntimeEnvironmentBuilder").newInstance();
             } catch (Exception e) {
                 logger.error("Unable to instance RuntimeEnvironmentBuilderFactory due to " + e.getMessage());
@@ -115,6 +115,6 @@ public interface RuntimeEnvironmentBuilder {
             return ((RuntimeEnvironmentBuilderFactory) get()).newClasspathKmoduleDefaultBuilder(kbaseName, ksessionName);
         }
 
-        
+
     }
 }

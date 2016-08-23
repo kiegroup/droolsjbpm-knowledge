@@ -34,11 +34,11 @@ import org.kie.internal.process.CorrelationKey;
 public class CorrelationKeyContext implements Context<CorrelationKey> {
 
     private CorrelationKey correlationKey;
-    
+
     public CorrelationKeyContext(CorrelationKey key) {
         this.correlationKey = key;
     }
-    
+
     @Override
     public CorrelationKey getContextId() {
 
@@ -53,7 +53,7 @@ public class CorrelationKeyContext implements Context<CorrelationKey> {
     public static CorrelationKeyContext get() {
         return new CorrelationKeyContext(null);
     }
-    
+
     /**
      * Returns new instance of <code>CorrelationKeyContext</code> with correlation key of already existing process instance
      * @param key actual correlation key of process instance

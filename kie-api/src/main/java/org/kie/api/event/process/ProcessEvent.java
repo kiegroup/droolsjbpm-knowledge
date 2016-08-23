@@ -28,7 +28,7 @@ public interface ProcessEvent
 
     /**
      * The ProcessInstance this event relates to.
-     * 
+     *
      * @return the process instance
      */
     ProcessInstance getProcessInstance();

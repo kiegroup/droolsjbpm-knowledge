@@ -34,11 +34,11 @@ import org.kie.api.runtime.manager.Context;
 public class ProcessInstanceIdContext implements Context<Long> {
 
     private Long processInstanceId;
-    
+
     public ProcessInstanceIdContext(Long processInstanceId) {
         this.processInstanceId = processInstanceId;
     }
-    
+
     @Override
     public Long getContextId() {
         return processInstanceId;
@@ -47,7 +47,7 @@ public class ProcessInstanceIdContext implements Context<Long> {
     public void setContextId(long id) {
         this.processInstanceId = id;
     }
-    
+
     /**
      * Returns new instance of <code>ProcessInstanceIdContext</code> without process instance id.
      * Used for starting new instances of the process.
@@ -56,7 +56,7 @@ public class ProcessInstanceIdContext implements Context<Long> {
     public static ProcessInstanceIdContext get() {
         return new ProcessInstanceIdContext(null);
     }
-    
+
     /**
      * Returns new instance of <code>ProcessInstanceIdContext</code> with id of already existing process instance
      * @param processInstanceId actual identifier of process instance

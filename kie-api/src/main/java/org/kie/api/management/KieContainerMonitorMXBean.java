@@ -3,7 +3,7 @@ package org.kie.api.management;
 public interface KieContainerMonitorMXBean {
 
     String getContainerId();
-    
+
     /**
      * The RelaseId configured while creating the Kiecontainer.
      * @return
@@ -15,15 +15,15 @@ public interface KieContainerMonitorMXBean {
      * @return
      */
     String getConfiguredReleaseIdStr();
-    
+
     /**
-     * The actual resolved ReleaseId. 
+     * The actual resolved ReleaseId.
      * @return
      */
     GAV getResolvedReleaseId();
-    
+
     /**
-     * The actual resolved ReleaseId. 
+     * The actual resolved ReleaseId.
      * @return
      */
     String getResolvedReleaseIdStr();

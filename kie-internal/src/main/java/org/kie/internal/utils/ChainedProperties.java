@@ -45,11 +45,11 @@ import java.util.Properties;
  *  <li>META-INF/ of  ClassLoader.getSystemClassLoader()</li>
  * </ul>
  * <br/>
- * To improve performance in frequent session creation cases, chained properties can be cached by it's conf file name 
+ * To improve performance in frequent session creation cases, chained properties can be cached by it's conf file name
  * and requesting classloader. To take advantage of the case it must be enabled via system property:<br/>
- * <code>org.kie.property.cache.enabled</code> that needs to be set to <code>true</code> 
+ * <code>org.kie.property.cache.enabled</code> that needs to be set to <code>true</code>
  * Cache entries are by default limited to 100 to reduce memory consumption but can be fine tuned by system property:<br/>
- * <code>org.kie.property.cache.size</code> that needs to be set to valid integer value 
+ * <code>org.kie.property.cache.size</code> that needs to be set to valid integer value
  */
 public class ChainedProperties
     implements
@@ -58,28 +58,28 @@ public class ChainedProperties
     protected static transient Logger logger = LoggerFactory.getLogger(ChainedProperties.class);
     private static final int MAX_CACHE_ENTRIES = Integer.parseInt(System.getProperty("org.kie.property.cache.size", "100"));
     private static final boolean CACHE_ENABLED = Boolean.parseBoolean(System.getProperty("org.kie.property.cache.enabled", "false"));
-    
+
     protected static Map<CacheKey, List<URL>> resourceUrlCache = new LinkedHashMap<CacheKey, List<URL>>() {
         private static final long serialVersionUID = -2324394641773215253L;
-        
+
         protected boolean removeEldestEntry(
                 Map.Entry<CacheKey, List<URL>> eldest) {
             return size() > MAX_CACHE_ENTRIES;
         }
     };
-    
+
     private List<Properties> props;
-    private List<Properties> defaultProps;   
+    private List<Properties> defaultProps;
 
     public ChainedProperties() {
     }
-    
+
     public ChainedProperties(String confFileName, ClassLoader classLoader) {
         this( confFileName,
               classLoader,
               true );
     }
-    
+
     public ChainedProperties(String confFileName,
                              ClassLoader classLoader,
                              boolean populateDefaults) {
@@ -103,7 +103,7 @@ public class ChainedProperties
         // Working directory properties file
         loadProperties( "drools." + confFileName,
                         this.props );
-        
+
         // check META-INF directories for all known ClassLoaders
         //ClassLoader confClassLoader = classLoader;
         loadProperties( getResources( "META-INF/drools." + confFileName,
@@ -134,7 +134,7 @@ public class ChainedProperties
         loadProperties( getResources( "/META-INF/drools.default." + confFileName,
                                       classLoader ),
                         this.defaultProps, classLoader );
-        
+
         loadDefaultsFromClassLoader( confFileName, classLoader, Thread.currentThread().getContextClassLoader() );
         loadDefaultsFromClassLoader( confFileName, classLoader, systemClassLoader );
 
@@ -185,11 +185,11 @@ public class ChainedProperties
 
     private Enumeration<URL> getResources(String name,
                                           ClassLoader classLoader) {
-        
+
         if (CACHE_ENABLED) {
             CacheKey cacheKey = new CacheKey(name, classLoader);
             List<URL> urlList = resourceUrlCache.get(cacheKey);
-            
+
             if (urlList == null) {
                 Enumeration<URL> resources = null;
                 try {
@@ -207,7 +207,7 @@ public class ChainedProperties
                 return Collections.enumeration(urlList);
             }
         }
-        
+
         Enumeration<URL> enumeration = null;
         try {
             enumeration = classLoader.getResources(name);
@@ -321,26 +321,26 @@ public class ChainedProperties
             return;
         }
         try {
-            
+
             Properties properties = new Properties();
             java.io.InputStream is = confURL.openStream();
             properties.load( is );
             is.close();
-            
+
             chain.add( properties );
         } catch ( IOException e ) {
             //throw new IllegalArgumentException( "Invalid URL to properties file '" + confURL.toExternalForm() + "'" );
         }
     }
     /*
-     * optional cache handling to improve performance to avoid duplicated loads of properties 
+     * optional cache handling to improve performance to avoid duplicated loads of properties
      */
-    
-    
+
+
     private static class CacheKey {
-        private String confFileName; 
+        private String confFileName;
         private ClassLoader classLoader;
-        
+
         CacheKey(String confFileName, ClassLoader classLoader) {
             this.confFileName = confFileName;
             this.classLoader = classLoader;

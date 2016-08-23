@@ -25,7 +25,7 @@ public interface KieRuntimeEvent {
 
     /**
      * {@link org.kie.api.runtime.KieRuntime} that generated the event.
-     * 
+     *
      * @return the KIE runtime
      */
     KieRuntime getKieRuntime();
