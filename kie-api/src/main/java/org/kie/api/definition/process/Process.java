@@ -30,11 +30,11 @@ public interface Process
     extends
     KieDefinition {
 
-	/**
-	 * The unique id of the Process.
-	 * 
-	 * @return the id
-	 */
+    /**
+     * The unique id of the Process.
+     * 
+     * @return the id
+     */
     String getId();
 
     /**
@@ -69,9 +69,9 @@ public interface Process
      */
     String getType();
     
-	/**
-	 * Meta data associated with this Node.
-	 */
+    /**
+     * Meta data associated with this Node.
+     */
     Map<String, Object> getMetaData();
 
     Resource getResource();

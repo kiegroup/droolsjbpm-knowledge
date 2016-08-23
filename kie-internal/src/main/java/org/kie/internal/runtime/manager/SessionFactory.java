@@ -23,10 +23,10 @@ import org.kie.api.runtime.KieSession;
  */
 public interface SessionFactory {
 
-	/**
-	 * Produces new instance of <code>KieSession</code>
-	 * @return new instance of <code>KieSession</code>
-	 */
+    /**
+     * Produces new instance of <code>KieSession</code>
+     * @return new instance of <code>KieSession</code>
+     */
     KieSession newKieSession();
     
     /**

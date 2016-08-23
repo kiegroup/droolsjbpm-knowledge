@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
  * Factory that produces instances of <code>RuntimeManager</code>. It allows to produce
  * runtime managers based on predefined strategies:
  * <ul>
- * 	<li>Singleton</li>
- * 	<li>PerRequest</li>
- * 	<li>PerProcessInstance</li> 
+ *  <li>Singleton</li>
+ *  <li>PerRequest</li>
+ *  <li>PerProcessInstance</li> 
  * </ul>
  * By default uses <code>org.jbpm.runtime.manager.impl.RuntimeManagerFactoryImpl</code> as implementation 
  * of the factory but can be overridden using system property <code>org.jbpm.runtime.manager.class</code>
@@ -32,55 +32,55 @@ import org.slf4j.LoggerFactory;
  */
 public interface RuntimeManagerFactory {
    
-	/**
-	 * Produces new instance of singleton <code>RuntimeManager</code> with default identifier. 
-	 * Since it relies on default identifier it can only be invoked once unless previously produced
-	 * manager is closed. Otherwise error will be thrown indicating that managers must be identifier uniquely.
-	 * @param environment environment instance for the new runtime manager
-	 * @return new instance of <code>RuntimeManager</code>
-	 */
+    /**
+     * Produces new instance of singleton <code>RuntimeManager</code> with default identifier. 
+     * Since it relies on default identifier it can only be invoked once unless previously produced
+     * manager is closed. Otherwise error will be thrown indicating that managers must be identifier uniquely.
+     * @param environment environment instance for the new runtime manager
+     * @return new instance of <code>RuntimeManager</code>
+     */
     RuntimeManager newSingletonRuntimeManager(RuntimeEnvironment environment);
     
     /**
      * Produces new instance of singleton <code>RuntimeManager</code> with custom identifier. 
-	 * In case the given identifier is already in use error will be thrown indicating that managers must be identifier uniquely.
-	 * @param environment environment instance for the new runtime manager
+     * In case the given identifier is already in use error will be thrown indicating that managers must be identifier uniquely.
+     * @param environment environment instance for the new runtime manager
      * @param identifier custom identifier for the manager
      * @return new instance of <code>RuntimeManager</code>
      */
     RuntimeManager newSingletonRuntimeManager(RuntimeEnvironment environment, String identifier);
     
     /**
-	 * Produces new instance of per request <code>RuntimeManager</code> with default identifier. 
-	 * Since it relies on default identifier it can only be invoked once unless previously produced
-	 * manager is closed. Otherwise error will be thrown indicating that managers must be identifier uniquely.
-	 * @param environment environment instance for the new runtime manager
-	 * @return new instance of <code>RuntimeManager</code>
-	 */
+     * Produces new instance of per request <code>RuntimeManager</code> with default identifier. 
+     * Since it relies on default identifier it can only be invoked once unless previously produced
+     * manager is closed. Otherwise error will be thrown indicating that managers must be identifier uniquely.
+     * @param environment environment instance for the new runtime manager
+     * @return new instance of <code>RuntimeManager</code>
+     */
     RuntimeManager newPerRequestRuntimeManager(RuntimeEnvironment environment);
     
     /**
      * Produces new instance of per request <code>RuntimeManager</code> with custom identifier. 
-	 * In case the given identifier is already in use error will be thrown indicating that managers must be identifier uniquely.
-	 * @param environment environment instance for the new runtime manager
+     * In case the given identifier is already in use error will be thrown indicating that managers must be identifier uniquely.
+     * @param environment environment instance for the new runtime manager
      * @param identifier custom identifier for the manager
      * @return new instance of <code>RuntimeManager</code>
      */
     RuntimeManager newPerRequestRuntimeManager(RuntimeEnvironment environment, String identifier);
     
     /**
-	 * Produces new instance of per process instance <code>RuntimeManager</code> with default identifier. 
-	 * Since it relies on default identifier it can only be invoked once unless previously produced
-	 * manager is closed. Otherwise error will be thrown indicating that managers must be identifier uniquely.
-	 * @param environment environment instance for the new runtime manager
-	 * @return new instance of <code>RuntimeManager</code>
-	 */
+     * Produces new instance of per process instance <code>RuntimeManager</code> with default identifier. 
+     * Since it relies on default identifier it can only be invoked once unless previously produced
+     * manager is closed. Otherwise error will be thrown indicating that managers must be identifier uniquely.
+     * @param environment environment instance for the new runtime manager
+     * @return new instance of <code>RuntimeManager</code>
+     */
     RuntimeManager newPerProcessInstanceRuntimeManager(RuntimeEnvironment environment);
     
     /**
      * Produces new instance of per process instance <code>RuntimeManager</code> with custom identifier. 
-	 * In case the given identifier is already in use error will be thrown indicating that managers must be identifier uniquely.
-	 * @param environment environment instance for the new runtime manager
+     * In case the given identifier is already in use error will be thrown indicating that managers must be identifier uniquely.
+     * @param environment environment instance for the new runtime manager
      * @param identifier custom identifier for the manager
      * @return new instance of <code>RuntimeManager</code>
      */

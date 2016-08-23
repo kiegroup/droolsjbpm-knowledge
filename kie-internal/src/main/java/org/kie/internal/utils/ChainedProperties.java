@@ -37,12 +37,12 @@ import java.util.Properties;
 /**
  * Priority
  * <ul>
- * 	<li>System properties</li>
- * 	<li>home directory</li>
- * 	<li>working directory</li>
- * 	<li>META-INF/ of optionally provided classLoader</li>
- * 	<li>META-INF/ of Thread.currentThread().getContextClassLoader()</li>
- * 	<li>META-INF/ of  ClassLoader.getSystemClassLoader()</li>
+ *  <li>System properties</li>
+ *  <li>home directory</li>
+ *  <li>working directory</li>
+ *  <li>META-INF/ of optionally provided classLoader</li>
+ *  <li>META-INF/ of Thread.currentThread().getContextClassLoader()</li>
+ *  <li>META-INF/ of  ClassLoader.getSystemClassLoader()</li>
  * </ul>
  * <br/>
  * To improve performance in frequent session creation cases, chained properties can be cached by it's conf file name 
@@ -59,14 +59,14 @@ public class ChainedProperties
     private static final int MAX_CACHE_ENTRIES = Integer.parseInt(System.getProperty("org.kie.property.cache.size", "100"));
     private static final boolean CACHE_ENABLED = Boolean.parseBoolean(System.getProperty("org.kie.property.cache.enabled", "false"));
     
-	protected static Map<CacheKey, List<URL>> resourceUrlCache = new LinkedHashMap<CacheKey, List<URL>>() {
-		private static final long serialVersionUID = -2324394641773215253L;
-		
-		protected boolean removeEldestEntry(
-				Map.Entry<CacheKey, List<URL>> eldest) {
-			return size() > MAX_CACHE_ENTRIES;
-		}
-	};
+    protected static Map<CacheKey, List<URL>> resourceUrlCache = new LinkedHashMap<CacheKey, List<URL>>() {
+        private static final long serialVersionUID = -2324394641773215253L;
+        
+        protected boolean removeEldestEntry(
+                Map.Entry<CacheKey, List<URL>> eldest) {
+            return size() > MAX_CACHE_ENTRIES;
+        }
+    };
     
     private List<Properties> props;
     private List<Properties> defaultProps;   
@@ -185,29 +185,29 @@ public class ChainedProperties
 
     private Enumeration<URL> getResources(String name,
                                           ClassLoader classLoader) {
-    	
-		if (CACHE_ENABLED) {
-			CacheKey cacheKey = new CacheKey(name, classLoader);
-			List<URL> urlList = resourceUrlCache.get(cacheKey);
-			
-			if (urlList == null) {
-				Enumeration<URL> resources = null;
-				try {
-					resources = classLoader.getResources(name);
-				} catch (IOException e) {
-					logger.error("error", e);
-				}
-				synchronized (resourceUrlCache) {
-					resourceUrlCache.put(cacheKey, Collections.list(resources));
-				}
+        
+        if (CACHE_ENABLED) {
+            CacheKey cacheKey = new CacheKey(name, classLoader);
+            List<URL> urlList = resourceUrlCache.get(cacheKey);
+            
+            if (urlList == null) {
+                Enumeration<URL> resources = null;
+                try {
+                    resources = classLoader.getResources(name);
+                } catch (IOException e) {
+                    logger.error("error", e);
+                }
+                synchronized (resourceUrlCache) {
+                    resourceUrlCache.put(cacheKey, Collections.list(resources));
+                }
 
-				return resources;
-			} else {
+                return resources;
+            } else {
 
-				return Collections.enumeration(urlList);
-			}
-		}
-    	
+                return Collections.enumeration(urlList);
+            }
+        }
+        
         Enumeration<URL> enumeration = null;
         try {
             enumeration = classLoader.getResources(name);
@@ -321,12 +321,12 @@ public class ChainedProperties
             return;
         }
         try {
-        	
-        	Properties properties = new Properties();
+            
+            Properties properties = new Properties();
             java.io.InputStream is = confURL.openStream();
             properties.load( is );
             is.close();
-        	
+            
             chain.add( properties );
         } catch ( IOException e ) {
             //throw new IllegalArgumentException( "Invalid URL to properties file '" + confURL.toExternalForm() + "'" );
@@ -338,52 +338,52 @@ public class ChainedProperties
     
     
     private static class CacheKey {
-    	private String confFileName; 
-    	private ClassLoader classLoader;
-    	
-    	CacheKey(String confFileName, ClassLoader classLoader) {
-    		this.confFileName = confFileName;
-    		this.classLoader = classLoader;
-    	}
+        private String confFileName; 
+        private ClassLoader classLoader;
+        
+        CacheKey(String confFileName, ClassLoader classLoader) {
+            this.confFileName = confFileName;
+            this.classLoader = classLoader;
+        }
 
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result
-					+ ((classLoader == null) ? 0 : classLoader.hashCode());
-			result = prime * result
-					+ ((confFileName == null) ? 0 : confFileName.hashCode());
-			return result;
-		}
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result
+                    + ((classLoader == null) ? 0 : classLoader.hashCode());
+            result = prime * result
+                    + ((confFileName == null) ? 0 : confFileName.hashCode());
+            return result;
+        }
 
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			CacheKey other = (CacheKey) obj;
-			if (classLoader == null) {
-				if (other.classLoader != null)
-					return false;
-			} else if (!classLoader.equals(other.classLoader))
-				return false;
-			if (confFileName == null) {
-				if (other.confFileName != null)
-					return false;
-			} else if (!confFileName.equals(other.confFileName))
-				return false;
-			return true;
-		}
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj)
+                return true;
+            if (obj == null)
+                return false;
+            if (getClass() != obj.getClass())
+                return false;
+            CacheKey other = (CacheKey) obj;
+            if (classLoader == null) {
+                if (other.classLoader != null)
+                    return false;
+            } else if (!classLoader.equals(other.classLoader))
+                return false;
+            if (confFileName == null) {
+                if (other.confFileName != null)
+                    return false;
+            } else if (!confFileName.equals(other.confFileName))
+                return false;
+            return true;
+        }
 
-		@Override
-		public String toString() {
-			return "CacheKey [confFileName=" + confFileName + ", classLoader="
-					+ classLoader + "]";
-		}
+        @Override
+        public String toString() {
+            return "CacheKey [confFileName=" + confFileName + ", classLoader="
+                    + classLoader + "]";
+        }
 
     }
 }

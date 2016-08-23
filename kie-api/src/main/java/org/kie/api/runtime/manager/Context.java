@@ -24,10 +24,10 @@ package org.kie.api.runtime.manager;
  */
 public interface Context<T> {
 
-	/**
-	 * See concrete implementation for available types
-	 *
-	 * @return the id of context which is specific to the type of context.
-	 */
+    /**
+     * See concrete implementation for available types
+     *
+     * @return the id of context which is specific to the type of context.
+     */
     T getContextId();
 }

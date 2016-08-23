@@ -20,30 +20,30 @@ import java.util.Date;
 /**
  * Audit view of node instance where each node instance (in most of the cases) will have two entries:
  * <ul>
- * 	<li>when node instance was triggered</li>
- * 	<li>when node instance was left - completed</li>
+ *  <li>when node instance was triggered</li>
+ *  <li>when node instance was left - completed</li>
  *</ul>
  */
 public interface NodeInstanceLog {
-	
-	/**
-	 * Indicates that node instance was triggered
-	 */
-	public static final int TYPE_ENTER = 0;
-	
-	/**
-	 * Indicates that node instance was left (it's no more active)
-	 */
-	public static final int TYPE_EXIT = 1;
+    
+    /**
+     * Indicates that node instance was triggered
+     */
+    public static final int TYPE_ENTER = 0;
+    
+    /**
+     * Indicates that node instance was left (it's no more active)
+     */
+    public static final int TYPE_EXIT = 1;
 
-	/**
-	 * @return process instance identifier
-	 */
+    /**
+     * @return process instance identifier
+     */
     Long getProcessInstanceId();
 
     /**
-	 * @return id of the definition
-	 */
+     * @return id of the definition
+     */
     String getProcessId();
 
     /**
@@ -55,39 +55,39 @@ public interface NodeInstanceLog {
      * @return identifier of the node which usually is the unique identifier from process definition,
      * but can be unique identifier assigned by the engine when unique id is not available
      */
-	String getNodeId();
-	
-	/**
-	 * @return name of the node from process definition
-	 */
-	String getNodeName();
+    String getNodeId();
+    
+    /**
+     * @return name of the node from process definition
+     */
+    String getNodeName();
 
-	/**
-	 * @return date on when this node was triggered
-	 */
-	Date getDate();
-	
-	/**
-	 * @return identifier of work item that this node refers to, might be null if it's not work item based node
-	 */
-	Long getWorkItemId();
+    /**
+     * @return date on when this node was triggered
+     */
+    Date getDate();
+    
+    /**
+     * @return identifier of work item that this node refers to, might be null if it's not work item based node
+     */
+    Long getWorkItemId();
 
-	/**
-	 * Incoming or outgoing connection identifier (sequence flow) for given node.
-	 * Incoming or outgoing depends on the type of the node instance log entry where 
-	 * <ul>
-	 * 	<li>entry type will contain incoming sequence flow</li>
-	 * 	<li>exit type will contain outgoing sequence flow</li>
-	 * </ul>
-	 * @return Incoming or outgoing connection identifier
-	 * 
-	 * @see NodeInstanceLog#getType()
-	 */
+    /**
+     * Incoming or outgoing connection identifier (sequence flow) for given node.
+     * Incoming or outgoing depends on the type of the node instance log entry where 
+     * <ul>
+     *  <li>entry type will contain incoming sequence flow</li>
+     *  <li>exit type will contain outgoing sequence flow</li>
+     * </ul>
+     * @return Incoming or outgoing connection identifier
+     * 
+     * @see NodeInstanceLog#getType()
+     */
     String getConnection();
 
     /**
-	 * @return external (optional) identifier associated with this process instance
-	 */
+     * @return external (optional) identifier associated with this process instance
+     */
     String getExternalId();
 
     /**
@@ -100,6 +100,6 @@ public interface NodeInstanceLog {
      * @see NodeInstanceLog#TYPE_ENTER
      * @see NodeInstanceLog#TYPE_EXIT
      */
-	Integer getType();
+    Integer getType();
     
 }

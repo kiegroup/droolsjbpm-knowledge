@@ -104,7 +104,7 @@ public class StringKeyStringValueMap implements Map<String, String> {
     public String remove(Object key) {
         Iterator<StringKeyStringValueEntry> iter = entries.iterator();
         while( iter.hasNext() ) { 
-        	StringKeyStringValueEntry entry = iter.next();
+            StringKeyStringValueEntry entry = iter.next();
             String entryKey = entry.getKey();
             if( key.equals(entryKey) ) { 
                 iter.remove();
@@ -117,7 +117,7 @@ public class StringKeyStringValueMap implements Map<String, String> {
     @Override
     public void putAll(Map<? extends String, ? extends String> m) {
         for( Entry<?, ?> entry : m.entrySet() ) { 
-        	StringKeyStringValueEntry newEntry = new StringKeyStringValueEntry((String)entry.getKey(), (String)entry.getValue());
+            StringKeyStringValueEntry newEntry = new StringKeyStringValueEntry((String)entry.getKey(), (String)entry.getValue());
            entries.add(newEntry);
         }
     }

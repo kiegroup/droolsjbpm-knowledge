@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class StringKeyStringValueEntry {
 
-	@XmlElement(name="key")
+    @XmlElement(name="key")
     private String key;
 
     @XmlElement(name="value")

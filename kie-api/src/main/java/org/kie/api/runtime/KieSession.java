@@ -94,12 +94,12 @@ public interface KieSession
         CommandExecutor,
         KieRuntime {
 
-	/**
-	 * Deprecated. use {@link #getIdentifier()} instead
+    /**
+     * Deprecated. use {@link #getIdentifier()} instead
      *
-	 * @return id of this session
-	 */
-	@Deprecated 	
+     * @return id of this session
+     */
+    @Deprecated     
     int getId();
     
     long getIdentifier();

@@ -43,57 +43,57 @@ import org.kie.internal.task.api.model.TaskDef;
 
 public interface TaskModelFactory {
 
-	Attachment newAttachment();
-	
-	BooleanExpression newBooleanExpression();
-	
-	Comment newComment();
-	
-	ContentData newContentData();
-	
-	Content newContent();
-	
-	Deadline newDeadline();
-	
-	DeadlineSummary newDeadlineSummary();
-	
-	Deadlines newDeadlines();
-	
-	Delegation newDelegation();
-	
-	EmailNotificationHeader newEmailNotificationHeader();
-	
-	EmailNotification newEmialNotification();
-	
-	Escalation newEscalation();
-	
-	FaultData newFaultData();
-	
-	Group newGroup();
+    Attachment newAttachment();
+    
+    BooleanExpression newBooleanExpression();
+    
+    Comment newComment();
+    
+    ContentData newContentData();
+    
+    Content newContent();
+    
+    Deadline newDeadline();
+    
+    DeadlineSummary newDeadlineSummary();
+    
+    Deadlines newDeadlines();
+    
+    Delegation newDelegation();
+    
+    EmailNotificationHeader newEmailNotificationHeader();
+    
+    EmailNotification newEmialNotification();
+    
+    Escalation newEscalation();
+    
+    FaultData newFaultData();
+    
+    Group newGroup();
         
     Group newGroup(String id);
-	
-	I18NText newI18NText();
-	
-	Language newLanguage();
-	
-	Notification newNotification();
-	
-	OrganizationalEntity newOrgEntity();
-	
-	PeopleAssignments newPeopleAssignments();
-	
-	Reassignment newReassignment();
-	
-	TaskData newTaskData();
-	
-	TaskDef newTaskDef();
-	
-	Task newTask();
-	
-	TaskSummary newTaskSummary();
-	
-	User newUser();
+    
+    I18NText newI18NText();
+    
+    Language newLanguage();
+    
+    Notification newNotification();
+    
+    OrganizationalEntity newOrgEntity();
+    
+    PeopleAssignments newPeopleAssignments();
+    
+    Reassignment newReassignment();
+    
+    TaskData newTaskData();
+    
+    TaskDef newTaskDef();
+    
+    Task newTask();
+    
+    TaskSummary newTaskSummary();
+    
+    User newUser();
         
-	User newUser(String id);
+    User newUser(String id);
 }

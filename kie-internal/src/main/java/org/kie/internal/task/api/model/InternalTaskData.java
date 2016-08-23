@@ -58,13 +58,13 @@ public interface InternalTaskData extends TaskData {
 
     void setProcessInstanceId(long processInstanceId);
     
-	void setProcessId(String processId);
-	
-	void setDeploymentId(String deploymentId);
-	
-	void setProcessSessionId(long processSessionId);
+    void setProcessId(String processId);
+    
+    void setDeploymentId(String deploymentId);
+    
+    void setProcessSessionId(long processSessionId);
 
-	/**
+    /**
      * Sets the document content data for this task data. It will set the documentContentId from the specified
      * documentID, documentAccessType, documentType from the specified
      * documentConentData.

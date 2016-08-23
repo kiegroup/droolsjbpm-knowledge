@@ -23,9 +23,9 @@ package org.kie.internal.runtime;
  */
 public interface Cacheable {
 
-	
-	/**
-	 * Closes underlying resources when cache is closed/disposed.
-	 */
-	void close();
+    
+    /**
+     * Closes underlying resources when cache is closed/disposed.
+     */
+    void close();
 }

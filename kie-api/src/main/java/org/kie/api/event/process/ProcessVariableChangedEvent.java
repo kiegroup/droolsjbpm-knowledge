@@ -23,11 +23,11 @@ public interface ProcessVariableChangedEvent
     extends
     ProcessEvent {
 
-	/**
-	 * The unique id of the process variable (definition).
-	 * 
-	 * @return the variable id
-	 */
+    /**
+     * The unique id of the process variable (definition).
+     * 
+     * @return the variable id
+     */
     String getVariableId();
 
     /**

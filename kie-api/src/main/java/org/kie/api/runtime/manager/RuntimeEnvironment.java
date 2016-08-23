@@ -29,9 +29,9 @@ import org.kie.api.task.UserGroupCallback;
  */
 public interface RuntimeEnvironment {
 
-	/**
-	 * @return <code>KieBase</code> that shall be used by the manager
-	 */
+    /**
+     * @return <code>KieBase</code> that shall be used by the manager
+     */
     KieBase getKieBase();
     
     /**

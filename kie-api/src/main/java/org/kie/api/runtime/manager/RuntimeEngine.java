@@ -31,14 +31,14 @@ import org.kie.api.task.TaskService;
  */
 public interface RuntimeEngine {
 
-	/**
-	 * @return <code>KieSession</code> configured for this <code>RuntimeEngine</code>
-	 */
+    /**
+     * @return <code>KieSession</code> configured for this <code>RuntimeEngine</code>
+     */
     KieSession getKieSession();
     
     /**
-	 * @return <code>TaskService</code> configured for this <code>RuntimeEngine</code>
-	 */
+     * @return <code>TaskService</code> configured for this <code>RuntimeEngine</code>
+     */
     TaskService getTaskService();
     
     /**

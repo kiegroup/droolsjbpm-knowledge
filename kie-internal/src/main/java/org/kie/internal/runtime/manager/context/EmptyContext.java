@@ -22,8 +22,8 @@ import org.kie.api.runtime.manager.Context;
  * to the RuntimeManager and is usually used for instances of manager that does not deal with
  * contextual information:
  * <ul>
- * 	<li>Singleton</li>
- * 	<li>PerRequest</li>
+ *  <li>Singleton</li>
+ *  <li>PerRequest</li>
  * </ul>
  * To obtain instances of this context use static <code>get()</code> method.
  */

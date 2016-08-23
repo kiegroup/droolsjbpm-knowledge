@@ -101,7 +101,7 @@ import org.kie.api.runtime.KieSession;
 public interface StatefulKnowledgeSession
     extends
         KieSession, KnowledgeRuntime, KnowledgeRuntimeEventManager {
-	
-	KnowledgeBase getKieBase();
+    
+    KnowledgeBase getKieBase();
 
 }

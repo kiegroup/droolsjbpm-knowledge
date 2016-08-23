@@ -23,10 +23,10 @@ import org.kie.api.task.TaskService;
  */
 public interface TaskServiceFactory {
 
-	/**
-	 * Produces new instance of <code>TaskService</code>
-	 * @return new instance of <code>TaskService</code>
-	 */
+    /**
+     * Produces new instance of <code>TaskService</code>
+     * @return new instance of <code>TaskService</code>
+     */
     TaskService newTaskService();
     
     /**

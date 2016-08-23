@@ -18,7 +18,7 @@ package org.kie.internal.task.api;
 import org.kie.internal.utils.ServiceRegistryImpl;
 
 public class TaskModelProvider {
-	
+    
     private static final String PROVIDER_CLASS = "org.jbpm.services.task.persistence.TaskModelProviderImpl";
 
     private static TaskModelProviderService provider;
@@ -28,7 +28,7 @@ public class TaskModelProvider {
     }
 
     public static synchronized void setTaskModelProviderService(TaskModelProviderService provider) {
-    	TaskModelProvider.provider = provider;
+        TaskModelProvider.provider = provider;
     }
 
     public static synchronized TaskModelProviderService getTaskModelProviderService() {
