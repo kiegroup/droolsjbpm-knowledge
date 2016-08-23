@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
  * The how is actually delegated to resolved implementation <code>ObjectModelResolver</code>
  * that default to Java Reflection based resolver but might utilize others (such as MVEL, Spring, CDI, etc).
  * <br>
- * The what type is derived from identifier (which should be FQCN in case of reflection) that is then used 
+ * The what type is derived from identifier (which should be FQCN in case of reflection) that is then used
  * to create instance of that object using constructor. Which constructor is taken depends on defined parameters
  * which might be again an ObjectModel for complex types.
  * String types are supported directly, all other should be represented as ObjectModel.
@@ -49,7 +49,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class ObjectModel implements Serializable {
-    
+
     private static final long serialVersionUID = 6079949171686382208L;
 
     @XmlElement(name="resolver")
@@ -62,18 +62,18 @@ public class ObjectModel implements Serializable {
     @XmlElement(name="parameter")
     @XmlElementWrapper(name="parameters")
     private List<Object> parameters = new ArrayList<Object>();
-    
+
     public ObjectModel() {
         // fox jaxb only
     }
-    
+
     public ObjectModel(String identifier, Object... parameters) {
         this.identifier = identifier;
         if (parameters != null) {
             this.parameters = new ArrayList<Object>(Arrays.asList(parameters));
         }
     }
-    
+
     public ObjectModel(String resolver, String identifier, Object... parameters) {
         this.resolver = resolver;
         this.identifier = identifier;
@@ -81,27 +81,27 @@ public class ObjectModel implements Serializable {
             this.parameters = new ArrayList<Object>(Arrays.asList(parameters));
         }
     }
-    
+
     public String getIdentifier() {
         return identifier;
     }
-    
+
     public void setIdentifier(String classname) {
         this.identifier = classname;
     }
-    
+
     public List<Object> getParameters() {
         return parameters;
     }
-    
+
     public void setParameters(List<Object> parameters) {
         this.parameters = parameters;
     }
-    
+
     public void addParameter(Object parameter) {
         this.parameters.add(parameter);
     }
-    
+
     public String getResolver() {
         return resolver;
     }

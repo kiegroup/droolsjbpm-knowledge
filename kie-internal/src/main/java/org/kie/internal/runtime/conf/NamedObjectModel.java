@@ -31,11 +31,11 @@ import javax.xml.bind.annotation.XmlSchemaType;
 public class NamedObjectModel extends ObjectModel {
 
     private static final long serialVersionUID = -72398619245628956L;
-    
+
     @XmlElement(name="name")
     @XmlSchemaType(name="string")
     private String name;
-    
+
     public NamedObjectModel() {
         //for jaxb only
     }
@@ -49,7 +49,7 @@ public class NamedObjectModel extends ObjectModel {
         super(classname, parameters);
         this.name = name;
     }
-    
+
     public String getName() {
         return name;
     }

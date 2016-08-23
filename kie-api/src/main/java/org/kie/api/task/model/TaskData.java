@@ -41,11 +41,11 @@ public interface TaskData extends Externalizable {
     boolean isSkipable();
 
     long getWorkItemId();
-    
+
     long getProcessInstanceId();
-    
+
     String getProcessId();
-    
+
     String getDeploymentId();
 
     long getProcessSessionId();
@@ -69,9 +69,9 @@ public interface TaskData extends Externalizable {
     List<Attachment> getAttachments();
 
     long getParentId();
-    
+
     Map<String, Object> getTaskInputVariables();
-    
+
     Map<String, Object> getTaskOutputVariables();
 
 }

@@ -51,35 +51,35 @@ public interface RegisterableItemsFactory {
      * @return map of handlers to be registered - in case of no handlers empty map shall be returned.
      */
     Map<String, WorkItemHandler> getWorkItemHandlers(RuntimeEngine runtime);
-    
+
     /**
      * Returns new instances of <code>ProcessEventListener</code> that will be registered on <code>RuntimeEngine</code>
      * @param runtime provides <code>RuntimeEngine</code> in case listeners need to make use of it internally
      * @return list of listeners to be registered - in case of no listeners empty list shall be returned.
      */
     List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime);
-    
+
     /**
      * Returns new instances of <code>AgendaEventListener</code> that will be registered on <code>RuntimeEngine</code>
      * @param runtime provides <code>RuntimeEngine</code> in case listeners need to make use of it internally
      * @return list of listeners to be registered - in case of no listeners empty list shall be returned.
      */
     List<AgendaEventListener> getAgendaEventListeners(RuntimeEngine runtime);
-    
+
     /**
      * Returns new instances of <code>RuleRuntimeEventListener</code> that will be registered on <code>RuntimeEngine</code>
      * @param runtime provides <code>RuntimeEngine</code> in case listeners need to make use of it internally
      * @return list of listeners to be registered - in case of no listeners empty list shall be returned.
      */
     List<RuleRuntimeEventListener> getRuleRuntimeEventListeners(RuntimeEngine runtime);
-    
+
     /**
      * Returns globals that shall be registered on <code>KieSession</code>.
      * @param runtime provides <code>RuntimeEngine</code> in case globals need to make use of it internally
      * @return map of globals to be registered - in case of no globals empty map shall be returned.
      */
     Map<String, Object> getGlobals(RuntimeEngine runtime);
-    
+
     /**
      * @return new instances of <code>TaskLifeCycleEventListener</code> that will be registered on <code>RuntimeEngine</code>.
      */

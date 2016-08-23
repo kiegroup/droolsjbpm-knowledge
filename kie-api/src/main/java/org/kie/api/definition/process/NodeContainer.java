@@ -24,14 +24,14 @@ public interface NodeContainer {
 
     /**
      * The Nodes of this NodeContainer.
-     * 
+     *
      * @return the nodes
      */
     Node[] getNodes();
 
     /**
      * The node in this NodeContainer with the given id.
-     * 
+     *
      * @return the node with the given id
      */
     Node getNode(long id);

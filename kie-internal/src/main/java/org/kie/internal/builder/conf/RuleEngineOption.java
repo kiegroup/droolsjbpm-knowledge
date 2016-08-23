@@ -21,13 +21,13 @@ import org.kie.api.conf.SingleValueKieBaseOption;
  * <p>
  * An Enum for switching between Phreak and Reteoo algorithms.
  * </p>
- * 
+ *
  * <pre>
  * drools.ruleEngine = &lt;phreak|reteoo&gt;
  * </pre>
- * 
+ *
  * <b>DEFAULT = phreak.</b>
- * 
+ *
  */
 public enum RuleEngineOption implements SingleValueKieBaseOption {
 
@@ -54,7 +54,7 @@ public enum RuleEngineOption implements SingleValueKieBaseOption {
     public boolean isLRUnlinkingEnabled() {
         return this == PHREAK;
     }
-    
+
     public static RuleEngineOption determineOption( String val ) {
         return RETEOO.value.equalsIgnoreCase(val) ? RETEOO : PHREAK;
     }

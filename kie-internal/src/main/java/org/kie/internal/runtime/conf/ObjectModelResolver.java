@@ -19,8 +19,8 @@ package org.kie.internal.runtime.conf;
 import java.util.Map;
 
 /**
- * Resolves <code>ObjectModel</code> to actual instances based on underlying mechanism 
- * such as reflection, Spring, CDI, MVEL and more. 
+ * Resolves <code>ObjectModel</code> to actual instances based on underlying mechanism
+ * such as reflection, Spring, CDI, MVEL and more.
  *
  */
 public interface ObjectModelResolver {
@@ -34,7 +34,7 @@ public interface ObjectModelResolver {
      * @return
      */
     Object getInstance(ObjectModel model, ClassLoader cl, Map<String, Object> contextParams);
-    
+
     /**
      * Accepts if the given <code>resolverId</code> is matching this resolver identifier.
      * @param resolverId identifier of the resolver

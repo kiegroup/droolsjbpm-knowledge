@@ -67,7 +67,7 @@ public interface ProcessInstanceLog {
     Long getParentProcessInstanceId();
 
     /**
-     * Outcome of the process instance that is providing error information in case process 
+     * Outcome of the process instance that is providing error information in case process
      * instance completed with an error
      * @return the {@link String} value
      */
@@ -103,7 +103,7 @@ public interface ProcessInstanceLog {
      * @return the {@link String} value
      */
     String getProcessName();
-    
+
     /**
      * Description of the process instance
      * @return the {@link String} value

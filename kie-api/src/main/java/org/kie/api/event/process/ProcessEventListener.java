@@ -79,7 +79,7 @@ public interface ProcessEventListener
      * @param event
      */
     void afterNodeLeft(ProcessNodeLeftEvent event);
-    
+
     /**
      * This listener method is invoked right before the value of a process variable is being changed.
      * @param event

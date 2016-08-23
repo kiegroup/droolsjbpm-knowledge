@@ -3,7 +3,7 @@
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -18,21 +18,21 @@ package it.pkg;
 public class Measurement {
     private String id;
     private String val;
-    
+
     public Measurement(String id, String val) {
         super();
         this.id = id;
         this.val = val;
     }
-    
+
     public String getId() {
         return id;
     }
-    
+
     public String getVal() {
         return val;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -44,6 +44,6 @@ public class Measurement {
         builder.append("]");
         return builder.toString();
     }
-    
-    
+
+
 }

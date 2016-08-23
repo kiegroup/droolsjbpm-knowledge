@@ -25,12 +25,12 @@ import java.util.Date;
  *</ul>
  */
 public interface NodeInstanceLog {
-    
+
     /**
      * Indicates that node instance was triggered
      */
     public static final int TYPE_ENTER = 0;
-    
+
     /**
      * Indicates that node instance was left (it's no more active)
      */
@@ -50,13 +50,13 @@ public interface NodeInstanceLog {
      * @return identifier of the node instance
      */
     String getNodeInstanceId();
-    
+
     /**
      * @return identifier of the node which usually is the unique identifier from process definition,
      * but can be unique identifier assigned by the engine when unique id is not available
      */
     String getNodeId();
-    
+
     /**
      * @return name of the node from process definition
      */
@@ -66,7 +66,7 @@ public interface NodeInstanceLog {
      * @return date on when this node was triggered
      */
     Date getDate();
-    
+
     /**
      * @return identifier of work item that this node refers to, might be null if it's not work item based node
      */
@@ -74,13 +74,13 @@ public interface NodeInstanceLog {
 
     /**
      * Incoming or outgoing connection identifier (sequence flow) for given node.
-     * Incoming or outgoing depends on the type of the node instance log entry where 
+     * Incoming or outgoing depends on the type of the node instance log entry where
      * <ul>
      *  <li>entry type will contain incoming sequence flow</li>
      *  <li>exit type will contain outgoing sequence flow</li>
      * </ul>
      * @return Incoming or outgoing connection identifier
-     * 
+     *
      * @see NodeInstanceLog#getType()
      */
     String getConnection();
@@ -94,12 +94,12 @@ public interface NodeInstanceLog {
      * @return Node type that indicates what sort of activity it was e.g. Human Task, Script Task, etc
      */
     String getNodeType();
-    
+
     /**
      * @return Type of the node instance log entry - Entry or Exit
      * @see NodeInstanceLog#TYPE_ENTER
      * @see NodeInstanceLog#TYPE_EXIT
      */
     Integer getType();
-    
+
 }

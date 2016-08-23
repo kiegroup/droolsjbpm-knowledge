@@ -35,56 +35,56 @@ public interface InternalRuntimeManager extends RuntimeManager {
      * @throws IllegalStateException in case validation fails
      */
     void validate(KieSession ksession, Context<?> context) throws IllegalStateException;
-    
+
     /**
      * Returns the actual environment used by the <code>RuntimeManager</code>
      * @return
      */
     RuntimeEnvironment getEnvironment();
-    
+
     /**
-     * Indicates if the runtime manager is closed. 
+     * Indicates if the runtime manager is closed.
      * @return true if runtime manager is closed (close method was invoked on it) otherwise false
      */
     boolean isClosed();
-    
+
     /**
-     * Returns current deployment descriptor for this instance of RuntimeManager, might be null if 
+     * Returns current deployment descriptor for this instance of RuntimeManager, might be null if
      * descriptors are not used
      * @return
      */
     DeploymentDescriptor getDeploymentDescriptor();
-    
+
     /**
      * Sets deployment descriptor for this instance of RuntimeManager
      * @param descriptor
      */
     void setDeploymentDescriptor(DeploymentDescriptor descriptor);
-    
+
     /**
      * Sets Security Manager to be used by this instance of RuntimeManager
      * @param securityManager
      */
     void setSecurityManager(SecurityManager securityManager);
-    
+
     /**
      * Sets CacheManager to be used for manager scoped cacheable items
      * @param cacheManager
      */
     void setCacheManager(CacheManager cacheManager);
-    
+
     /**
      * Retrieves instance of cache manager
      * @return
      */
     CacheManager getCacheManager();
-    
+
     /**
      * Returns KieContainer associated with this runtime manager if any
      * @return
      */
     KieContainer getKieContainer();
-    
+
     /**
      * Sets KieContainer to be associated with this runtime manager
      * @param kieContainer

@@ -18,7 +18,7 @@ package org.kie.internal.runtime.manager;
 import org.kie.api.runtime.manager.RuntimeEngine;
 
 /**
- * Callback listener interface to receive notification when <code>Disposable</code> 
+ * Callback listener interface to receive notification when <code>Disposable</code>
  * instances are actually disposed.
  *
  */

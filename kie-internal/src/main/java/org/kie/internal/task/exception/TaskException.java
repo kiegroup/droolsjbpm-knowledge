@@ -25,7 +25,7 @@ public abstract class TaskException extends RuntimeException {
 
     private static final long serialVersionUID = 2370182914623204842L;
     private boolean recoverable = true;
-    
+
     public TaskException(String message) {
         super(message);
     }
