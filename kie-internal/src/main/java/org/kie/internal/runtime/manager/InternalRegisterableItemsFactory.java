@@ -19,7 +19,7 @@ import org.kie.api.runtime.manager.RegisterableItemsFactory;
 
 public interface InternalRegisterableItemsFactory extends RegisterableItemsFactory {
 
-	InternalRuntimeManager getRuntimeManager();
-	
-	void setRuntimeManager(InternalRuntimeManager manager);
+    InternalRuntimeManager getRuntimeManager();
+    
+    void setRuntimeManager(InternalRuntimeManager manager);
 }

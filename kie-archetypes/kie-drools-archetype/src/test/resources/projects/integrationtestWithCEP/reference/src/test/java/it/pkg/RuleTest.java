@@ -39,33 +39,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RuleTest {
-	static final Logger LOG = LoggerFactory.getLogger(RuleTest.class);
-	
-	@Test
-	public void test() {
-		KieServices kieServices = KieServices.Factory.get();
+    static final Logger LOG = LoggerFactory.getLogger(RuleTest.class);
+    
+    @Test
+    public void test() {
+        KieServices kieServices = KieServices.Factory.get();
         
-		KieContainer kContainer = kieServices.getKieClasspathContainer();
+        KieContainer kContainer = kieServices.getKieClasspathContainer();
         Results verifyResults = kContainer.verify();
         for (Message m : verifyResults.getMessages()) {
-        	LOG.info("{}", m);
+            LOG.info("{}", m);
         }
         
         LOG.info("Creating kieBase with STREAM option");
         KieBaseConfiguration kieBaseConf = kieServices.newKieBaseConfiguration();
-		kieBaseConf.setOption( EventProcessingOption.STREAM );
+        kieBaseConf.setOption( EventProcessingOption.STREAM );
         KieBase kieBase = kContainer.newKieBase(kieBaseConf);
         
         LOG.info("There should be rules: ");
         for ( KiePackage kp : kieBase.getKiePackages() ) {
-        	for (Rule rule : kp.getRules()) {
-        		LOG.info("kp " + kp + " rule " + rule.getName());
-        	}
+            for (Rule rule : kp.getRules()) {
+                LOG.info("kp " + kp + " rule " + rule.getName());
+            }
         }
 
         LOG.info("Creating kieSession");
         KieSessionConfiguration config = kieServices.newKieSessionConfiguration();
-		config.setOption( ClockTypeOption.get("pseudo") );
+        config.setOption( ClockTypeOption.get("pseudo") );
         KieSession session = kieBase.newKieSession(config, null);
         SessionPseudoClock clock = session.getSessionClock();
         
@@ -75,17 +75,17 @@ public class RuleTest {
         
         LOG.info("Now running data");
         
-		clock.advanceTime(1, TimeUnit.MINUTES);
+        clock.advanceTime(1, TimeUnit.MINUTES);
         Measurement mRed= new Measurement("color", "red");
         session.insert(mRed);
         session.fireAllRules();
         
-		clock.advanceTime(1, TimeUnit.MINUTES);
+        clock.advanceTime(1, TimeUnit.MINUTES);
         Measurement mGreen= new Measurement("color", "green");
         session.insert(mGreen);
         session.fireAllRules();
         
-		clock.advanceTime(1, TimeUnit.MINUTES);
+        clock.advanceTime(1, TimeUnit.MINUTES);
         Measurement mBlue= new Measurement("color", "blue");
         session.insert(mBlue);
         session.fireAllRules();
@@ -97,5 +97,5 @@ public class RuleTest {
         assertTrue("contains green", check.contains("green"));
         assertTrue("contains blue", check.contains("blue"));
         
-	}
+    }
 }

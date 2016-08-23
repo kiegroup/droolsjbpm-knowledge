@@ -20,10 +20,10 @@ import org.kie.internal.command.Context;
 
 public interface TaskContext extends Context, org.kie.api.task.TaskContext {
 
-	TaskPersistenceContext getPersistenceContext();
-	
-	void setPersistenceContext(TaskPersistenceContext context);
-	
-	UserGroupCallback getUserGroupCallback();
+    TaskPersistenceContext getPersistenceContext();
+    
+    void setPersistenceContext(TaskPersistenceContext context);
+    
+    UserGroupCallback getUserGroupCallback();
 
 }

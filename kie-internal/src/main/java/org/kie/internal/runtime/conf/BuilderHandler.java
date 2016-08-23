@@ -24,11 +24,11 @@ package org.kie.internal.runtime.conf;
  * @see DeploymentDescriptorBuilder
  */
 public interface BuilderHandler {
-	
-	/**
-	 * Verifies if given <code>value</code> is acceptable to be written via builder
-	 * @param value
-	 * @return
-	 */
-	boolean accepted(Object value);
+    
+    /**
+     * Verifies if given <code>value</code> is acceptable to be written via builder
+     * @param value
+     * @return
+     */
+    boolean accepted(Object value);
 }

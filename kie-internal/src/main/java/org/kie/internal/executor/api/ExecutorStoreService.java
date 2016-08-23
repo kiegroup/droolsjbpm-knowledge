@@ -21,5 +21,5 @@ package org.kie.internal.executor.api;
  */
 public interface ExecutorStoreService extends org.kie.api.executor.ExecutorStoreService {
 
-	
+    
 }

@@ -31,7 +31,7 @@ import javax.inject.Qualifier;
 @Target({ElementType.TYPE})
 public @interface Activate {
 
-	String whenAvailable() default "";
-	
-	String whenNotAvailable() default "";
+    String whenAvailable() default "";
+    
+    String whenNotAvailable() default "";
 }

@@ -19,7 +19,7 @@ import org.kie.api.builder.ReleaseId;
 
 public interface RuntimeEnvironmentBuilderFactory {
 
-	/**
+    /**
      * Provides completely empty <code>RuntimeEnvironmentBuilder</code> instance that allows to manually
      * set all required components instead of relying on any defaults.
      * @return new instance of <code>RuntimeEnvironmentBuilder</code>
@@ -29,7 +29,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * @return new instance of <code>RuntimeEnvironmentBuilder</code> that is already preconfigured with defaults
      * 
@@ -40,7 +40,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * but it does not have persistence for process engine configured so it will only store process instances in memory
      * @return new instance of <code>RuntimeEnvironmentBuilder</code> that is already preconfigured with defaults
@@ -52,7 +52,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * This one is tailored to works smoothly with kjars as the notion of kbase and ksessions
      * @param groupId group id of kjar
@@ -67,7 +67,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * This one is tailored to works smoothly with kjars as the notion of kbase and ksessions
      * @param groupId group id of kjar
@@ -84,7 +84,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * This one is tailored to works smoothly with kjars as the notion of kbase and ksessions
      * @param releaseId <code>ReleaseId</code> that described the kjar
@@ -97,7 +97,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * This one is tailored to works smoothly with kjars as the notion of kbase and ksessions
      * @param releaseId <code>ReleaseId</code> that described the kjar
@@ -112,7 +112,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * It relies on KieClasspathContainer that requires to have kmodule.xml present in META-INF folder which 
      * defines the kjar itself.
@@ -126,7 +126,7 @@ public interface RuntimeEnvironmentBuilderFactory {
     /**
      * Provides default configuration of <code>RuntimeEnvironmentBuilder</code> that is based on:
      * <ul>
-     * 	<li>DefaultRuntimeEnvironment</li>
+     *  <li>DefaultRuntimeEnvironment</li>
      * </ul>
      * It relies on KieClasspathContainer that requires to have kmodule.xml present in META-INF folder which 
      * defines the kjar itself.

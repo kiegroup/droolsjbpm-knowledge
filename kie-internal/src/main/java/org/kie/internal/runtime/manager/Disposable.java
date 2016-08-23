@@ -22,9 +22,9 @@ package org.kie.internal.runtime.manager;
  */
 public interface Disposable {
 
-	/**
-	 * Actual logic that shall be executed on dispose.
-	 */
+    /**
+     * Actual logic that shall be executed on dispose.
+     */
     void dispose();
     
     /**

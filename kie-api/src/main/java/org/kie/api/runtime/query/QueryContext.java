@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class QueryContext implements Serializable {
 
-	private static final long serialVersionUID = -3174717972613778773L;
+    private static final long serialVersionUID = -3174717972613778773L;
 
-	@XmlElement
+    @XmlElement
     @XmlSchemaType(name="int")
     protected Integer offset = 0;
     

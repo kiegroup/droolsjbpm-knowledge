@@ -28,12 +28,12 @@ import org.kie.internal.runtime.conf.DeploymentDescriptor;
  */
 public interface InternalRuntimeManager extends RuntimeManager {
 
-	/**
-	 * Validates if given <code>KieSession</code> is eligible to be used with given context.
-	 * @param ksession instance of <code>KieSession</code>
-	 * @param context instance of <code>Context</code>
-	 * @throws IllegalStateException in case validation fails
-	 */
+    /**
+     * Validates if given <code>KieSession</code> is eligible to be used with given context.
+     * @param ksession instance of <code>KieSession</code>
+     * @param context instance of <code>Context</code>
+     * @throws IllegalStateException in case validation fails
+     */
     void validate(KieSession ksession, Context<?> context) throws IllegalStateException;
     
     /**

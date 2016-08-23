@@ -40,13 +40,13 @@ import org.slf4j.LoggerFactory;
  * @see ExecutorAdminService
  */
 public interface ExecutorService {
-	
-	/**
-	 * Allow to use custom identifiers for the executor instance where default is to rely on local id of clustering of kie
-	 * if present, otherwise use simple 'default-executor'. Alternatively an jbpm-executor.id file can be dropped on root 
-	 * of the classpath to provide application scoped id instead of JVM scoped (system property)
-	 */
-	public static final String EXECUTOR_ID = IdProvider.get();
+    
+    /**
+     * Allow to use custom identifiers for the executor instance where default is to rely on local id of clustering of kie
+     * if present, otherwise use simple 'default-executor'. Alternatively an jbpm-executor.id file can be dropped on root 
+     * of the classpath to provide application scoped id instead of JVM scoped (system property)
+     */
+    public static final String EXECUTOR_ID = IdProvider.get();
 
     List<RequestInfo> getQueuedRequests(QueryContext queryContext);
 

@@ -25,10 +25,10 @@ import java.util.Map;
  */
 public interface Node {
 
-	/**
-	 * The id of the node.  This is unique within its NodeContainer.
-	 * @return the id of the node
-	 */
+    /**
+     * The id of the node.  This is unique within its NodeContainer.
+     * @return the id of the node
+     */
     long getId();
 
     /**
@@ -76,9 +76,9 @@ public interface Node {
      */
     NodeContainer getNodeContainer();
 
-	/**
-	 * Meta data associated with this Node.
-	 */
+    /**
+     * Meta data associated with this Node.
+     */
     Map<String, Object> getMetaData();
 
 }

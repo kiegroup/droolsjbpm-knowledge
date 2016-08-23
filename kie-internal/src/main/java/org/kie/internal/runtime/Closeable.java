@@ -26,8 +26,8 @@ package org.kie.internal.runtime;
  */
 public interface Closeable {
 
-	/**
-	 * Closes the underlying resources
-	 */
-	void close();
+    /**
+     * Closes the underlying resources
+     */
+    void close();
 }

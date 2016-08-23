@@ -23,9 +23,9 @@ package org.kie.api.runtime.manager;
  * as soon as manager is instantiated to ensure its fully featured functionality right from the start. 
  * That includes:
  * <ul>
- * 	<li>timer service</li>
- * 	<li>task service</li>
- * 	<li>finds and initializes timer start events based processes</li>
+ *  <li>timer service</li>
+ *  <li>task service</li>
+ *  <li>finds and initializes timer start events based processes</li>
  * </ul>
  * RuntimeManager shall always be closed whenever it's not needed any more to free up resources it allocated.<br>
  * <code>RuntimeManager</code>s are identified by unique identifiers and thus there cannot be two RuntimeManagers
@@ -34,30 +34,30 @@ package org.kie.api.runtime.manager;
  * work needed to control ksession behavior. Which mainly covers when to create, dispose and when to use which ksession.
  * Currently there are three predefined strategies:
  * <ul>
- * 	<li>Singleton - there is only one, always active ksession for the manager, 
- * 					access to it is thread safe that is achieved by synchronization which applies to both
- * 					ksession and task service</li>
- * 	<li>PerRequest - new ksession and task service instances will be returned for every invocation of the 
- * 					getRuntimeEngine(Context) method. Important to know is same instance of RuntimeEngine will
- * 					be returned through out transaction to avoid issues with persistence context.</li>
- * 	<li>PerProcessInstance - most advanced strategy that keeps track of which ksession was used to work with
- * 					given process instance. It lives as long as process instance is alive and is destroyed
- * 					when process instance is completed/aborted.</li>
+ *  <li>Singleton - there is only one, always active ksession for the manager, 
+ *                  access to it is thread safe that is achieved by synchronization which applies to both
+ *                  ksession and task service</li>
+ *  <li>PerRequest - new ksession and task service instances will be returned for every invocation of the 
+ *                  getRuntimeEngine(Context) method. Important to know is same instance of RuntimeEngine will
+ *                  be returned through out transaction to avoid issues with persistence context.</li>
+ *  <li>PerProcessInstance - most advanced strategy that keeps track of which ksession was used to work with
+ *                  given process instance. It lives as long as process instance is alive and is destroyed
+ *                  when process instance is completed/aborted.</li>
  * </ul>
  */
 public interface RuntimeManager {
 
-	/**
-	 * Returns <code>RuntimeEngine</code> instance that is fully initialized:
-	 * <ul>
-	 * 	<li>KiseSession is created or loaded depending on the strategy</li>
-	 * 	<li>TaskService is initialized and attached to ksession (via listener)</li>
-	 * 	<li>WorkItemHandlers are initialized and registered on ksession</li>
-	 * 	<li>EventListeners (process, agenda, working memory) are initialized and added to ksession</li>
-	 * </ul>
-	 * @param context the concrete implementation of the context that is supported by given <code>RuntimeManager</code>
-	 * @return instance of the <code>RuntimeEngine</code>
-	 */
+    /**
+     * Returns <code>RuntimeEngine</code> instance that is fully initialized:
+     * <ul>
+     *  <li>KiseSession is created or loaded depending on the strategy</li>
+     *  <li>TaskService is initialized and attached to ksession (via listener)</li>
+     *  <li>WorkItemHandlers are initialized and registered on ksession</li>
+     *  <li>EventListeners (process, agenda, working memory) are initialized and added to ksession</li>
+     * </ul>
+     * @param context the concrete implementation of the context that is supported by given <code>RuntimeManager</code>
+     * @return instance of the <code>RuntimeEngine</code>
+     */
     RuntimeEngine getRuntimeEngine(Context<?> context);
     
     /**
