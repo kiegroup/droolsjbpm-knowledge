@@ -26,11 +26,11 @@ import org.kie.api.PropertiesConfiguration;
  * <li><code><b>drools.agent.scanDirectories</b> = &lt;<b>true</b>|false&gt;</code>
  * Enables(true) or Disables(false) the scan of directories. </li>
  * <li><code><b>drools.agent.newInstance</b> = &lt;<b>true</b>|false&gt;</code>
- * Setting the newInstance option to true (default) will make the agent to create a brand new KnowledgeBase 
+ * Setting the newInstance option to true (default) will make the agent to create a brand new KnowledgeBase
  * every time there is a change to the source assets. Previously created sessions will continue
  * to reference and use the previously existing KnowledgeBase, so this option should be
- * used in scenarios where sessions are short lived, as they are never updated. 
- * Setting this option to false will make the agent keep and incrementally update the existing 
+ * used in scenarios where sessions are short lived, as they are never updated.
+ * Setting this option to false will make the agent keep and incrementally update the existing
  * knowledge base, automatically updating all existing sessions. This option should be used for
  * scenarios with long living sessions that should be updated automatically when the source
  * assets change. </li>
@@ -65,25 +65,25 @@ public interface KnowledgeAgentConfiguration
     public boolean isMonitorChangeSetEvents();
 
     /**
-    * <p>Returns the configured state of the <code>drools.agent.newInstance</code> option.</p> 
-    * 
-    * <p>If true (default), the agent creates a brand new KnowledgeBase 
+    * <p>Returns the configured state of the <code>drools.agent.newInstance</code> option.</p>
+    *
+    * <p>If true (default), the agent creates a brand new KnowledgeBase
     * every time there is a change to the source assets. Previously created sessions will continue
     * to reference and use the previously existing KnowledgeBase, so this option should be
     * used in scenarios where sessions are short lived, as they are never updated. </p>
-    * 
-    * <p>If false will, the agent keeps and incrementally update the existing 
+    *
+    * <p>If false will, the agent keeps and incrementally update the existing
     * knowledge base, automatically updating all existing sessions. This option should be used for
     * scenarios with long living sessions that should be updated automatically when the source
-    * assets change.</p> 
-    * 
+    * assets change.</p>
+    *
     * @return the configured state of the <code>drools.agent.newInstance</code> option.
     */
     public boolean isNewInstance();
 
     /**
      * @return true if the agent is configured to use the same classloader for compilation
-     *         and runtime execution. false otherwise. 
+     *         and runtime execution. false otherwise.
      */
     public boolean isUseKBaseClassLoaderForCompiling();
 

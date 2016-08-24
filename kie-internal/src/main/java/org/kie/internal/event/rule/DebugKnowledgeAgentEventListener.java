@@ -31,17 +31,17 @@ import org.kie.internal.event.knowledgeagent.ResourceCompilationFailedEvent;
 public class DebugKnowledgeAgentEventListener
     implements
     KnowledgeAgentEventListener {
-    
+
     private PrintStream stream;
-    
+
     public DebugKnowledgeAgentEventListener() {
         this.stream =  System.err;
     }
-    
+
     public DebugKnowledgeAgentEventListener(PrintStream stream) {
         this.stream = stream;
-    }    
-    
+    }
+
     public void afterChangeSetApplied(AfterChangeSetAppliedEvent event) {
         stream.println( event );
     }
