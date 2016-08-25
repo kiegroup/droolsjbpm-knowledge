@@ -127,4 +127,6 @@ public interface TaskQueryService {
      * @return
      */
     List<TaskSummary> query( String userId, Object queryWhere );
+
+    List<TaskSummary> getTasksByGroup( List<String> groupIds );
 }

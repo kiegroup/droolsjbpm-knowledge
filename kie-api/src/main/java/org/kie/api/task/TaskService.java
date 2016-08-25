@@ -35,6 +35,10 @@ import org.kie.api.task.model.TaskSummary;
  */
 public interface TaskService extends CommandExecutor {
 
+    // Task management
+
+    long addTask(Task task, Map<String, Object> params);
+
     void activate(long taskId, String userId);
 
     void claim(long taskId, String userId);
@@ -50,6 +54,22 @@ public interface TaskService extends CommandExecutor {
     void fail(long taskId, String userId, Map<String, Object> faultData);
 
     void forward(long taskId, String userId, String targetEntityId);
+
+    void release(long taskId, String userId);
+
+    void resume(long taskId, String userId);
+
+    void skip(long taskId, String userId);
+
+    void start(long taskId, String userId);
+
+    void stop(long taskId, String userId);
+
+    void suspend(long taskId, String userId);
+
+    void nominate(long taskId, String userId, List<OrganizationalEntity> potentialOwners);
+
+    // Task queries
 
     Task getTaskByWorkItemId(long workItemId);
 
@@ -73,28 +93,6 @@ public interface TaskService extends CommandExecutor {
     List<TaskSummary> getTasksAssignedAsPotentialOwnerByProcessId(String userId, String processId);
 
     List<Long> getTasksByProcessInstanceId(long processInstanceId);
-
-    long addTask(Task task, Map<String, Object> params);
-
-    void release(long taskId, String userId);
-
-    void resume(long taskId, String userId);
-
-    void skip(long taskId, String userId);
-
-    void start(long taskId, String userId);
-
-    void stop(long taskId, String userId);
-
-    void suspend(long taskId, String userId);
-
-    void nominate(long taskId, String userId, List<OrganizationalEntity> potentialOwners);
-
-    Content getContentById(long contentId);
-
-    Attachment getAttachmentById(long attachId);
-
-    Map<String, Object> getTaskContent(long taskId);
 
     /**
      * This method will be removed in jBPM 7.x because of new methods that better implement this functionality.
@@ -127,6 +125,18 @@ public interface TaskService extends CommandExecutor {
     @Deprecated
     List<TaskSummary> getTasksByVariousFields( String userId, Map <String, List<?>> parameters, boolean union);
 
+    List<TaskSummary> getTasksByGroup(List<String> groupIds);
+
+    // Content and Attachment management
+
+    Content getContentById(long contentId);
+
+    Attachment getAttachmentById(long attachId);
+
+    Map<String, Object> getTaskContent(long taskId);
+
+    // CoMMent management
+
     Long addComment(long taskId, Comment comment);
 
     Long addComment(long taskId, String addedByUserId, String commentText);
@@ -136,6 +146,8 @@ public interface TaskService extends CommandExecutor {
     List<Comment> getAllCommentsByTaskId(long taskId);
 
     Comment getCommentById(long commentId);
+
+    // Other attributes
 
     void setExpirationDate(long taskId, Date date);
 }

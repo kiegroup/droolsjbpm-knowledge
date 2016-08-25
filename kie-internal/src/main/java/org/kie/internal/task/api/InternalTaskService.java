@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.kie.api.task.TaskService;
 import org.kie.api.task.model.Attachment;
-import org.kie.api.task.model.Comment;
 import org.kie.api.task.model.Content;
 import org.kie.api.task.model.Group;
 import org.kie.api.task.model.I18NText;
@@ -45,19 +44,11 @@ import org.kie.internal.task.query.TaskSummaryQueryBuilder;
  */
 public interface InternalTaskService extends TaskService {
 
-    List<TaskSummary> getTasksOwned(String userId, List<Status> status, QueryFilter filter);
-
-    List<TaskSummary> getTasksAssignedAsPotentialOwner(String userId, List<String> groupIds, List<Status> status, QueryFilter filter);
-
     void addGroup(Group group);
 
     void addUser(User user);
 
     int archiveTasks(List<TaskSummary> tasks);
-
-    void claim(long taskId, String userId, List<String> groupIds);
-
-    void claimNextAvailable(String userId, List<String> groupIds);
 
     void deleteFault(long taskId, String userId);
 
@@ -116,6 +107,10 @@ public interface InternalTaskService extends TaskService {
     List<TaskSummary> getTasksByStatusByProcessInstanceIdByTaskName(long processInstanceId, List<Status> status, String taskName);
 
     Map<Long, List<OrganizationalEntity>> getPotentialOwnersForTaskIds(List<Long> taskIds);
+
+    List<TaskSummary> getTasksOwned(String userId, List<Status> status, QueryFilter filter);
+
+    List<TaskSummary> getTasksAssignedAsPotentialOwner(String userId, List<String> groupIds, List<Status> status, QueryFilter filter);
 
     User getUserById(String userId);
 
