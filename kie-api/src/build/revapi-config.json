@@ -86,6 +86,11 @@
         "code": "java.method.addedToInterface",
         "new": "method java.util.Map<java.lang.String, java.lang.Object> org.kie.api.task.model.TaskData::getTaskOutputVariables()",
         "justification": "Provides access to task output variables directly from a task"
+      },
+      {
+        "code" : "java.method.addedToInterface",
+        "new" : "method java.util.List<org.kie.api.task.model.TaskSummary> org.kie.api.task.TaskService::getTasksByGroup(java.util.List<java.lang.String>)",
+        "justification" : "RHBPMS-4184: Client wants to search by group id"
       }
     ]
   }
