@@ -113,6 +113,16 @@
         "code": "java.method.addedToInterface",
         "new": "method org.kie.api.runtime.manager.RuntimeManager org.kie.api.runtime.manager.RuntimeManagerFactory::newPerCaseRuntimeManager(org.kie.api.runtime.manager.RuntimeEnvironment, java.lang.String)",
         "justification": "Case management implementation requires new type (strategy) of RuntimeManager"
+      },
+      {
+        "code": "java.method.removed",
+        "old": "method java.util.List<org.kie.api.task.model.TaskSummary> org.kie.api.task.TaskService::getTasksByVariousFields(java.lang.String, java.util.List<java.lang.Long>, java.util.List<java.lang.Long>, java.util.List<java.lang.Long>, java.util.List<java.lang.String>, java.util.List<java.lang.String>, java.util.List<java.lang.String>, java.util.List<org.kie.api.task.model.Status>, java.util.List<java.lang.String>, boolean)",
+        "justification": "Deprecated"
+      },
+      {
+        "code": "java.method.removed",
+        "old": "method java.util.List<org.kie.api.task.model.TaskSummary> org.kie.api.task.TaskService::getTasksByVariousFields(java.lang.String, java.util.Map<java.lang.String, java.util.List<?>>, boolean)",
+        "justification": "Deprecated"
       }
     ]
   }
