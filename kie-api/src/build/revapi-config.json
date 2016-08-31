@@ -103,6 +103,11 @@
         "code": "java.method.addedToInterface",
         "new": "method java.util.Map<java.lang.String, java.lang.Object> org.kie.api.task.model.TaskData::getTaskOutputVariables()",
         "justification": "Provides access to task output variables directly from a task"
+      },
+      {
+        "code": "java.method.addedToInterface",
+        "new": "method void org.kie.api.runtime.KieSession::submit(org.kie.api.runtime.KieSession.AtomicAction)",
+        "justification": "allow to submit atomic actions during fireUntilHalt"
       }
     ]
   }
