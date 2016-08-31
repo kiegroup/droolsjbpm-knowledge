@@ -92,4 +92,12 @@ public interface ProcessEventListener
      */
     void afterVariableChanged(ProcessVariableChangedEvent event);
 
+    /**
+	 * This listener method is invoked right before a node in a process instance is being removed from the process instance
+     * @param event
+     */
+    default void beforeNodeRemoved(ProcessNodeTriggeredEvent event) {
+        // empty for backwards compatibility
+    }
+
 }
