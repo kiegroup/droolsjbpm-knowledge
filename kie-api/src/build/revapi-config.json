@@ -91,6 +91,11 @@
         "code" : "java.method.addedToInterface",
         "new" : "method java.util.List<org.kie.api.task.model.TaskSummary> org.kie.api.task.TaskService::getTasksByGroup(java.util.List<java.lang.String>)",
         "justification" : "RHBPMS-4184: Client wants to search by group id"
+      },
+      {
+        "code": "java.method.addedToInterface",
+        "new": "method void org.kie.api.runtime.KieSession::submit(org.kie.api.runtime.KieSession.AtomicAction)",
+        "justification": "allow to submit atomic actions during fireUntilHalt"
       }
     ]
   }
