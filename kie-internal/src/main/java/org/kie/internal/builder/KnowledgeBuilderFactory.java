@@ -21,8 +21,6 @@ import java.util.Properties;
 import org.kie.internal.KnowledgeBase;
 import org.kie.internal.utils.ServiceRegistryImpl;
 
-import com.sun.tools.xjc.Options;
-
 /**
  * This factory is used to build the knowledge base resources that are held collectively in
  * KnowledgePackages. The KnowledgePackage also provides the role of 'namespacing'. An optional
@@ -131,10 +129,8 @@ public class KnowledgeBuilderFactory {
         return getKnowledgeBuilderServiceFactory().newScoreCardConfiguration();
     }
 
-    public static JaxbConfiguration newJaxbConfiguration(Options xjcOpts,
-                                                         String systemId) {
-        return getKnowledgeBuilderServiceFactory().newJaxbConfiguration(xjcOpts,
-                                                                        systemId);
+    public static JaxbConfiguration newJaxbConfiguration(String systemId) {
+        return getKnowledgeBuilderServiceFactory().newJaxbConfiguration(systemId);
     }
 
     private static synchronized void setKnowledgeBuilderFactoryService(KnowledgeBuilderFactoryService serviceFactory) {

@@ -23,11 +23,9 @@ import java.util.Map;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+import org.kie.api.io.Resource;
 import org.kie.internal.KnowledgeBase;
 import org.kie.internal.builder.KnowledgeBuilder;
-import org.kie.api.io.Resource;
-
-import com.sun.tools.xjc.Options;
 
 /**
  * Provides helper methods for working with JAXB and a Knowledgebase, it takes care of the Classpath issues when
@@ -68,11 +66,9 @@ public class KnowledgeBuilderHelper {
      */
     public static String[] addXsdModel(Resource resource,
                                        KnowledgeBuilder kbuilder,
-                                       Options xjcOpts,
                                        String systemId) throws IOException {
         return getDroolsJaxbHelperProvider().addXsdModel( resource,
                                                           kbuilder,
-                                                          xjcOpts,
                                                           systemId );
     }
 

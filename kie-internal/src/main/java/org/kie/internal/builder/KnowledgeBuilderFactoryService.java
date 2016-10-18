@@ -16,12 +16,10 @@
 
 package org.kie.internal.builder;
 
-import org.kie.internal.KnowledgeBase;
-import org.kie.api.Service;
-
 import java.util.Properties;
 
-import com.sun.tools.xjc.Options;
+import org.kie.api.Service;
+import org.kie.internal.KnowledgeBase;
 
 /**
  * KnowledgeBuilderFactoryService is used by the KnowledgeBuilderFactory to "provide" it's concrete implementation.
@@ -29,7 +27,7 @@ import com.sun.tools.xjc.Options;
  * This class is not considered stable and may change, the user is protected from this change by using
  * the Factory api, which is considered stable.
  */
-public interface KnowledgeBuilderFactoryService  extends Service {
+public interface KnowledgeBuilderFactoryService extends Service {
     /**
      * Instantiate and return a new KnowledgeBuilderConfiguration
      * @return
@@ -89,6 +87,5 @@ public interface KnowledgeBuilderFactoryService  extends Service {
     public KnowledgeBuilder newKnowledgeBuilder(KnowledgeBase kbase,
                                                 KnowledgeBuilderConfiguration conf);
 
-    public JaxbConfiguration newJaxbConfiguration(Options xjcOpts,
-                                                  String systemId);
+    public JaxbConfiguration newJaxbConfiguration(String systemId);
 }
