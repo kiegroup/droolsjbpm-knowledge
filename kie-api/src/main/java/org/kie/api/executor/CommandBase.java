@@ -17,9 +17,12 @@
 package org.kie.api.executor;
 
 /**
- * Possible statuses of the request
- *
+ * Executor's Command are dedicated to contain purely business logic that should be executed.
+ * It should not have any reference to underlying process engine and should not be concerned
+ * with any process runtime related logic such us completing work item, sending signals, etc.
+ * <br>
+ * Base interface for Command and CommandAsync
  */
-public enum STATUS {
-   QUEUED, DONE, CANCELLED, ERROR, RETRYING, RUNNING, WAITING_ASYNC, QUEUED_CALLBACK, RUNNING_CALLBACK
+public interface CommandBase {
+
 }

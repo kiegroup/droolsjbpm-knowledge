@@ -44,6 +44,13 @@ public interface Executor {
     Long scheduleRequest(String commandName, Date date, CommandContext ctx);
 
     /**
+     * Schedules execution of callback to async command.
+     * @param requestId  - id of async request
+     * @param results - result of execution
+     */
+    void scheduleResponse(Long requestId, ExecutionResults results);
+
+    /**
      * Cancels active (queued, running or retrying) request
      * @param requestId - id of the request to cancel
      */

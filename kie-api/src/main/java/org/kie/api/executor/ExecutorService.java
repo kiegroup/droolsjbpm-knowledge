@@ -72,6 +72,8 @@ public interface ExecutorService {
 
     Long scheduleRequest(String commandName, CommandContext ctx);
 
+    void scheduleResponse(Long requestId, ExecutionResults results);
+
     void cancelRequest(Long requestId);
 
     void init();

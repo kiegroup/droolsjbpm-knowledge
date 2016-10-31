@@ -293,7 +293,17 @@
        "old": "method java.util.List<java.lang.String> org.kie.api.task.UserGroupCallback::getGroupsForUser(java.lang.String, java.util.List<java.lang.String>, java.util.List<java.lang.String>)",
        "new": "method java.util.List<java.lang.String> org.kie.api.task.UserGroupCallback::getGroupsForUser(java.lang.String)",
        "justification": "Removed unused and confusing arguments"
-     }
+      },
+      {
+        "code": "java.method.addedToInterface",
+        "new": "method void org.kie.api.executor.Executor::scheduleResponse(java.lang.Long, org.kie.api.executor.ExecutionResults)",
+        "justification": "New feature to execute non-blocking async command"
+      },
+      {
+        "code": "java.method.addedToInterface",
+        "new": "method void org.kie.api.executor.ExecutorService::scheduleResponse(java.lang.Long, org.kie.api.executor.ExecutionResults)",
+        "justification": "New feature to execute non-blocking async command"
+      }
     ]
   }
 }
