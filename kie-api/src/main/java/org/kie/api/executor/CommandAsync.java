@@ -40,13 +40,14 @@ package org.kie.api.executor;
  * In case there is a heavy logic on initialization it should be placed in another service implementation that
  * can be looked up from within command.
  */
-public interface Command extends CommandBase{
+public interface CommandAsync extends CommandBase {
 
     /**
      * Executed this command's logic.
+     * ExecutorService.scheduleResponse(Long requestId, ExecutionResults results) should be called to return results.
      * @param ctx - contextual data given by the executor service
-     * @return returns any results in case of successful execution
+     * @param requestId - request id given by the executor service for using in callback
      * @throws Exception in case execution failed and shall be retried if possible
      */
-    ExecutionResults execute(CommandContext ctx) throws Exception;
+    void execute(CommandContext ctx, Long requestId) throws Exception;
 }
