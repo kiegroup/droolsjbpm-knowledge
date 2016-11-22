@@ -16,16 +16,6 @@
 
 package org.kie.api.runtime;
 
-public interface Context {
-
-    String getName();
-
-    Object get(String identifier);
-
-    void set(String identifier,
-             Object value);
-
-    void remove(String identifier);
-
-    boolean has(String identifier);
+public interface ConversationContext extends Context {
+    long getConversationId();
 }

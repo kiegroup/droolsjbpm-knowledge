@@ -18,20 +18,28 @@ package org.kie.api.runtime;
 
 import org.kie.api.command.Command;
 
-public interface ExecutableRunner extends CommandExecutor {
-    Context execute( Executable executable );
+public interface ExecutableRunner<C extends Context> extends CommandExecutor {
+    C execute( Executable executable );
 
-    Context execute( Executable executable, Context ctx );
+    C execute( Executable executable, C ctx );
 
     <T> T execute( Command<T> command, Context ctx );
 
-    Context createContext();
+    C createContext();
 
-    static ExecutableRunner create() {
+    static ExecutableRunner<RequestContext> create() {
         try {
             return (ExecutableRunner) Class.forName( "org.drools.core.fluent.impl.PseudoClockRunner" ).newInstance();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to instance KieServices", e);
+            throw new RuntimeException("Unable to instance ExecutableRunner", e);
+        }
+    }
+
+    static ExecutableRunner<RequestContext> create(long startTime) {
+        try {
+            return (ExecutableRunner) Class.forName( "org.drools.core.fluent.impl.PseudoClockRunner" ).getConstructor( long.class ).newInstance(startTime);
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to instance ExecutableRunner", e);
         }
     }
 }
