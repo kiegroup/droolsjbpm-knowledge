@@ -21,10 +21,6 @@ import org.kie.api.KieBase;
 import java.util.Map;
 
 public interface RequestContext extends Context {
-    long getRequestId();
-
-    long getConversationId();
-
     Map<String, Object> getOut();
 
     Object getResult();
@@ -32,7 +28,7 @@ public interface RequestContext extends Context {
     RequestContext with(KieBase kieBase);
     RequestContext with(KieSession kieSession);
 
-    ConversationContext getConversationContext();
+    Context getConversationContext();
 
     Context getApplicationContext();
 
