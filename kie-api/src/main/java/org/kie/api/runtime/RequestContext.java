@@ -18,12 +18,9 @@ package org.kie.api.runtime;
 
 import org.kie.api.KieBase;
 
-import java.util.Map;
-
 public interface RequestContext extends Context {
-    Map<String, Object> getOut();
-
     Object getResult();
+    void setResult(Object result);
 
     RequestContext with(KieBase kieBase);
     RequestContext with(KieSession kieSession);

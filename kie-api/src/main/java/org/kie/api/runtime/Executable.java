@@ -16,7 +16,5 @@
 
 package org.kie.api.runtime;
 
-import java.util.List;
-
 public interface Executable {
 }
