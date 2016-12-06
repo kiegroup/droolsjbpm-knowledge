@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package org.kie.internal.fluent.runtime;
+package org.kie.api.runtime.builder;
 
-public interface KieContainerFluent {
-    KieSessionFluent newSession();
-    KieSessionFluent newSession(String id);
+public enum Scope {
+    REQUEST, CONVERSATION, APPLICATION;
 }
