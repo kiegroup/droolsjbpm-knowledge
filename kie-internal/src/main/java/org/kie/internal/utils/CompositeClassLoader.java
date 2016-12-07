@@ -98,7 +98,7 @@ public class CompositeClassLoader extends ClassLoader {
      * This ClassLoader never has classes of it's own, so only search the child ClassLoaders
      * and the parent ClassLoader if one is provided
      */
-    public Class< ? > loadClass(final String name,
+    public synchronized Class< ? > loadClass(final String name,
                                 final boolean resolve) throws ClassNotFoundException {
         Class cls = loader.get().load( this,
                                        name,
@@ -114,7 +114,7 @@ public class CompositeClassLoader extends ClassLoader {
     * This ClassLoader never has classes of it's own, so only search the child ClassLoaders
     * and the parent ClassLoader if one is provided
     */
-   public Class< ? > loadClass(final String name,
+   public synchronized Class< ? > loadClass(final String name,
                                final boolean resolve,
                                final ClassLoader ignore) throws ClassNotFoundException {
        Class cls = loader.get().load( this,
