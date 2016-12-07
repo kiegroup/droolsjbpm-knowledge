@@ -131,13 +131,17 @@ public interface RuntimeManagerFactory {
         }
 
         private static RuntimeManagerFactory create(ClassLoader classLoader) {
-            initialized = true;
             try {
                 String className = System.getProperty("org.jbpm.runtime.manager.class",
                                                       "org.jbpm.runtime.manager.impl.RuntimeManagerFactoryImpl" );
-                return classLoader != null ?
+                RuntimeManagerFactory runtimeManagerFactory =  classLoader != null ?
                        ( RuntimeManagerFactory ) Class.forName( className, true, classLoader ).newInstance() :
                        ( RuntimeManagerFactory ) Class.forName( className ).newInstance();
+                       
+                 // only set initialized to true after an instance really has been created      
+                 initialized = true;
+                 
+                 return runtimeManagerFactory;
             } catch (Exception e) {
                 initializationException = e;
                 logger.error("Unable to instance RuntimeManagerFactory due to " + e.getMessage());
