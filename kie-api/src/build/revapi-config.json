@@ -386,7 +386,7 @@
         },
         {
           "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.command.Command<java.lang.Long> org.kie.api.command.KieCommands::newAdvanceSessionTime(java.lang.String, long, java.util.concurrent.TimeUnit)",
+          "new": "method org.kie.api.command.Command<java.lang.Long> org.kie.api.command.KieCommands::newAdvanceSessionTime(long, java.util.concurrent.TimeUnit, java.lang.String)",
           "justification": "Added command to advance session time"
         }
       ]
