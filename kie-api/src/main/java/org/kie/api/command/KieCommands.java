@@ -138,6 +138,6 @@ public interface KieCommands {
     Command<Long> newGetSessionTime();
     Command<Long> newGetSessionTime(String outIdentifier);
 
-    Command<Long> newAdvanceSessionTime(long amount, TimeUnit unit );
-    Command<Long> newAdvanceSessionTime(String outIdentifier, long amount, TimeUnit unit );
+    Command<Long> newAdvanceSessionTime(long amount, TimeUnit unit);
+    Command<Long> newAdvanceSessionTime(long amount, TimeUnit unit, String outIdentifier);
 }
