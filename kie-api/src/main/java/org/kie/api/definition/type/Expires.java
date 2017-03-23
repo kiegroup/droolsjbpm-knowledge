@@ -27,7 +27,7 @@ public @interface Expires {
 
     String value();
 
-    Type type() default Type.HARD;
+    Policy policy() default Policy.TIME_HARD;
 
-    enum Type { HARD, SOFT }
+    enum Policy { TIME_HARD, TIME_SOFT }
 }
