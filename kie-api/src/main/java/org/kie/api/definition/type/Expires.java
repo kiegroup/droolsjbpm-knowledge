@@ -26,4 +26,8 @@ import java.lang.annotation.Target;
 public @interface Expires {
 
     String value();
+
+    Type type() default Type.HARD;
+
+    enum Type { HARD, SOFT }
 }
