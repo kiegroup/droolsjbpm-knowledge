@@ -551,7 +551,7 @@
           "classSimpleName": "KieExecutors",
           "methodName": "getExecutor",
           "elementKind": "method",
-          "justification": "Change returned type from Executor to ExecutorService"
+          "justification": "Return an ExecutorService to allow to shut it down"
         },
         {
           "code": "java.method.returnTypeChangedCovariantly",
@@ -563,7 +563,7 @@
           "classSimpleName": "KieExecutors",
           "methodName": "newSingleThreadExecutor",
           "elementKind": "method",
-          "justification": "Change returned type from Executor to ExecutorService"
+          "justification": "Return an ExecutorService to allow to shut it down"
         }
       ]
     }
