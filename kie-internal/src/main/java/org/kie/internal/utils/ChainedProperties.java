@@ -156,15 +156,53 @@ public class ChainedProperties
         // ClassLoader.getResources() doesn't work but doing
         // Class.getResourse() does
         if (this.defaultProps.isEmpty()) {
+            loadOsgiProperties("/META-INF/drools.default."
+                        + confFileName, classLoader);
+        }
+    }
+
+    private void loadOsgiProperties(String fileName, ClassLoader classLoader) {
+        if (!CACHE_ENABLED) {
             try {
                 Class<?> c = Class.forName(
                         "org.drools.compiler.lang.MVELDumper", false,
                         classLoader);
-                URL confURL = c.getResource("/META-INF/drools.default."
-                        + confFileName);
+                URL confURL = c.getResource(fileName);
+                if ( confURL == null ) {
+                    return;
+                }
                 loadProperties(confURL, this.defaultProps);
             } catch (ClassNotFoundException e) { }
+            return;
         }
+        CacheKey ck = new CacheKey("osgi_" + fileName, classLoader);
+        List<Properties> cached = propertiesCache.get(ck);
+        if (cached == null) {
+            try {
+                Class<?> c = Class.forName(
+                    "org.drools.compiler.lang.MVELDumper", false,
+                    classLoader);
+                URL confURL = c.getResource(fileName);
+                cached = readOsgi(confURL);
+                propertiesCache.put(ck, cached);
+            } catch (ClassNotFoundException e) { }
+        }
+        if (cached != null) {
+            defaultProps.addAll(cached);
+        }
+    }
+
+    private List<Properties> readOsgi(URL confURL) {
+        List<Properties> retval = new ArrayList<>();
+        if ( confURL == null ) {
+            return retval;
+        }
+        try ( InputStream is = confURL.openStream() ) {
+            Properties properties = new Properties();
+            properties.load( is );
+            retval.add( properties );
+        } catch ( IOException e ) { }
+        return retval;
     }
 
     @SuppressWarnings("unchecked")
