@@ -175,7 +175,7 @@ public class ChainedProperties
             } catch (ClassNotFoundException e) { }
             return;
         }
-        CacheKey ck = new CacheKey(fileName, classLoader);
+        CacheKey ck = new CacheKey("osgi_" + fileName, classLoader);
         List<Properties> cached = propertiesCache.get(ck);
         if (cached == null) {
             try {
