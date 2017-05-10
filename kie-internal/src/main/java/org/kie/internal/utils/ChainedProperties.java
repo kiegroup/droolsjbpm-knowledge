@@ -69,18 +69,19 @@ public class ChainedProperties
     private List<Properties> defaultProps = new ArrayList<Properties>();
 
     public static ChainedProperties getChainedProperties( ClassLoader classLoader ) {
-        String confFileName = "properties.conf";
+        return getChainedProperties( "properties.conf", classLoader );
+    }
+
+    public static ChainedProperties getChainedProperties( String confFileName, ClassLoader classLoader ) {
         CacheKey key = new CacheKey( confFileName, classLoader );
         ChainedProperties chainedProperties = propertiesCache.get(key);
         if (chainedProperties == null) {
             chainedProperties = new ChainedProperties( confFileName, classLoader );
             propertiesCache.put(key, chainedProperties);
         }
-        return chainedProperties;
-    }
-
-    public static ChainedProperties createChainedProperties( ClassLoader classLoader ) {
-        return getChainedProperties(classLoader).clone();
+        ChainedProperties props = chainedProperties.clone();
+        props.addProperties( System.getProperties() );
+        return props;
     }
 
     protected ChainedProperties clone() {
@@ -94,25 +95,16 @@ public class ChainedProperties
     }
 
     private ChainedProperties(String confFileName, ClassLoader classLoader) {
-        // System defined properties always get precedence
-        addProperties( System.getProperties() );
-
         loadProperties( "META-INF/kie." + confFileName, classLoader, this.props );
-        loadProperties( "/META-INF/kie." + confFileName, classLoader, this.props );
-
         loadProperties( "META-INF/kie.default." + confFileName, classLoader, this.defaultProps);
-        loadProperties( "/META-INF/kie.default." + confFileName, classLoader, this.defaultProps);
 
         // this happens only in OSGi: for some reason doing
         // ClassLoader.getResources() doesn't work but doing
         // Class.getResourse() does
         if (this.defaultProps.isEmpty()) {
             try {
-                Class<?> c = Class.forName(
-                        "org.drools.compiler.lang.MVELDumper", false,
-                        classLoader);
-                URL confURL = c.getResource("/META-INF/kie.default."
-                        + confFileName);
+                Class<?> c = Class.forName( "org.drools.core.WorkingMemory", false, classLoader);
+                URL confURL = c.getResource("/META-INF/kie.default." + confFileName);
                 loadProperties(confURL, this.defaultProps);
             } catch (ClassNotFoundException e) { }
         }
