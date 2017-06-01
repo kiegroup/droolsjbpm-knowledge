@@ -18,8 +18,6 @@ package org.kie.internal.runtime;
 
 import org.kie.api.KieBase;
 import org.kie.api.runtime.KieSession;
-import org.kie.internal.event.KnowledgeRuntimeEventManager;
-
 
 /**
  * StatefulKnowledgeSession is the most common way to interact with the engine. A StatefulKnowledgeSession
@@ -100,7 +98,7 @@ import org.kie.internal.event.KnowledgeRuntimeEventManager;
  */
 public interface StatefulKnowledgeSession
     extends
-        KieSession, KnowledgeRuntime, KnowledgeRuntimeEventManager {
+        KieSession, KnowledgeRuntime {
 
     KieBase getKieBase();
 
