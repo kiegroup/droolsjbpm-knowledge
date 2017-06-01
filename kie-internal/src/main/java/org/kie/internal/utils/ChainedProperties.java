@@ -252,13 +252,14 @@ public class ChainedProperties
         }
 
         @Override public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof Key)) return false;
+            if (this == o) { return true; }
+            if (!(o instanceof Key)) { return false; }
 
             Key key = (Key) o;
 
-            if (name != null ? !name.equals(key.name) : key.name != null)
+            if (name != null ? !name.equals(key.name) : key.name != null) {
                 return false;
+            }
             return loader != null
                     ? loader.equals(key.loader)
                     : key.loader == null;
