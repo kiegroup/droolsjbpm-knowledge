@@ -36,7 +36,7 @@ public interface KieCommands {
     Command newInsert(Object object, String outIdentifier, boolean returnObject, String entryPoint);
 
     Command newInsertElements(Iterable objects);
-    
+
     Command newInsertElements(Iterable objects, String outIdentifier);
 
     Command newInsertElements(Iterable objects, String outIdentifier, boolean returnObject, String entryPoint);
@@ -113,17 +113,25 @@ public interface KieCommands {
     BatchExecutionCommand newBatchExecution(List< ? extends Command> commands, String lookup);
 
     Command newRegisterWorkItemHandlerCommand(WorkItemHandler handler, String workItemName);
-    
+
     Command newAbortWorkItem(long workItemId);
 
     Command newCompleteWorkItem(long workItemId,
                                 Map<String, Object> results);
-    
+
     Command<FactHandle> fromExternalFactHandleCommand(String factHandleExternalForm);
 
     Command<FactHandle> fromExternalFactHandleCommand(String factHandleExternalForm, boolean disconnected);
 
     Command newAgendaGroupSetFocus(String name);
+    
+    Command newGetFactHandles();
+
+    Command newGetFactHandles(String outIdentifier);
+
+    Command newGetFactHandles(ObjectFilter filter);
+
+    Command newGetFactHandles(ObjectFilter filter, String outIdentifier);
 
 }
 

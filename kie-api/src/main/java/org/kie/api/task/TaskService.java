@@ -29,12 +29,16 @@ import org.kie.api.task.model.Task;
 import org.kie.api.task.model.TaskSummary;
 
 /**
- * The Task Service Entry Point serves as 
+ * The Task Service Entry Point serves as
  *  facade of all the other services, providing a single entry point
  *  to access to all the services
  */
 public interface TaskService extends CommandExecutor {
-    
+
+    // Task management
+
+    long addTask(Task task, Map<String, Object> params);
+
     void activate(long taskId, String userId);
 
     void claim(long taskId, String userId);
@@ -50,6 +54,22 @@ public interface TaskService extends CommandExecutor {
     void fail(long taskId, String userId, Map<String, Object> faultData);
 
     void forward(long taskId, String userId, String targetEntityId);
+
+    void release(long taskId, String userId);
+
+    void resume(long taskId, String userId);
+
+    void skip(long taskId, String userId);
+
+    void start(long taskId, String userId);
+
+    void stop(long taskId, String userId);
+
+    void suspend(long taskId, String userId);
+
+    void nominate(long taskId, String userId, List<OrganizationalEntity> potentialOwners);
+
+    // Task queries
 
     Task getTaskByWorkItemId(long workItemId);
 
@@ -69,38 +89,16 @@ public interface TaskService extends CommandExecutor {
     List<TaskSummary> getTasksOwnedByStatus(String userId, List<Status> status, String language);
 
     List<TaskSummary> getTasksByStatusByProcessInstanceId(long processInstanceId, List<Status> status, String language);
-    
+
     List<TaskSummary> getTasksAssignedAsPotentialOwnerByProcessId(String userId, String processId);
 
     List<Long> getTasksByProcessInstanceId(long processInstanceId);
-    
-    long addTask(Task task, Map<String, Object> params);
 
-    void release(long taskId, String userId);
-
-    void resume(long taskId, String userId);
-
-    void skip(long taskId, String userId);
-
-    void start(long taskId, String userId);
-
-    void stop(long taskId, String userId);
-
-    void suspend(long taskId, String userId);
-
-    void nominate(long taskId, String userId, List<OrganizationalEntity> potentialOwners);
-
-    Content getContentById(long contentId);
-
-    Attachment getAttachmentById(long attachId);
-
-    Map<String, Object> getTaskContent(long taskId);
-    
     /**
      * This method will be removed in jBPM 7.x because of new methods that better implement this functionality.
      * </p>
      * This method queries using the given arguments.
-     *  
+     *
      * @param userId Optional parameter: the task user id
      * @param workItemIds Optional parameter: a list of work item ids
      * @param taskIds Optional parameter: a list of task ids
@@ -113,29 +111,43 @@ public interface TaskService extends CommandExecutor {
      * @return a List of {@link TaskSummary} instances that fit the critieria given
      */
     @Deprecated
-    List<TaskSummary> getTasksByVariousFields( String userId, List<Long> workItemIds, List<Long> taskIds, List<Long> procInstIds, 
-            List<String> busAdmins, List<String> potOwners, List<String> taskOwners, 
+    List<TaskSummary> getTasksByVariousFields( String userId, List<Long> workItemIds, List<Long> taskIds, List<Long> procInstIds,
+            List<String> busAdmins, List<String> potOwners, List<String> taskOwners,
             List<Status> status, List<String> language, boolean union);
-    
+
     /**
      * This method will be removed in jBPM 7.x because of new methods that better implement this functionality.
      * <p>
-     * Using this method is not recommended. 
-     * 
+     * Using this method is not recommended.
+     *
      * @see #getTasksByVariousFields(String, List, List, List, List, List, List, List, List, boolean)
      */
     @Deprecated
     List<TaskSummary> getTasksByVariousFields( String userId, Map <String, List<?>> parameters, boolean union);
-    
+
+    List<TaskSummary> getTasksByGroup(List<String> groupIds);
+
+    // Content and Attachment management
+
+    Content getContentById(long contentId);
+
+    Attachment getAttachmentById(long attachId);
+
+    Map<String, Object> getTaskContent(long taskId);
+
+    // CoMMent management
+
     Long addComment(long taskId, Comment comment);
-    
+
     Long addComment(long taskId, String addedByUserId, String commentText);
 
     void deleteComment(long taskId, long commentId);
 
     List<Comment> getAllCommentsByTaskId(long taskId);
 
-    Comment getCommentById(long commentId);        
-    
+    Comment getCommentById(long commentId);
+
+    // Other attributes
+
     void setExpirationDate(long taskId, Date date);
 }

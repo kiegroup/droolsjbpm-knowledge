@@ -26,14 +26,14 @@ import org.kie.api.runtime.KieSessionConfiguration;
 
 /**
  * The KnowledgeAgentFactory provides detailed information on how to create and use the KnowledgeAgent.
- * 
+ *
  * @see org.kie.internal.agent.KnowledgeAgentFactory
  * @see org.kie.internal.agent.KnowledgeAgentConfiguration
  */
 public interface KnowledgeAgent {
 
     void addEventListener(KnowledgeAgentEventListener listener);
-    
+
     void removeEventListener(KnowledgeAgentEventListener listener);
 
 
@@ -44,7 +44,7 @@ public interface KnowledgeAgent {
     }
 
     /**
-     * 
+     *
      * @return
      *    The name
      */
@@ -56,18 +56,18 @@ public interface KnowledgeAgent {
      *     The KnowledgeBase
      */
     KnowledgeBase getKnowledgeBase();
-    
-    
+
+
     /**
      * StatelessKnowledgeSession created from here will always have the execute() method called against the latest built KnowledgeBase
      * @return
      */
     StatelessKnowledgeSession newStatelessKnowledgeSession();
-    
+
     /**
      * StatelessKnowledgeSession created from here will always have the execute() method called against the latest built KnowledgeBase
      * @return
-     */    
+     */
     StatelessKnowledgeSession newStatelessKnowledgeSession(KieSessionConfiguration conf);
 
     void monitorResourceChangeEvents(boolean monitor);

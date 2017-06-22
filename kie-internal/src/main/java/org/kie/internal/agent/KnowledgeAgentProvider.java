@@ -23,8 +23,8 @@ import org.kie.internal.builder.KnowledgeBuilderConfiguration;
 
 /**
  * KnowledgeAgentProvider is used by the KnowledgeAgentFactory to "provide" it's concrete implementation.
- * 
- * This class is not considered stable and may change, the user is protected from this change by using 
+ *
+ * This class is not considered stable and may change, the user is protected from this change by using
  * the Factory api, which is considered stable.
  */
 public interface KnowledgeAgentProvider {

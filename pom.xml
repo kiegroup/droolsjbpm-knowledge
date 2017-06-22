@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-parent-with-dependencies</artifactId>
-    <version>6.4.0.Final</version>
+    <version>6.5.1-SNAPSHOT</version>
     <!-- relativePath causes out-of-date problems on hudson slaves -->
     <!--<relativePath>../droolsjbpm-build-bootstrap/pom.xml</relativePath>-->
   </parent>
@@ -16,6 +16,10 @@
 
   <name>KIE :: API Parent</name>
   <description>The common API for KIE (Drools, jBPM and OptaPlanner)</description>
+
+  <properties>
+    <checkstyle.failOnValidation>true</checkstyle.failOnValidation>
+  </properties>
 
   <repositories>
     <!-- Bootstrap repository to locate the parent pom when the parent pom has not been build locally. -->

@@ -24,7 +24,7 @@ import javax.management.ObjectName;
 /**
  * An MBean interface for {@link org.kie.api.runtime.KieSession} monitoring
  */
-public interface KieSessionMonitoringMBean {
+public interface GenericKieSessionMonitoringMXBean {
 
     /**
      * Resets all stats
@@ -40,16 +40,6 @@ public interface KieSessionMonitoringMBean {
      * @return the associated Kie Base ID
      */
     String getKieBaseId();
-
-    /**
-     * @return the associated Kie Session ID
-     */
-    int getKieSessionId();
-
-    /**
-     * @return the total fact count current loaded into this session
-     */
-    long getTotalFactCount();
 
     /**
      * @return the total number of matches fired in this session since last
@@ -81,31 +71,53 @@ public interface KieSessionMonitoringMBean {
     double getAverageFiringTime();
 
     /**
-     * Returns a formatted String with statistics for a single rule in this session,
-     * like number of matches created, cancelled and fired as well as firing time.
-     *  
-     * @param ruleName the name of the rule for which statistics are requested.
-     * 
-     * @return formatted String with statistics
-     */
-    String getStatsForRule(String ruleName);
-
-    /**
      * @return the timestamp of the last stats reset
      */
     Date getLastReset();
     
-    Map<String,String> getStatsByRule();
+    
+    public static interface IAgendaStatsData {
+        long getMatchesFired();
+        long getMatchesCreated();
+        long getMatchesCancelled();
+        long getFiringTime();
+        Date getLastReset();
+    }
+    /**
+     * Returns the statistics for a single rule in this session,
+     * like number of matches created, cancelled and fired as well as firing time.
+     *  
+     * @param ruleName the name of the rule for which statistics are requested.
+     * 
+     * @return the statistics for a single rule in this session
+     */
+    IAgendaStatsData getStatsForRule(String ruleName);
+    Map<String, IAgendaStatsData> getStatsByRule();
 
+    
     long getTotalProcessInstancesStarted();
     
     long getTotalProcessInstancesCompleted();
     
-    String getStatsForProcess(String processId);
     
-    Map<String,String> getStatsByProcess();
+    public static interface IGlobalProcessStatsData {
+        long getProcessInstancesStarted();
+        long getProcessInstancesCompleted();
+        Date getLastReset();
+    }
+    public static interface IProcessStatsData extends IGlobalProcessStatsData {
+        long getProcessNodesTriggered();
+    }
+    IProcessStatsData getStatsForProcess(String processId);
+    Map<String,IProcessStatsData> getStatsByProcess();
     
-    String getStatsForProcessInstance(long processInstanceId);
     
-    Map<Long,String> getStatsByProcessInstance();
+    String getKieSessionName();
+    
+    /**
+     * Return the total number of KieSession monitored by name by this MBean.
+     * If the type of KieSession monitored is Stateful, this is the total count of Stateful KieSession(s) currently live under the specified KieSession name.
+     * If the type of KieSession monitored is Stateless, this is the total amount of Working Memory created.
+     */
+    long getTotalSessions();
 }
