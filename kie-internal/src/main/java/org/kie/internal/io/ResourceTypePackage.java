@@ -28,7 +28,7 @@ public interface ResourceTypePackage {
      * @param resource
      * @return true if this ResourceTypePackage mutated as part of this method invocation.
      */
-    default boolean removeFromResource(Resource resource) {
+    default boolean removeResource(Resource resource) {
         return false;
     }
 }
