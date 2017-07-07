@@ -148,7 +148,7 @@ public class ServiceRegistryImpl
                     "org.jbpm.persistence.correlation.JPACorrelationKeyFactory");
         addDefault( "org.kie.internal.utils.ClassLoaderResolver",
                     "org.kie.scanner.MavenClassLoaderResolver" );
-        addDefault( "org.kie.internal.utils.ServiceDiscovery",
+        addDefault( "org.kie.api.utils.ServiceDiscovery",
                     "org.drools.core.util.ServiceDiscoveryImpl" );
 
 
