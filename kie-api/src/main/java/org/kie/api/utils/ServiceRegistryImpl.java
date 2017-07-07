@@ -160,6 +160,9 @@ public class ServiceRegistryImpl
                            "org.kie.internal.runtime.KieRuntimesImpl" );
         addDefaultFactory( "org.kie.internal.runtime.beliefs.KieBeliefs",
                            "org.kie.internal.runtime.beliefs.KieBeliefsImpl" );
+        
+        addDefault( "org.kie.api.runtime.builder.ExecutableBuilder", 
+                    "org.drools.core.fluent.impl.ExecutableBuilderImpl" );
 
         initServiceDiscovery();
     }
