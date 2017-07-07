@@ -152,14 +152,14 @@ public class ServiceRegistryImpl
                     "org.drools.core.util.ServiceDiscoveryImpl" );
 
 
-        addDefault( "org.kie.internal.assembler.KieAssemblers",
-                    "org.kie.internal.assembler.KieAssemblersImpl" );
-        addDefault( "org.kie.internal.weaver.KieWeavers",
-                    "org.kie.internal.weaver.KieWeaversImpl" );
-        addDefault( "org.kie.internal.runtime.KieRuntimes",
-                    "org.kie.internal.runtime.KieRuntimesImpl" );
-        addDefault( "org.kie.internal.runtime.beliefs.KieBeliefs",
-                    "org.kie.internal.runtime.beliefs.KieBeliefsImpl" );
+        addDefaultFactory( "org.kie.internal.assembler.KieAssemblers",
+                           "org.kie.internal.assembler.KieAssemblersImpl" );
+        addDefaultFactory( "org.kie.internal.weaver.KieWeavers",
+                           "org.kie.internal.weaver.KieWeaversImpl" );
+        addDefaultFactory( "org.kie.internal.runtime.KieRuntimes",
+                           "org.kie.internal.runtime.KieRuntimesImpl" );
+        addDefaultFactory( "org.kie.internal.runtime.beliefs.KieBeliefs",
+                           "org.kie.internal.runtime.beliefs.KieBeliefsImpl" );
 
         initServiceDiscovery();
     }
