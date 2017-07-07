@@ -33,6 +33,7 @@ import org.kie.api.persistence.jpa.KieStoreServices;
 import org.kie.api.runtime.Environment;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSessionConfiguration;
+import org.kie.api.utils.ServiceRegistryImpl;
 
 /**
  * <p>
@@ -330,7 +331,7 @@ public interface KieServices {
 
         static {
             try {
-                INSTANCE = ( KieServices ) Class.forName( "org.drools.compiler.kie.builder.impl.KieServicesImpl" ).newInstance();
+                INSTANCE = ServiceRegistryImpl.getInstance().get( KieServices.class );
             } catch (Exception e) {
                 throw new RuntimeException("Unable to instance KieServices", e);
             }
