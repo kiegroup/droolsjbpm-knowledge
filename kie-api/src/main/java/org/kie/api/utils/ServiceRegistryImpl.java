@@ -45,7 +45,7 @@ public class ServiceRegistryImpl
 
     private static final ServiceRegistry          instance        = new ServiceRegistryImpl();
 
-    protected static final transient Logger logger          = LoggerFactory.getLogger( ServiceRegistryImpl.class );
+    private static final transient Logger logger          = LoggerFactory.getLogger( ServiceRegistryImpl.class );
 
     private final Map<String, Callable< ? >>      registry        = new HashMap<String, Callable< ? >>();
     private final Map<String, Callable< ? >>      defaultServices = new HashMap<String, Callable< ? >>();
