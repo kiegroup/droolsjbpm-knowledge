@@ -34,6 +34,7 @@ import org.kie.api.persistence.jpa.KieStoreServices;
 import org.kie.api.runtime.builder.ExecutableBuilder;
 import org.kie.api.runtime.manager.RuntimeEnvironmentBuilderFactory;
 import org.kie.api.runtime.rule.DataSource;
+import org.kie.api.runtime.rule.RuleUnitExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -170,6 +171,8 @@ public class ServiceRegistryImpl
                     "org.jbpm.runtime.manager.impl.RuntimeEnvironmentBuilder" );
         addDefault( DataSource.class,
                     "org.drools.core.datasources.CursoredDataSource" );
+        addDefault( RuleUnitExecutor.class,
+                    "org.drools.core.impl.RuleUnitExecutorSession");
 
         initServiceDiscovery();
     }
