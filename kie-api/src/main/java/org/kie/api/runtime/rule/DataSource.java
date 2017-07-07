@@ -16,6 +16,8 @@
 
 package org.kie.api.runtime.rule;
 
+import org.kie.api.utils.ServiceRegistryImpl;
+
 /**
  * A DataSource is a source of the data processed by a given {@link RuleUnit}.
  */
@@ -56,7 +58,7 @@ public interface DataSource<T> extends Iterable<T> {
      */
     static <T> DataSource<T> create(T... items) {
         try {
-            DataSource<T> dataSource = (DataSource<T>) Class.forName( "org.drools.core.datasources.CursoredDataSource" ).newInstance();
+            DataSource<T> dataSource = ServiceRegistryImpl.getInstance().get(DataSource.class);
             for (T item : items) {
                 dataSource.insert( item );
             }

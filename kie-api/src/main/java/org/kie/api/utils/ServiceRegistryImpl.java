@@ -31,6 +31,9 @@ import org.kie.api.concurrent.KieExecutors;
 import org.kie.api.io.KieResources;
 import org.kie.api.marshalling.KieMarshallers;
 import org.kie.api.persistence.jpa.KieStoreServices;
+import org.kie.api.runtime.builder.ExecutableBuilder;
+import org.kie.api.runtime.manager.RuntimeEnvironmentBuilderFactory;
+import org.kie.api.runtime.rule.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -161,10 +164,12 @@ public class ServiceRegistryImpl
         addDefaultFactory( "org.kie.internal.runtime.beliefs.KieBeliefs",
                            "org.kie.internal.runtime.beliefs.KieBeliefsImpl" );
         
-        addDefault( "org.kie.api.runtime.builder.ExecutableBuilder", 
+        addDefault( ExecutableBuilder.class, 
                     "org.drools.core.fluent.impl.ExecutableBuilderImpl" );
-        addDefault( "org.kie.api.runtime.manager.RuntimeEnvironmentBuilderFactory",
+        addDefault( RuntimeEnvironmentBuilderFactory.class,
                     "org.jbpm.runtime.manager.impl.RuntimeEnvironmentBuilder" );
+        addDefault( DataSource.class,
+                    "org.drools.core.datasources.CursoredDataSource" );
 
         initServiceDiscovery();
     }
