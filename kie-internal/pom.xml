@@ -88,6 +88,7 @@
               org.kie.api.runtime.query,
               org.kie.api.task,
               org.kie.api.task.model,
+              org.kie.api.utils,
               org.kie.scanner;resolution:=optional,
               org.slf4j
             </Import-Package>
