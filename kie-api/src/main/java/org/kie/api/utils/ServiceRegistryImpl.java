@@ -163,6 +163,8 @@ public class ServiceRegistryImpl
         
         addDefault( "org.kie.api.runtime.builder.ExecutableBuilder", 
                     "org.drools.core.fluent.impl.ExecutableBuilderImpl" );
+        addDefault( "org.kie.api.runtime.manager.RuntimeEnvironmentBuilderFactory",
+                    "org.jbpm.runtime.manager.impl.RuntimeEnvironmentBuilder" );
 
         initServiceDiscovery();
     }

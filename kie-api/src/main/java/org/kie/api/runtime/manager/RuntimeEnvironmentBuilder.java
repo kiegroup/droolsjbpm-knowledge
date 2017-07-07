@@ -20,6 +20,7 @@ import org.kie.api.builder.ReleaseId;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
 import org.kie.api.task.UserGroupCallback;
+import org.kie.api.utils.ServiceRegistryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,8 +54,7 @@ public interface RuntimeEnvironmentBuilder {
 
         static {
             try {
-                INSTANCE = ( RuntimeEnvironmentBuilderFactory )
-                        Class.forName( "org.jbpm.runtime.manager.impl.RuntimeEnvironmentBuilder").newInstance();
+                INSTANCE = ServiceRegistryImpl.getInstance().get( RuntimeEnvironmentBuilderFactory.class );
             } catch (Exception e) {
                 logger.error("Unable to instance RuntimeEnvironmentBuilderFactory due to " + e.getMessage());
             }
