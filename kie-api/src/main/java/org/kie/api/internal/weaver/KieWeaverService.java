@@ -13,22 +13,19 @@
  * limitations under the License.
 */
 
-package org.kie.internal.io;
+package org.kie.api.internal.weaver;
 
-import org.kie.api.io.Resource;
+import org.kie.api.KieBase;
+import org.kie.api.definition.KiePackage;
+import org.kie.api.internal.io.ResourceTypePackage;
+import org.kie.api.internal.utils.KieService;
 import org.kie.api.io.ResourceType;
 
-public interface ResourceTypePackage {
+public interface KieWeaverService<P extends ResourceTypePackage> extends KieService {
+
     ResourceType getResourceType();
 
-    /**
-     * Remove artifacts inside this ResourceTypePackage which belong to the resource passed as parameter.
-     * Concrete implementation of this interface shall extend this method in order to properly support incremental KieContainer updates.
-     * 
-     * @param resource
-     * @return true if this ResourceTypePackage mutated as part of this method invocation.
-     */
-    default boolean removeResource(Resource resource) {
-        return false;
-    }
+    void merge(KieBase kieBase, KiePackage kiePkg, P rtPkg);
+
+    void weave(KieBase kieBase, KiePackage kiePkg, P rtPkg);
 }

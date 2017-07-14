@@ -13,16 +13,18 @@
  * limitations under the License.
 */
 
-package org.kie.internal.assembler;
+package org.kie.api.internal.utils;
 
-import org.kie.api.io.Resource;
-import org.kie.api.io.ResourceConfiguration;
-import org.kie.api.io.ResourceType;
-import org.kie.internal.builder.KnowledgeBuilder;
-import org.kie.internal.utils.KieService;
+import org.kie.api.Service;
 
-public interface KieAssemblerService extends KieService {
-    ResourceType getResourceType();
+public interface KieService extends Service {
+//    void preInit(T ctx);
+//    void init(T ctx);
+//    void postInit(T ctx);
 
-    void addResource(KnowledgeBuilder kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception;
+    Class getServiceInterface();
+
+//    ResourceType getResourceType();
+//
+//    RequiredResourceType[] getRequiredResourceType();
 }

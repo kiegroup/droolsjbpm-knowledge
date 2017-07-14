@@ -13,27 +13,26 @@
  * limitations under the License.
 */
 
-package org.kie.internal.assembler;
+package org.kie.api.internal.weaver;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.kie.api.io.ResourceType;
 
-public class KieAssemblersImpl implements KieAssemblers {
-    private Map<ResourceType, KieAssemblerService> assemblers;
+public class KieWeaversImpl implements KieWeavers {
+    private Map<ResourceType, KieWeaverService> weavers;
 
-    public KieAssemblersImpl() {
-        assemblers = new HashMap<ResourceType, KieAssemblerService>();
+    public KieWeaversImpl() {
+        weavers = new HashMap<ResourceType, KieWeaverService>();
     }
 
-    @Override
-    public Map<ResourceType, KieAssemblerService> getAssemblers() {
-        return this.assemblers;
+    public Map<ResourceType, KieWeaverService> getWeavers() {
+        return this.weavers;
     }
 
     @Override
     public Class getServiceInterface() {
-        return KieAssemblerService.class;
+        return KieWeavers.class;
     }
 }

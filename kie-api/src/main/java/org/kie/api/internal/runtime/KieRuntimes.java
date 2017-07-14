@@ -13,10 +13,12 @@
  * limitations under the License.
 */
 
-package org.kie.internal.runtime;
+package org.kie.api.internal.runtime;
 
-import org.kie.internal.utils.KieService;
+import java.util.Map;
 
-public interface KieRuntimeService<T> extends KieService {
-    T newKieRuntime(KnowledgeRuntime session);
+import org.kie.api.internal.utils.KieService;
+
+public interface KieRuntimes extends KieService {
+    Map<String, Object> getRuntimes();
 }

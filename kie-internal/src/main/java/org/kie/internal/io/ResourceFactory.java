@@ -21,10 +21,10 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.URL;
 
+import org.kie.api.internal.utils.ServiceRegistry;
 import org.kie.api.io.KieResources;
 import org.kie.api.io.Resource;
 import org.kie.internal.definition.KnowledgeDescr;
-import org.kie.internal.utils.ServiceRegistryImpl;
 
 /**
  * <p>
@@ -140,7 +140,7 @@ public class ResourceFactory {
     }
 
     private static void loadFactoryService() {
-        setFactoryService( ServiceRegistryImpl.getInstance().get( KieResources.class ) );
+        setFactoryService(ServiceRegistry.getInstance().get(KieResources.class));
     }
 
 }
