@@ -13,10 +13,19 @@
  * limitations under the License.
 */
 
-package org.kie.internal.runtime;
+package org.kie.api.internal.weaver;
 
-import org.kie.internal.utils.KieService;
+import org.kie.api.KieBase;
+import org.kie.api.definition.KiePackage;
+import org.kie.api.internal.io.ResourceTypePackage;
+import org.kie.api.internal.utils.KieService;
+import org.kie.api.io.ResourceType;
 
-public interface KieRuntimeService<T> extends KieService {
-    T newKieRuntime(KnowledgeRuntime session);
+public interface KieWeaverService<P extends ResourceTypePackage> extends KieService {
+
+    ResourceType getResourceType();
+
+    void merge(KieBase kieBase, KiePackage kiePkg, P rtPkg);
+
+    void weave(KieBase kieBase, KiePackage kiePkg, P rtPkg);
 }
