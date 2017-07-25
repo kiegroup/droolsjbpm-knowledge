@@ -13,19 +13,16 @@
  * limitations under the License.
 */
 
-package org.kie.internal.weaver;
+package org.kie.api.internal.runtime.beliefs;
 
-import org.kie.api.KieBase;
-import org.kie.api.definition.KiePackage;
-import org.kie.api.io.ResourceType;
-import org.kie.internal.io.ResourceTypePackage;
-import org.kie.internal.utils.KieService;
+import java.util.Map;
 
-public interface KieWeaverService<P extends ResourceTypePackage> extends KieService {
+import org.kie.api.internal.utils.KieService;
 
-    ResourceType getResourceType();
+public interface KieBeliefs extends KieService {
+    Map<String, KieBeliefService> getBeliefs();
 
-    void merge(KieBase kieBase, KiePackage kiePkg, P rtPkg);
 
-    void weave(KieBase kieBase, KiePackage kiePkg, P rtPkg);
+    public KieBeliefService[] getServices();
+
 }
