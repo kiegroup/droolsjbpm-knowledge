@@ -18,6 +18,7 @@ package org.kie.api.runtime.builder;
 
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.runtime.Executable;
+import org.kie.api.utils.ServiceRegistryImpl;
 
 public interface ExecutableBuilder extends TimeFluent<ExecutableBuilder>, ContextFluent<ExecutableBuilder, ExecutableBuilder> {
 
@@ -27,7 +28,7 @@ public interface ExecutableBuilder extends TimeFluent<ExecutableBuilder>, Contex
 
     static ExecutableBuilder create() {
         try {
-            return (ExecutableBuilder) Class.forName( "org.drools.core.fluent.impl.ExecutableBuilderImpl" ).newInstance();
+            return ServiceRegistryImpl.getInstance().get( ExecutableBuilder.class );
         } catch (Exception e) {
             throw new RuntimeException("Unable to instance ExecutableRunner", e);
         }

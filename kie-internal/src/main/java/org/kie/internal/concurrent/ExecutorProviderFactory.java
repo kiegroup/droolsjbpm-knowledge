@@ -17,7 +17,7 @@
 package org.kie.internal.concurrent;
 
 import org.kie.api.concurrent.KieExecutors;
-import org.kie.internal.utils.ServiceRegistryImpl;
+import org.kie.api.utils.ServiceRegistryImpl;
 
 public class ExecutorProviderFactory {
 

@@ -15,7 +15,7 @@
  */
 
 
-package org.kie.internal.utils;
+package org.kie.api.utils;
 
 import java.net.URL;
 import java.util.Enumeration;
@@ -31,15 +31,10 @@ import org.kie.api.concurrent.KieExecutors;
 import org.kie.api.io.KieResources;
 import org.kie.api.marshalling.KieMarshallers;
 import org.kie.api.persistence.jpa.KieStoreServices;
-import org.kie.internal.assembler.KieAssemblers;
-import org.kie.internal.assembler.KieAssemblersImpl;
-import org.kie.internal.process.CorrelationKeyFactory;
-import org.kie.internal.runtime.KieRuntimes;
-import org.kie.internal.runtime.KieRuntimesImpl;
-import org.kie.internal.runtime.beliefs.KieBeliefs;
-import org.kie.internal.runtime.beliefs.KieBeliefsImpl;
-import org.kie.internal.weaver.KieWeavers;
-import org.kie.internal.weaver.KieWeaversImpl;
+import org.kie.api.runtime.builder.ExecutableBuilder;
+import org.kie.api.runtime.manager.RuntimeEnvironmentBuilderFactory;
+import org.kie.api.runtime.rule.DataSource;
+import org.kie.api.runtime.rule.RuleUnitExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +49,7 @@ public class ServiceRegistryImpl
 
     private static final ServiceRegistry          instance        = new ServiceRegistryImpl();
 
-    protected static final transient Logger logger          = LoggerFactory.getLogger( ServiceRegistryImpl.class );
+    private static final transient Logger logger          = LoggerFactory.getLogger( ServiceRegistryImpl.class );
 
     private final Map<String, Callable< ? >>      registry        = new HashMap<String, Callable< ? >>();
     private final Map<String, Callable< ? >>      defaultServices = new HashMap<String, Callable< ? >>();
@@ -153,22 +148,31 @@ public class ServiceRegistryImpl
                            "org.kie.scanner.KieScannerFactoryServiceImpl");
         addDefault( KieStoreServices.class,
                     "org.drools.persistence.jpa.KnowledgeStoreServiceImpl");
-        addDefault( CorrelationKeyFactory.class,
+        addDefault( "org.kie.internal.process.CorrelationKeyFactory",
                     "org.jbpm.persistence.correlation.JPACorrelationKeyFactory");
-        addDefault( ClassLoaderResolver.class,
+        addDefault( "org.kie.internal.utils.ClassLoaderResolver",
                     "org.kie.scanner.MavenClassLoaderResolver" );
-        addDefault( ServiceDiscovery.class,
+        addDefault( "org.kie.api.utils.ServiceDiscovery",
                     "org.drools.core.util.ServiceDiscoveryImpl" );
 
 
-        defaultServices.put( KieAssemblers.class.getName(),
-                             new ReturnInstance( new KieAssemblersImpl()) );
-        defaultServices.put( KieWeavers.class.getName(),
-                             new ReturnInstance( new KieWeaversImpl()) );
-        defaultServices.put( KieRuntimes.class.getName(),
-                             new ReturnInstance( new KieRuntimesImpl()) );
-        defaultServices.put( KieBeliefs.class.getName(),
-                             new ReturnInstance( new KieBeliefsImpl()) );
+        addDefaultFactory( "org.kie.internal.assembler.KieAssemblers",
+                           "org.kie.internal.assembler.KieAssemblersImpl" );
+        addDefaultFactory( "org.kie.internal.weaver.KieWeavers",
+                           "org.kie.internal.weaver.KieWeaversImpl" );
+        addDefaultFactory( "org.kie.internal.runtime.KieRuntimes",
+                           "org.kie.internal.runtime.KieRuntimesImpl" );
+        addDefaultFactory( "org.kie.internal.runtime.beliefs.KieBeliefs",
+                           "org.kie.internal.runtime.beliefs.KieBeliefsImpl" );
+        
+        addDefault( ExecutableBuilder.class, 
+                    "org.drools.core.fluent.impl.ExecutableBuilderImpl" );
+        addDefault( RuntimeEnvironmentBuilderFactory.class,
+                    "org.jbpm.runtime.manager.impl.RuntimeEnvironmentBuilder" );
+        addDefault( DataSource.class,
+                    "org.drools.core.datasources.CursoredDataSource" );
+        addDefault( RuleUnitExecutor.class,
+                    "org.drools.core.impl.RuleUnitExecutorSession");
 
         initServiceDiscovery();
     }

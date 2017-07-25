@@ -17,6 +17,7 @@
 package org.kie.api.runtime.rule;
 
 import org.kie.api.KieBase;
+import org.kie.api.utils.ServiceRegistryImpl;
 
 /**
  * RuleUnitExecutor allows to execute different {@link RuleUnit}s.
@@ -82,7 +83,7 @@ public interface RuleUnitExecutor {
      */
     static RuleUnitExecutor create() {
         try {
-            return ( RuleUnitExecutor ) Class.forName( "org.drools.core.impl.RuleUnitExecutorSession" ).newInstance();
+            return ServiceRegistryImpl.getInstance().get( RuleUnitExecutor.class );
         } catch (Exception e) {
             throw new RuntimeException("Unable to instance KieServices", e);
         }

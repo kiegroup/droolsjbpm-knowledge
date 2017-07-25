@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kie.internal.utils;
+package org.kie.api.utils;
 
 public interface FastClassLoader {
     public Class<?> fastFindClass(String name);

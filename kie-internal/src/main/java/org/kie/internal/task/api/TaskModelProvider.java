@@ -15,7 +15,7 @@
 
 package org.kie.internal.task.api;
 
-import org.kie.internal.utils.ServiceRegistryImpl;
+import org.kie.api.utils.ServiceRegistryImpl;
 
 public class TaskModelProvider {
 

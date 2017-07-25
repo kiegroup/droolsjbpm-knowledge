@@ -16,9 +16,9 @@
 
 package org.kie.internal.builder.impl;
 
+import org.kie.api.utils.ServiceRegistryImpl;
 import org.kie.internal.KieInternalServices;
 import org.kie.internal.process.CorrelationKeyFactory;
-import org.kie.internal.utils.ServiceRegistryImpl;
 
 public class KieInternalServicesImpl implements KieInternalServices {
 

@@ -21,7 +21,7 @@ import java.util.Properties;
 import com.sun.tools.xjc.Options;
 
 import org.kie.api.KieBase;
-import org.kie.internal.utils.ServiceRegistryImpl;
+import org.kie.api.utils.ServiceRegistryImpl;
 
 /**
  * This factory is used to build the knowledge base resources that are held collectively in

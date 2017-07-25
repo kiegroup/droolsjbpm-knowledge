@@ -23,8 +23,8 @@ import java.net.URL;
 
 import org.kie.api.io.KieResources;
 import org.kie.api.io.Resource;
+import org.kie.api.utils.ServiceRegistryImpl;
 import org.kie.internal.definition.KnowledgeDescr;
-import org.kie.internal.utils.ServiceRegistryImpl;
 
 /**
  * <p>
