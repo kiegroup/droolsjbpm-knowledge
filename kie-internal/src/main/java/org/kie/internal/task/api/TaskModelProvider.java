@@ -16,23 +16,19 @@
 package org.kie.internal.task.api;
 
 import org.kie.api.internal.utils.ServiceRegistry;
-import org.kie.api.internal.utils.ServiceRegistryImpl;
 
 public class TaskModelProvider {
 
-    private static TaskModelProviderService provider;
+    private static class LazyHolder {
+        private static final TaskModelProviderService provider = ServiceRegistry.getInstance().get(TaskModelProviderService.class);
+    }
 
     public static TaskModelFactory getFactory() {
         return getTaskModelProviderService().getTaskModelFactory();
     }
 
-
-
     public static TaskModelProviderService getTaskModelProviderService() {
-        if (provider == null) {
-            provider = ServiceRegistry.getInstance().get(TaskModelProviderService.class);
-        }
-        return provider;
+        return LazyHolder.provider;
     }
 
 }
