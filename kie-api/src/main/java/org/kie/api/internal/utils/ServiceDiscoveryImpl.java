@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.function.BiPredicate;
 
 import org.kie.api.internal.assembler.KieAssemblerService;
 import org.kie.api.internal.assembler.KieAssemblers;
@@ -51,11 +50,11 @@ public class ServiceDiscoveryImpl {
 
     private ClassLoader classloader;
 
-    private final List<BiPredicate<String, String>> processors = Arrays.asList( this::processKieService,
-                                                                                this::processKieBeliefs,
-                                                                                this::processKieAssemblers,
-                                                                                this::processKieWeavers,
-                                                                                this::processKieRuntimes );
+    private final List<ServiceProcessor> processors = Arrays.asList( this::processKieService,
+                                                                     this::processKieBeliefs,
+                                                                     this::processKieAssemblers,
+                                                                     this::processKieWeavers,
+                                                                     this::processKieRuntimes );
 
     private ServiceDiscoveryImpl() {}
 
@@ -111,8 +110,9 @@ public class ServiceDiscoveryImpl {
                     new IllegalStateException("Discovery started, but no kie.conf's found");
                 }
                 if (confResources != null) {
-                    Properties props = loadConfs(confResources);
-                    processKieConf( props );
+                    while (confResources.hasMoreElements()) {
+                        registerConfs( getClassLoader(), confResources.nextElement() );
+                    }
                 }
                 buildMap();
             }
@@ -123,28 +123,31 @@ public class ServiceDiscoveryImpl {
         return cachedServices;
     }
 
-    private Properties loadConfs(Enumeration<URL> confResources) {
+    public void registerConfs( ClassLoader classLoader, URL url ) {
+        log.info("Loading kie.conf from  ", classLoader);
+        Properties props = loadConfs( url );
+        processKieConf( classLoader, props );
+    }
+
+    private Properties loadConfs(URL url) {
         // iterate urls, then for each url split the service key and attempt to register each service
         Properties props = new Properties();
-        while (confResources.hasMoreElements()) {
-            URL url = confResources.nextElement();
-            try (InputStream is = url.openStream()) {
-                props.load( is );
-                log.info("Discovered kie.conf url={} ", url);
-            } catch (Exception exc) {
-                throw new RuntimeException("Unable to build kie service url = " + url.toExternalForm(), exc);
-            }
+        try (InputStream is = url.openStream()) {
+            props.load( is );
+            log.info("Discovered kie.conf url={} ", url);
+        } catch (Exception exc) {
+            throw new RuntimeException("Unable to build kie service url = " + url.toExternalForm(), exc);
         }
         return props;
     }
 
-    private void processKieConf(Properties props) {
+    private void processKieConf(ClassLoader classLoader, Properties props) {
         props.forEach( (k, v) -> {
             String key = k.toString();
             boolean optional = key.startsWith( "?" );
             try {
                 processors.stream()
-                          .filter( p -> p.test( optional ? key.substring( 1 ) : key, v.toString() ) )
+                          .filter( p -> p.process( classLoader, optional ? key.substring( 1 ) : key, v.toString() ) )
                           .findFirst()
                           .orElseThrow( () -> new RuntimeException( "Cannot process pair: ( " + k + ", " + v + " )" ) );
             } catch (RuntimeException e) {
@@ -157,9 +160,14 @@ public class ServiceDiscoveryImpl {
         });
     }
 
-    private boolean processKieRuntimes(String key, String value) {
+    @FunctionalInterface
+    private interface ServiceProcessor {
+        boolean process(ClassLoader classLoader, String key, String value);
+    }
+
+    private boolean processKieRuntimes(ClassLoader classLoader, String key, String value) {
         if (key.startsWith( "kie.runtimes." )) {
-            KieRuntimeService runtime = newInstance( value );
+            KieRuntimeService runtime = newInstance( classLoader, value );
             log.info("Adding Runtime {}\n", runtime.getServiceInterface().getName());
             runtimes.getRuntimes().put(runtime.getServiceInterface().getName(), runtime);
             return true;
@@ -167,9 +175,9 @@ public class ServiceDiscoveryImpl {
         return false;
     }
 
-    private boolean processKieAssemblers(String key, String value) {
+    private boolean processKieAssemblers(ClassLoader classLoader, String key, String value) {
         if (key.startsWith( "kie.assemblers." )) {
-            KieAssemblerService assemblerFactory = newInstance( value );
+            KieAssemblerService assemblerFactory = newInstance( classLoader, value );
             log.info( "Adding Assembler {}\n", assemblerFactory.getClass().getName() );
             assemblers.getAssemblers().put(assemblerFactory.getResourceType(), assemblerFactory);
             return true;
@@ -177,9 +185,9 @@ public class ServiceDiscoveryImpl {
         return false;
     }
 
-    private boolean processKieWeavers(String key, String value) {
+    private boolean processKieWeavers(ClassLoader classLoader, String key, String value) {
         if (key.startsWith( "kie.weavers." )) {
-            KieWeaverService weaver = newInstance( value );
+            KieWeaverService weaver = newInstance( classLoader, value );
             log.info("Adding Weaver {}\n", weavers.getClass().getName());
             weavers.getWeavers().put( weaver.getResourceType(), weaver );
             return true;
@@ -187,9 +195,9 @@ public class ServiceDiscoveryImpl {
         return false;
     }
 
-    private boolean processKieBeliefs(String key, String value) {
+    private boolean processKieBeliefs(ClassLoader classLoader, String key, String value) {
         if (key.startsWith( "kie.beliefs." )) {
-            KieBeliefService belief = newInstance( value );
+            KieBeliefService belief = newInstance( classLoader, value );
             log.info("Adding Belief {}\n", belief.getClass().getName());
             beliefs.getBeliefs().put(belief.getBeliefType(), belief);
             return true;
@@ -197,26 +205,26 @@ public class ServiceDiscoveryImpl {
         return false;
     }
 
-    private boolean processKieService(String key, String value) {
+    private boolean processKieService(ClassLoader classLoader, String key, String value) {
         if (key.startsWith( "kie.services." )) {
             String serviceName = key.substring( "kie.services.".length() );
-            services.put(serviceName, newInstance( value ));
+            services.put(serviceName, newInstance( classLoader, value ));
             log.info( "Adding Service {}\n", value );
             return true;
         }
         return false;
     }
 
-    private <T> T newInstance( String className ) {
+    private <T> T newInstance( ClassLoader classLoader, String className ) {
         try {
-            return (T) Class.forName( className, true, getClassLoader() ).newInstance();
+            return (T) Class.forName( className, true, classLoader ).newInstance();
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             throw new RuntimeException( "Cannot create instance of class: " + className, e );
         }
     }
 
     private ClassLoader getClassLoader() {
-        if (classloader== null) {
+        if (classloader == null) {
             classloader = Thread.currentThread().getContextClassLoader();
             if (classloader == null) {
                 classloader = ClassLoader.getSystemClassLoader();
