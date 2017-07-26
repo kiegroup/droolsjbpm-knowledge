@@ -16,10 +16,11 @@
 package org.kie.api.internal.runtime;
 
 import org.kie.api.internal.utils.KieService;
+import org.kie.api.runtime.KieRuntime;
 
 public interface KieRuntimeService<T> extends KieService {
 
-    T newKieRuntime(KnowledgeRuntime session);
+    T newKieRuntime(KieRuntime session );
 
     Class getServiceInterface();
 }

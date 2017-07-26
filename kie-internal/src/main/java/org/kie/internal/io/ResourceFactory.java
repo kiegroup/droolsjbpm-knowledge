@@ -128,19 +128,12 @@ public class ResourceFactory {
         return getFactoryService().newDescrResource( descr );
     }
 
-    private static synchronized void setFactoryService(KieResources factoryService) {
-        ResourceFactory.factoryService = factoryService;
-    }
-
     private static synchronized KieResources getFactoryService() {
-        if ( factoryService == null ) {
-            loadFactoryService();
-        }
-        return factoryService;
+        return LazyHolder.service;
     }
 
-    private static void loadFactoryService() {
-        setFactoryService(ServiceRegistry.getInstance().get(KieResources.class));
+    private static class LazyHolder {
+        private static final KieResources service = ServiceRegistry.getInstance().get(KieResources.class);
     }
 
 }

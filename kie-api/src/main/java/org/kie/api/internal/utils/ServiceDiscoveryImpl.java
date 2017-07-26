@@ -84,6 +84,10 @@ public class ServiceDiscoveryImpl {
         this.kiecConfDiscoveryAllowed = kiecConfDiscoveryAllowed;
     }
 
+    public <T> void addService(Class<T> serviceClass, T service) {
+        addService( serviceClass.getCanonicalName(), service );
+    }
+
     public synchronized void addService(String serviceName, Object object) {
         if (!sealed) {
             cachedServices.put(serviceName, object);
