@@ -46,13 +46,6 @@ public class ServiceRegistryImpl
 
     public synchronized <T> T get(Class<T> cls) {
         Object service = this.registry.get( cls.getName() );
-        if (service == null || cls.isInstance( service )) {
-            return (T) service;
-        }
-        try {
-            return (T) Class.forName( service.getClass().getCanonicalName() ).newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException( e );
-        }
+        return cls.isInstance( service ) ? (T) service : null;
     }
 }
