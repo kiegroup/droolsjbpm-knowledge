@@ -46,7 +46,7 @@ public class ServiceRegistryImpl
 
     public synchronized <T> T get(Class<T> cls) {
         Object service = this.registry.get( cls.getName() );
-        if (cls.isInstance( service )) {
+        if (service == null || cls.isInstance( service )) {
             return (T) service;
         }
         try {
