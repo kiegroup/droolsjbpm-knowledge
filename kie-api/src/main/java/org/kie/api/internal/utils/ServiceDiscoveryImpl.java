@@ -155,7 +155,7 @@ public class ServiceDiscoveryImpl {
     private <T> T newInstance( ClassLoader classLoader, String className ) {
         try {
             return (T) Class.forName( className, true, classLoader ).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NoClassDefFoundError e) {
             throw new RuntimeException( "Cannot create instance of class: " + className, e );
         }
     }
