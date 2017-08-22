@@ -31,8 +31,7 @@ public class XStreamUtils {
     }
 
     private static XStream internalCreateXStream( XStream xstream ) {
-        String[] voidDeny = {"void.class", "Void.class"};
-        xstream.denyTypes(voidDeny);
+        xstream.denyTypes(VOID_TYPES);
         return xstream;
     }
 }
