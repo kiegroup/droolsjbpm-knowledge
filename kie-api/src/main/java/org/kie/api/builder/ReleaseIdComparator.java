@@ -19,11 +19,11 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
-import java.util.Properties;
+import java.util.Map;
 import java.util.Stack;
 
 public class ReleaseIdComparator implements Comparator<ReleaseId> {
@@ -162,7 +162,7 @@ public class ReleaseIdComparator implements Comparator<ReleaseId> {
 
             private static final List<String> _QUALIFIERS = Arrays.asList(QUALIFIERS);
 
-            private static final Properties ALIASES = new Properties();
+            private static final Map<String, String> ALIASES = new HashMap<>();
 
             static {
                 ALIASES.put("ga", "");
@@ -193,7 +193,7 @@ public class ReleaseIdComparator implements Comparator<ReleaseId> {
                             break;
                     }
                 }
-                this.value = ALIASES.getProperty(value, value);
+                this.value = ALIASES.containsKey(value) ? ALIASES.get(value) : value;
             }
 
             public int getType() {
@@ -334,7 +334,7 @@ public class ReleaseIdComparator implements Comparator<ReleaseId> {
 
             items = new ListItem();
 
-            version = version.toLowerCase(Locale.ENGLISH);
+            version = version.toLowerCase();
 
             ListItem list = items;
 
