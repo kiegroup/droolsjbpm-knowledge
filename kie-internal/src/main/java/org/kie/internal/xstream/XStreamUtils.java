@@ -17,6 +17,7 @@
 package org.kie.internal.xstream;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.converters.reflection.ReflectionProvider;
 import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
 import com.thoughtworks.xstream.security.WildcardTypePermission;
 
@@ -31,6 +32,10 @@ public class XStreamUtils {
 
     public static XStream createXStream(HierarchicalStreamDriver hierarchicalStreamDriver ) {
         return internalCreateXStream( new XStream(hierarchicalStreamDriver) );
+    }
+
+    public static XStream createXStream(ReflectionProvider reflectionProvider ) {
+        return internalCreateXStream( new XStream(reflectionProvider) );
     }
 
     private static XStream internalCreateXStream( XStream xstream ) {
