@@ -18,6 +18,9 @@ package org.kie.internal.xstream;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
+import com.thoughtworks.xstream.security.WildcardTypePermission;
+
+import static com.thoughtworks.xstream.XStream.setupDefaultSecurity;
 
 public class XStreamUtils {
     private static final String[] VOID_TYPES = {"void.class", "Void.class"};
@@ -31,7 +34,8 @@ public class XStreamUtils {
     }
 
     private static XStream internalCreateXStream( XStream xstream ) {
-        xstream.denyTypes(VOID_TYPES);
+        setupDefaultSecurity(xstream);
+        xstream.addPermission( new WildcardTypePermission( new String[] { "org.kie.**", "org.drools.**", "org.jbpm.**", "org.optaplanner.**" } ) );
         return xstream;
     }
 }
