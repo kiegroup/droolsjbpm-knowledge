@@ -16,9 +16,12 @@
 
 package org.kie.internal.xstream;
 
+import java.util.function.Function;
+
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.reflection.ReflectionProvider;
 import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
+import com.thoughtworks.xstream.mapper.MapperWrapper;
 import com.thoughtworks.xstream.security.WildcardTypePermission;
 
 import static com.thoughtworks.xstream.XStream.setupDefaultSecurity;
@@ -36,6 +39,14 @@ public class XStreamUtils {
 
     public static XStream createXStream(ReflectionProvider reflectionProvider ) {
         return internalCreateXStream( new XStream(reflectionProvider) );
+    }
+
+    public static XStream createXStream(ReflectionProvider reflectionProvider, Function<MapperWrapper, MapperWrapper> mapper ) {
+        return internalCreateXStream( new XStream(reflectionProvider) {
+            protected MapperWrapper wrapMapper(MapperWrapper next) {
+                return mapper.apply( next );
+            }
+        });
     }
 
     private static XStream internalCreateXStream( XStream xstream ) {
