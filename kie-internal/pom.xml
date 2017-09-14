@@ -39,6 +39,10 @@
             <Import-Package>
               com.sun.tools.xjc;resolution:=optional,
               com.thoughtworks.xstream;resolution:=optional,
+              com.thoughtworks.xstream.converters.reflection;resolution:=optional,
+              com.thoughtworks.xstream.io;resolution:=optional,
+              com.thoughtworks.xstream.mapper;resolution:=optional,
+              com.thoughtworks.xstream.security;resolution:=optional,
               javax.enterprise.*;resolution:=optional,
               javax.inject.*;resolution:=optional,
               javax.xml.datatype;resolution:=optional,
