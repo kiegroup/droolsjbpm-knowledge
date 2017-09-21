@@ -20,6 +20,7 @@ import java.util.function.Function;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.reflection.ReflectionProvider;
+import com.thoughtworks.xstream.core.ClassLoaderReference;
 import com.thoughtworks.xstream.io.HierarchicalStreamDriver;
 import com.thoughtworks.xstream.mapper.MapperWrapper;
 import com.thoughtworks.xstream.security.WildcardTypePermission;
@@ -33,8 +34,12 @@ public class XStreamUtils {
         return internalCreateXStream( new XStream() );
     }
 
-    public static XStream createXStream(HierarchicalStreamDriver hierarchicalStreamDriver ) {
+    public static XStream createXStream(HierarchicalStreamDriver hierarchicalStreamDriver) {
         return internalCreateXStream( new XStream(hierarchicalStreamDriver) );
+    }
+
+    public static XStream createXStream(HierarchicalStreamDriver hierarchicalStreamDriver, ClassLoader classLoader) {
+        return internalCreateXStream( new XStream(null, hierarchicalStreamDriver, new ClassLoaderReference( classLoader )) );
     }
 
     public static XStream createXStream(ReflectionProvider reflectionProvider ) {
