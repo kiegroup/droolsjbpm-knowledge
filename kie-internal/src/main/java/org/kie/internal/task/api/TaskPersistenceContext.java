@@ -31,7 +31,6 @@ import org.kie.api.task.model.User;
 import org.kie.internal.task.api.model.ContentData;
 import org.kie.internal.task.api.model.Deadline;
 import org.kie.internal.task.api.model.FaultData;
-import org.kie.internal.task.api.model.InternalTaskData;
 
 public interface TaskPersistenceContext {
 
