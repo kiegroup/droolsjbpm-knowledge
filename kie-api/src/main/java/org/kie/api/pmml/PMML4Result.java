@@ -59,14 +59,6 @@ public class PMML4Result {
         this.resultVariables = new HashMap<>();
     }
     
-//    public PMML4Result(SegmentExecution segEx) {
-//        this.correlationId = segEx.getCorrelationId();
-//        this.segmentationId = segEx.getSegmentationId();
-//        this.segmentId = segEx.getSegmentId();
-//        this.segmentIndex = segEx.getSegmentIndex();
-//        this.resultVariables = new HashMap<>();
-//    }
-
     public String getResultCode() {
         return resultCode;
     }
@@ -132,7 +124,7 @@ public class PMML4Result {
     public <T> Optional<T> getResultValue(String objName, String objField, Class<T> clazz, Object...params) {
         T value = null;
         Object obj = getResultValue(objName, objField, params);
-        if (clazz.isAssignableFrom(obj.getClass())) {
+        if (clazz != null && obj != null && clazz.isAssignableFrom(obj.getClass())) {
             value = (T)obj;
         }
         return value != null ? Optional.of(value) : Optional.empty();
