@@ -37,4 +37,7 @@ public interface InternalKieBuilder extends KieBuilder {
      */
     KieBuilder buildAll(Predicate<String> classFilter);
 
+    // Used by: org.kie.workbench.common.services.backend.builder.core.Builder 
+    KieModule getkModule();
+
 }
