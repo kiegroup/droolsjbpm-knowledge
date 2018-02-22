@@ -124,14 +124,20 @@ public class ServiceDiscoveryImpl {
     private void processKieConf(ClassLoader classLoader, Properties props) {
         props.forEach( (k, v) -> {
             String key = k.toString();
-            boolean optional = key.startsWith( "?" );
-            try {
-                processKieService( classLoader, optional ? key.substring( 1 ) : key, v.toString() );
-            } catch (RuntimeException e) {
-                if (optional) {
-                    log.info("Cannot load service: " + key.substring( 1 ));
-                } else {
-                    throw e;
+            String[] values = v.toString().split(",");
+            for (String value : values) {
+                if (!(value.isEmpty() || value.contains("["))) { // DROOLS-2122: parsing with Properties.load a Drools version 6 kie.conf, hence skipping this entry
+                    boolean optional = key.startsWith( "?" );
+                    try {
+                        processKieService( classLoader, optional ? key.substring( 1 ) : key, value );
+                    } catch (RuntimeException e) {
+                        if (optional) {
+                            log.info("Cannot load service: " + key.substring( 1 ));
+                        } else {
+                            System.out.println("Loading failed because " + e.getMessage());
+                            throw e;
+                        }
+                    }
                 }
             }
         });
@@ -171,13 +177,12 @@ public class ServiceDiscoveryImpl {
     }
 
     private void buildMap() {
-        for (String serviceName : services.keySet()) {
-            Object service = services.get(serviceName);
-            cachedServices.put(serviceName, service);
-            List<?> children = childServices.remove( serviceName );
+        for (Map.Entry<String, Object> serviceEntry : services.entrySet()) {
+            cachedServices.put(serviceEntry.getKey(), serviceEntry.getValue());
+            List<?> children = childServices.remove( serviceEntry.getKey() );
             if (children != null) {
                 for (Object child : children) {
-                    ( (Consumer) service ).accept( child );
+                    ( (Consumer) serviceEntry.getValue() ).accept( child );
                 }
             }
         }
