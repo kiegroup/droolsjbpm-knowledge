@@ -132,7 +132,7 @@ public class PMML4Result {
     public <T> Optional<T> getResultValue(String objName, String objField, Class<T> clazz, Object...params) {
         T value = null;
         Object obj = getResultValue(objName, objField, params);
-        if (clazz.isAssignableFrom(obj.getClass())) {
+        if (clazz != null && obj != null && clazz.isAssignableFrom(obj.getClass())) {
             value = (T)obj;
         }
         return value != null ? Optional.of(value) : Optional.empty();
