@@ -15,6 +15,9 @@
 
 package org.kie.api.internal.assembler;
 
+import java.util.List;
+import java.util.function.Consumer;
+
 import org.kie.api.internal.utils.KieService;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceConfiguration;
@@ -22,6 +25,53 @@ import org.kie.api.io.ResourceType;
 
 public interface KieAssemblerService extends KieService {
     ResourceType getResourceType();
+
+    public static class ResourceDescr {
+
+        private final Resource res;
+        private final ResourceConfiguration resConfig;
+        private final Consumer<Object> beforeAdd;
+        private final Consumer<Object> afterAdd;
+
+        /**
+         * 
+         * @param res 
+         * @param resConfig
+         * @param beforeAdd will be invoked passing kbuilder before performing addResource
+         * @param afterAdd will be invoked passing kbuilder after performing addResource
+         */
+        public ResourceDescr(Resource res, ResourceConfiguration resConfig, Consumer<Object> beforeAdd, Consumer<Object> afterAdd) {
+            this.res = res;
+            this.resConfig = resConfig;
+            this.beforeAdd = beforeAdd;
+            this.afterAdd = afterAdd;
+        }
+
+        public Resource getRes() {
+            return res;
+        }
+
+        public ResourceConfiguration getResConfig() {
+            return resConfig;
+        }
+
+        public Consumer<Object> getBeforeAdd() {
+            return beforeAdd;
+        }
+
+        public Consumer<Object> getAfterAdd() {
+            return afterAdd;
+        }
+
+    }
+
+    default void addResources(Object kbuilder, List<ResourceDescr> resources, ResourceType type) throws Exception {
+        for (ResourceDescr rd : resources) {
+            rd.getBeforeAdd().accept(kbuilder);
+            addResource(kbuilder, rd.getRes(), type, rd.getResConfig());
+            rd.getAfterAdd().accept(kbuilder);
+        }
+    }
 
     void addResource(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception;
 }
