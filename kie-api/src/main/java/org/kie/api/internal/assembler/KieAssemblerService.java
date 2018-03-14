@@ -26,7 +26,7 @@ import org.kie.api.io.ResourceType;
 public interface KieAssemblerService extends KieService {
     ResourceType getResourceType();
 
-    public static class ResourceDescr {
+    public static class ResourceAndConfig {
 
         private final Resource res;
         private final ResourceConfiguration resConfig;
@@ -37,10 +37,10 @@ public interface KieAssemblerService extends KieService {
          * 
          * @param res 
          * @param resConfig
-         * @param beforeAdd will be invoked passing kbuilder before performing addResource
-         * @param afterAdd will be invoked passing kbuilder after performing addResource
+         * @param beforeAdd callback executed on `kbuilder` as a paramenter, which will be executed before performing {@link KieAssemblerService#addResource(Object, Resource, ResourceType, ResourceConfiguration)} for the given resource {@link #res}
+         * @param afterAdd callback executed on `kbuilder` as a paramenter, which will be executed after performing {@link KieAssemblerService#addResource(Object, Resource, ResourceType, ResourceConfiguration)} for the given resource {@link #res}
          */
-        public ResourceDescr(Resource res, ResourceConfiguration resConfig, Consumer<Object> beforeAdd, Consumer<Object> afterAdd) {
+        public ResourceAndConfig(Resource res, ResourceConfiguration resConfig, Consumer<Object> beforeAdd, Consumer<Object> afterAdd) {
             this.res = res;
             this.resConfig = resConfig;
             this.beforeAdd = beforeAdd;
@@ -65,8 +65,8 @@ public interface KieAssemblerService extends KieService {
 
     }
 
-    default void addResources(Object kbuilder, List<ResourceDescr> resources, ResourceType type) throws Exception {
-        for (ResourceDescr rd : resources) {
+    default void addResources(Object kbuilder, List<ResourceAndConfig> resources, ResourceType type) throws Exception {
+        for (ResourceAndConfig rd : resources) {
             rd.getBeforeAdd().accept(kbuilder);
             addResource(kbuilder, rd.getRes(), type, rd.getResConfig());
             rd.getAfterAdd().accept(kbuilder);
