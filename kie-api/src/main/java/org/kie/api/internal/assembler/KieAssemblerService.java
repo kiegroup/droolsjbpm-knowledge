@@ -15,7 +15,7 @@
 
 package org.kie.api.internal.assembler;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.kie.api.internal.utils.KieService;
 import org.kie.api.io.Resource;
@@ -26,7 +26,7 @@ import org.kie.api.io.ResourceWithConfiguration;
 public interface KieAssemblerService extends KieService {
     ResourceType getResourceType();
 
-    default void addResources(Object kbuilder, List<ResourceWithConfiguration> resources, ResourceType type) throws Exception {
+    default void addResources(Object kbuilder, Collection<ResourceWithConfiguration> resources, ResourceType type) throws Exception {
         for (ResourceWithConfiguration rd : resources) {
             rd.getBeforeAdd().accept(kbuilder);
             addResource(kbuilder, rd.getResource(), type, rd.getResourceConfigutation());
