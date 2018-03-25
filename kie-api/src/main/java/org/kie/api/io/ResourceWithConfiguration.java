@@ -11,15 +11,15 @@ public interface ResourceWithConfiguration {
 
     Resource getResource();
 
-    ResourceConfiguration getResourceConfigutation();
+    ResourceConfiguration getResourceConfiguration();
 
     /**
-     * callback executed on `kbuilder` as a paramenter in {@link KieAssemblerService}, which will be executed before performing {@link KieAssemblerService#addResource(Object, Resource, ResourceType, ResourceConfiguration)} for the given resource {@link #getResource()}.
+     * callback executed on `kbuilder` as a parameter in {@link KieAssemblerService}, which will be executed before performing {@link KieAssemblerService#addResource(Object, Resource, ResourceType, ResourceConfiguration)} for the given resource {@link #getResource()}.
      */
     Consumer<Object> getBeforeAdd();
 
     /**
-     * callback executed on `kbuilder` as a paramenter in {@link KieAssemblerService}, which will be executed after performing {@link KieAssemblerService#addResource(Object, Resource, ResourceType, ResourceConfiguration)} for the given resource {@link #getResource()}.
+     * callback executed on `kbuilder` as a parameter in {@link KieAssemblerService}, which will be executed after performing {@link KieAssemblerService#addResource(Object, Resource, ResourceType, ResourceConfiguration)} for the given resource {@link #getResource()}.
      */
     Consumer<Object> getAfterAdd();
 

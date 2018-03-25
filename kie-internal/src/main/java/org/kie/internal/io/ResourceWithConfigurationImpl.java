@@ -35,7 +35,7 @@ public class ResourceWithConfigurationImpl implements ResourceWithConfiguration 
         }
 
         @Override
-        public ResourceConfiguration getResourceConfigutation() {
+        public ResourceConfiguration getResourceConfiguration() {
             return resourceConfiguration;
         }
 

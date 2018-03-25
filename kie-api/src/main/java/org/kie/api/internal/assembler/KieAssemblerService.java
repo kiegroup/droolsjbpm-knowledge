@@ -29,7 +29,7 @@ public interface KieAssemblerService extends KieService {
     default void addResources(Object kbuilder, Collection<ResourceWithConfiguration> resources, ResourceType type) throws Exception {
         for (ResourceWithConfiguration rd : resources) {
             rd.getBeforeAdd().accept(kbuilder);
-            addResource(kbuilder, rd.getResource(), type, rd.getResourceConfigutation());
+            addResource(kbuilder, rd.getResource(), type, rd.getResourceConfiguration());
             rd.getAfterAdd().accept(kbuilder);
         }
     }
