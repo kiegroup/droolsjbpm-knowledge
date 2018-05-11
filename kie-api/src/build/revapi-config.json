@@ -207,6 +207,24 @@
           "methodName": "removeOutput",
           "elementKind": "method",
           "justification": "Expose different methods for set and retrieve output variables"
+        },
+        {
+          "code": "java.method.addedToInterface",
+          "new": "method org.kie.api.runtime.builder.RuleUnitExecutorFluent org.kie.api.runtime.builder.KieContainerFluent::newRuleUnitExecutor()",
+          "package": "org.kie.api.runtime.builder",
+          "classSimpleName": "KieContainerFluent",
+          "methodName": "newRuleUnitExecutor",
+          "elementKind": "method",
+          "justification": "Add Unit support to fluent builder"
+        },
+        {
+          "code": "java.method.addedToInterface",
+          "new": "method org.kie.api.runtime.builder.RuleUnitExecutorFluent org.kie.api.runtime.builder.KieContainerFluent::newRuleUnitExecutor(java.lang.String)",
+          "package": "org.kie.api.runtime.builder",
+          "classSimpleName": "KieContainerFluent",
+          "methodName": "newRuleUnitExecutor",
+          "elementKind": "method",
+          "justification": "Add Unit support to fluent builder"
         }
       ]
     }
