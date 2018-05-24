@@ -88,6 +88,16 @@ public class PMMLRequestData {
         return this.requestParams.remove(parameter);
     }
 
+    public synchronized boolean addRequestParam(String paramName, int value) {
+       ParameterInfo parameter = new ParameterInfo(this.correlationId, paramName, Integer.class, value);
+       return this.addRequestParam(parameter);
+    }
+
+    public synchronized boolean addRequestParam(String paramName, double value) {
+       ParameterInfo parameter = new ParameterInfo(this.correlationId, paramName, Double.class, value);
+       return this.addRequestParam(parameter);
+    }
+
     public synchronized boolean addRequestParam(String paramName, Object value) {
         if (paramName == null || paramName.trim().isEmpty() || value == null) {
             return false;
