@@ -16,11 +16,9 @@
 
 package org.kie.api.internal.utils;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -106,14 +104,18 @@ public class ServiceDiscoveryImpl {
     }
 
     public void registerConfs( ClassLoader classLoader, URL url ) {
-        log.info("Loading kie.conf from  ", classLoader);
-        try {
-            Files.lines(Paths.get(url.toURI()))
-                    .filter( s -> !s.isEmpty() && !s.contains( "[" ) && s.contains( "=" ))
-                    .map( s -> s.split("=") )
-                    .forEach( entry -> processKieService( classLoader, entry[0].trim(), entry[1].trim() ) );
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException( e );
+        log.info("Loading kie.conf from  " + url + " in classloader " + classLoader);
+
+        try ( BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream())) ) {
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                // DROOLS-2122: parsing with Properties.load a Drools version 6 kie.conf, hence skipping this entry
+                if (line.contains( "=" ) && !line.contains( "[" )) {
+                    String[] entry = line.split( "=" );
+                    processKieService( classLoader, entry[0].trim(), entry[1].trim() );
+                }
+            }
+        } catch (Exception exc) {
+            throw new RuntimeException( "Unable to build kie service url = " + url.toExternalForm(), exc );
         }
     }
 
