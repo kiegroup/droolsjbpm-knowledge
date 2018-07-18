@@ -18,7 +18,7 @@ package org.kie.api.command;
 
 import org.kie.api.runtime.Context;
 
-public interface ExecutableCommand<T> extends org.kie.api.command.Command<T> {
+public interface ExecutableCommand<T> extends Command<T> {
 
     T execute(Context context);
 }
