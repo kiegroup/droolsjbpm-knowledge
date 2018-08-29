@@ -226,7 +226,17 @@
           "methodName": "addCommand",
           "elementKind": "method",
           "justification": "move to public API addCommand to support custom commands"
+        },
+        {
+          "code": "java.method.addedToInterface",
+          "new": "method org.kie.api.runtime.builder.KieContainerFluent org.kie.api.runtime.builder.ExecutableBuilder::setKieContainer(org.kie.api.runtime.KieContainer)",
+          "package": "org.kie.api.runtime.builder",
+          "classSimpleName": "ExecutableBuilder",
+          "methodName": "setKieContainer",
+          "elementKind": "method",
+          "justification": "add the possibility to plug existing KieContainer in ExecutableBuilder"
         }
+
       ]
     }
   }
