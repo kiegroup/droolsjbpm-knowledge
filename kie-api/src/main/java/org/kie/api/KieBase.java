@@ -165,6 +165,25 @@ public interface KieBase extends KieBaseEventManager {
     KieSession newKieSession();
 
     /**
+     * Creates a new {@link KiePool} of {@link KieSession}s using the default session configuration.
+     * Don't forget to call {@link KiePool#shutdown()} when you are done.
+     * @param initialSize the initial size of the pool
+     *
+     * @return created {@link KiePool}
+     */
+    KiePool<KieSession> newKieSessionsPool(int initialSize);
+
+    /**
+     * Creates a new {@link KiePool} of {@link KieSession}s using the provided session configuration.
+     * Don't forget to call {@link KiePool#shutdown()} when you are done.
+     * @param conf session configuration
+     * @param initialSize the initial size of the pool
+     *
+     * @return created {@link KiePool}
+     */
+    KiePool<KieSession> newKieSessionsPool(KieSessionConfiguration conf, int initialSize);
+
+    /**
      * Returns a collection of the {@link KieSession}s that exist in this {@link KieBase}.
      * Be careful as sessions are not thread-safe and could be in use elsewhere.
      *
