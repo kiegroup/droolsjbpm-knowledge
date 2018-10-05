@@ -20,7 +20,6 @@ import java.util.Collection;
 
 import org.kie.api.KieBase;
 import org.kie.api.KieBaseConfiguration;
-import org.kie.api.KiePool;
 import org.kie.api.builder.ReleaseId;
 import org.kie.api.builder.Results;
 import org.kie.api.builder.model.KieBaseModel;
@@ -107,6 +106,15 @@ public interface KieContainer {
     KieBase newKieBase(String kBaseName, KieBaseConfiguration conf);
 
     /**
+     * Creates a new {@link KieContainerSessionsPool} storing the sessions created from this KieContainer.
+     * Don't forget to {@link KieContainerSessionsPool#shutdown()} the pool when you are done.
+     *
+     * @param initialSize the initial size of sessions in the pool
+     * @return created {@link KieContainerSessionsPool}
+     */
+    KieContainerSessionsPool newKieSessionsPool(int initialSize);
+
+    /**
      * Creates the default KieSession for this KieContainer
      * @throws RuntimeException if this KieContainer doesn't have any default KieSession
      * @see org.kie.api.builder.model.KieSessionModel#setDefault(boolean)
@@ -119,46 +127,6 @@ public interface KieContainer {
      * @see org.kie.api.builder.model.KieSessionModel#setDefault(boolean)
      */
     KieSession newKieSession(KieSessionConfiguration conf);
-
-    /**
-     * Creates a new {@link KiePool} of default {@link KieSession}s using the default session configuration.
-     * Don't forget to call {@link KiePool#shutdown()} when you are done.
-     * @param initialSize the initial size of the pool
-     *
-     * @return created {@link KiePool}
-     */
-    KiePool<KieSession> newKieSessionsPool(int initialSize);
-
-    /**
-     * Creates a new {@link KiePool} of default {@link KieSession}s using the provided session configuration.
-     * Don't forget to call {@link KiePool#shutdown()} when you are done.
-     * @param conf session configuration
-     * @param initialSize the initial size of the pool
-     *
-     * @return created {@link KiePool}
-     */
-    KiePool<KieSession> newKieSessionsPool(KieSessionConfiguration conf, int initialSize);
-
-    /**
-     * Creates a new {@link KiePool} of default {@link KieSession}s with the given name using the default session configuration.
-     * Don't forget to call {@link KiePool#shutdown()} when you are done.
-     * @param kSessionName the KieSession name
-     * @param initialSize the initial size of the pool
-     *
-     * @return created {@link KiePool}
-     */
-    KiePool<KieSession> newKieSessionsPool(String kSessionName, int initialSize);
-
-    /**
-     * Creates a new {@link KiePool} of {@link KieSession}s with the given name using the provided session configuration.
-     * Don't forget to call {@link KiePool#shutdown()} when you are done.
-     * @param kSessionName the KieSession name
-     * @param conf session configuration
-     * @param initialSize the initial size of the pool
-     *
-     * @return created {@link KiePool}
-     */
-    KiePool<KieSession> newKieSessionsPool(String kSessionName, KieSessionConfiguration conf, int initialSize);
 
     /**
      * Creates the default {@link KieSession} for this KieContainer using the given Environment

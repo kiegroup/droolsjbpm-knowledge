@@ -247,57 +247,21 @@
         },
         {
           "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.KiePool<org.kie.api.runtime.KieSession> org.kie.api.KieBase::newKieSessionsPool(int)",
+          "new": "method org.kie.api.runtime.KieSessionsPool org.kie.api.KieBase::newKieSessionsPool(int)",
           "package": "org.kie.api",
           "classSimpleName": "KieBase",
           "methodName": "newKieSessionsPool",
           "elementKind": "method",
-          "justification": "add a pool of sessions"
+          "justification": "add sessions pool"
         },
         {
           "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.KiePool<org.kie.api.runtime.KieSession> org.kie.api.KieBase::newKieSessionsPool(org.kie.api.runtime.KieSessionConfiguration, int)",
-          "package": "org.kie.api",
-          "classSimpleName": "KieBase",
-          "methodName": "newKieSessionsPool",
-          "elementKind": "method",
-          "justification": "add a pool of sessions"
-        },
-        {
-          "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.KiePool<org.kie.api.runtime.KieSession> org.kie.api.runtime.KieContainer::newKieSessionsPool(int)",
+          "new": "method org.kie.api.runtime.KieContainerSessionsPool org.kie.api.runtime.KieContainer::newKieSessionsPool(int)",
           "package": "org.kie.api.runtime",
           "classSimpleName": "KieContainer",
           "methodName": "newKieSessionsPool",
           "elementKind": "method",
-          "justification": "add a pool of sessions"
-        },
-        {
-          "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.KiePool<org.kie.api.runtime.KieSession> org.kie.api.runtime.KieContainer::newKieSessionsPool(java.lang.String, int)",
-          "package": "org.kie.api.runtime",
-          "classSimpleName": "KieContainer",
-          "methodName": "newKieSessionsPool",
-          "elementKind": "method",
-          "justification": "add a pool of sessions"
-        },
-        {
-          "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.KiePool<org.kie.api.runtime.KieSession> org.kie.api.runtime.KieContainer::newKieSessionsPool(java.lang.String, org.kie.api.runtime.KieSessionConfiguration, int)",
-          "package": "org.kie.api.runtime",
-          "classSimpleName": "KieContainer",
-          "methodName": "newKieSessionsPool",
-          "elementKind": "method",
-          "justification": "add a pool of sessions"
-        },
-        {
-          "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.KiePool<org.kie.api.runtime.KieSession> org.kie.api.runtime.KieContainer::newKieSessionsPool(org.kie.api.runtime.KieSessionConfiguration, int)",
-          "package": "org.kie.api.runtime",
-          "classSimpleName": "KieContainer",
-          "methodName": "newKieSessionsPool",
-          "elementKind": "method",
-          "justification": "add a pool of sessions"
+          "justification": "add sessions pool"
         }
       ]
     }
