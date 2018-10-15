@@ -17,6 +17,7 @@
 package org.kie.api;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.Properties;
 
 import org.kie.api.builder.KieBuilder;
@@ -212,12 +213,21 @@ public interface KieServices {
     KieContainer newKieContainer(String containerId, ReleaseId releaseId, ClassLoader classLoader);
 
     /**
-     * Creates a KieScanner to automatically discover if there are new releases of the KieModule
+     * Creates a maven based KieScanner to automatically discover if there are new releases of the KieModule
      * (and its dependencies) wrapped by the given KieContainer
      * @param kieContainer kieContainer
      * @return new kie scanner
      */
     KieScanner newKieScanner(KieContainer kieContainer);
+
+    /**
+     * Creates a file system based KieScanner to automatically discover if there are new releases of the KieModule
+     * (and its dependencies) wrapped by the given KieContainer
+     * @param kieContainer kieContainer
+     * @param repositoryFolder The folder where the new releases will be dropped
+     * @return new kie scanner
+     */
+    KieScanner newKieScanner(KieContainer kieContainer, Path repositoryFolder);
 
     /**
      * Creates a new KieBuilder to build the KieModule contained in the given folder
