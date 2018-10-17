@@ -283,7 +283,7 @@
         },
         {
           "code": "java.method.addedToInterface",
-          "new": "method org.kie.api.builder.KieScanner org.kie.api.KieServices::newKieScanner(org.kie.api.runtime.KieContainer, java.nio.file.Path)",
+          "new": "method org.kie.api.builder.KieScanner org.kie.api.KieServices::newKieScanner(org.kie.api.runtime.KieContainer, java.lang.String)",
           "package": "org.kie.api",
           "classSimpleName": "KieServices",
           "methodName": "newKieScanner",

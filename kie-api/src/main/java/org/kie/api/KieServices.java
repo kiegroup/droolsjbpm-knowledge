@@ -17,7 +17,6 @@
 package org.kie.api;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.Properties;
 
 import org.kie.api.builder.KieBuilder;
@@ -227,7 +226,7 @@ public interface KieServices {
      * @param repositoryFolder The folder where the new releases will be dropped
      * @return new kie scanner
      */
-    KieScanner newKieScanner(KieContainer kieContainer, Path repositoryFolder);
+    KieScanner newKieScanner(KieContainer kieContainer, String repositoryFolder);
 
     /**
      * Creates a new KieBuilder to build the KieModule contained in the given folder
