@@ -88,7 +88,7 @@ public interface RuleUnitExecutor {
      */
     static RuleUnitExecutor create() {
         try {
-            return ( RuleUnitExecutor ) Class.forName( "org.drools.core.impl.RuleUnitExecutorSession" ).newInstance();
+            return ( RuleUnitExecutor ) Class.forName( "org.drools.core.impl.UnitExecutor" ).newInstance();
         } catch (Exception e) {
             throw new RuntimeException("Unable to instance KieServices", e);
         }
