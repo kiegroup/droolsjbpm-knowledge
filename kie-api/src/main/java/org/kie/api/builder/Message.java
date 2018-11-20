@@ -54,4 +54,11 @@ public interface Message {
     public static enum Level {
         ERROR, WARNING, INFO;
     }
+
+    /**
+     * If this message was generated from a KnowledgeBuilderResult or assimilated detailed Problem, return the original object.
+     */
+    default Object getDetailedIssueDescription() {
+        return null;
+    }
 }
