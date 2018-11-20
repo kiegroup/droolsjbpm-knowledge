@@ -56,9 +56,9 @@ public interface Message {
     }
 
     /**
-     * If this message was generated from a KnowledgeBuilderResult or assimilated detailed Problem, return the original object.
+     * If this message was generated from a KnowledgeBuilderResult or assimilated detailed problem, return the original object.
      */
-    default Object getDetailedIssueDescription() {
+    default Object getMetadata() {
         return null;
     }
 }
