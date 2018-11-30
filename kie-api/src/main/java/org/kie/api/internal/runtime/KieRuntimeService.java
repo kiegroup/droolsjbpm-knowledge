@@ -17,7 +17,6 @@ package org.kie.api.internal.runtime;
 
 import org.kie.api.KieBase;
 import org.kie.api.internal.utils.KieService;
-import org.kie.api.runtime.KieRuntime;
 
 public interface KieRuntimeService<T> extends KieService {
 
