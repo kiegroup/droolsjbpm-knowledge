@@ -17,6 +17,8 @@
 package org.kie.api.internal.utils;
 
 import org.kie.api.internal.assembler.KieAssemblerService;
+import org.kie.api.internal.assembler.ProcessedResource;
+import org.kie.api.internal.io.ResourceTypePackage;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceConfiguration;
 import org.kie.api.io.ResourceType;
@@ -32,4 +34,5 @@ public class MockChildAssemblerService implements KieAssemblerService {
     public void addResource(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
         // Intentionally empty
     }
+
 }

@@ -15,10 +15,21 @@
 
 package org.kie.api.internal.io;
 
+import org.kie.api.internal.assembler.KieAssemblerService;
+import org.kie.api.internal.assembler.ProcessedResource;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
 
-public interface ResourceTypePackage {
+/**
+ * A container for resources that have been processed by a {@link KieAssemblerService}.
+ *
+ * Resources are expected to be able to be looked up by a "name" or identifier.
+ *
+ * Each {@link ResourceTypePackage} is identified by a namespace.
+ *
+ * @param <T> the type of such a processed resource
+ */
+public interface ResourceTypePackage<T> extends Iterable<T> {
     ResourceType getResourceType();
 
     /**
@@ -31,4 +42,7 @@ public interface ResourceTypePackage {
     default boolean removeResource(Resource resource) {
         return false;
     }
+
+    void add(T element);
+
 }
