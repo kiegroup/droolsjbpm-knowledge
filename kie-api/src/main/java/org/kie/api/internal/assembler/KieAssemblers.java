@@ -17,7 +17,6 @@ package org.kie.api.internal.assembler;
 
 import java.util.List;
 
-import org.kie.api.internal.io.ResourceTypePackage;
 import org.kie.api.internal.utils.KieService;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceConfiguration;

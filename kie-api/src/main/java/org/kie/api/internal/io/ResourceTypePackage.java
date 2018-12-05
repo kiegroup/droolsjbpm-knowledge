@@ -16,7 +16,6 @@
 package org.kie.api.internal.io;
 
 import org.kie.api.internal.assembler.KieAssemblerService;
-import org.kie.api.internal.assembler.ProcessedResource;
 import org.kie.api.io.Resource;
 import org.kie.api.io.ResourceType;
 
