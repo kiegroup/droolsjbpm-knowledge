@@ -16,13 +16,16 @@
 
 package org.kie.internal.builder.fluent;
 
+import org.kie.internal.utils.ClassLoaderUtil;
+
 public interface DMNRuntimeFluent
         extends DMNFluent<DMNRuntimeFluent, ExecutableBuilder>,
                 ContextFluent<DMNRuntimeFluent, ExecutableBuilder> {
 
     static DMNRuntimeFluent create(CommandBasedExecutable executable) {
         try {
-            return (DMNRuntimeFluent) Class.forName("org.kie.dmn.core.fluent.DMNRuntimeFluentImpl")
+            return (DMNRuntimeFluent) ClassLoaderUtil.getClassLoader(null, null, true)
+                    .loadClass("org.kie.dmn.core.fluent.DMNRuntimeFluentImpl")
                     .getConstructor(CommandBasedExecutable.class).newInstance(executable);
         } catch (Exception e) {
             throw new RuntimeException("Unable to instance DMNRuntimeFluent", e);
