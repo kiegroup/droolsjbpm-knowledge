@@ -27,6 +27,10 @@ public interface DMNFluent<T extends DMNFluent, U> {
 
     T setActiveModel(String resourcePath);
 
+    T getModel(String namespace, String modelName);
+
+    T getModel(String resourcePath);
+
     T evaluateModel();
 
     T getAllContext();
