@@ -1,0 +1,40 @@
+#server configuration
+server:
+    address: 0.0.0.0
+    port: ${appServerPort}
+cxf:
+    path: /rest
+
+#kie server configuration and capabilities
+kieserver:
+    serverId: ${artifactId}
+    serverName: ${artifactId}
+    location: http://${appServerAddress}:${appServerPort}/rest/server
+KIE_SERVER_CAPABILITIES_MARKER
+
+JBPM_CONFIG_MARKER
+
+#data source and tx manager configuration
+spring:
+    datasource:
+        username: jbpm
+        password: jbpm
+        url: jdbc:postgresql://localhost:5432/jbpm
+        driver-class-name: org.postgresql.xa.PGXADataSource
+    jpa:
+        hibernate:
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                hbm2ddl:
+                    auto: update
+                show_sql: false
+    jta:
+        narayana:
+            transaction-manager-id: 1
+
+    #banner config
+    banner:
+            location: classpath:banner.txt

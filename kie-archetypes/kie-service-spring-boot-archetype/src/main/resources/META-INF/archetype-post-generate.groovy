@@ -27,10 +27,10 @@ if( kjarArtifactId != "none" && kjarVersion != "none") {
 
 def moduleDir = new File(request.getOutputDirectory()+"/"+request.getArtifactId());
 
-def appPropertiesFile = new File(moduleDir, "src/main/resources/application.properties");
-def appPropertiesFileMySql = new File(moduleDir, "src/main/resources/application-mysql.properties");
-def appPropertiesFilePostgres = new File(moduleDir, "src/main/resources/application-postgres.properties");
-def devAppPropertiesFile = new File(moduleDir, "src/main/resources/application-dev.properties");
+def appPropertiesFile = new File(moduleDir, "src/main/resources/application.yml");
+def appPropertiesFileMySql = new File(moduleDir, "src/main/resources/application-mysql.yml");
+def appPropertiesFilePostgres = new File(moduleDir, "src/main/resources/application-postgres.yml");
+def devAppPropertiesFile = new File(moduleDir, "src/main/resources/application-dev.yml");
 def pomFile = new File(moduleDir, "pom.xml");
 def indexFile = new File(moduleDir, "src/main/resources/static/index.html");
 def launchFile = new File(moduleDir, "launch.sh");
@@ -80,34 +80,43 @@ def PlannerSpringBootStarterDepends = """
 """;
 
 def serverCapabilitiesBPM = """
-#kie server capabilities
-kieserver.drools.enabled=true
-kieserver.dmn.enabled=true
-kieserver.jbpm.enabled=true
-kieserver.jbpmui.enabled=true
-kieserver.casemgmt.enabled=true
+    drools:
+        enabled: true
+    dmn:
+        enabled: true
+    jbpm:
+        enabled: true
+    jbpmui:
+        enabled: true
+    casemgmt:
+        enabled: true
 """;
 
 def serverCapabilitiesBRM = """
-#kie server capabilities
-kieserver.drools.enabled=true
-kieserver.dmn.enabled=true
+    drools:
+        enabled: true
+    dmn:
+        enabled: true
 """;
 
 def serverCapabilitiesPlanner = """
-#kie server capabilities
-kieserver.drools.enabled=true
-kieserver.dmn.enabled=true
-kieserver.optaplanner.enabled=true
+    drools:
+        enabled: true
+    dmn:
+        enabled: true
+    optaplanner:
+        enabled: true
 """;
 
 def BPMJBPMConfig = """
 #jbpm configuration
-jbpm.executor.enabled=false
-#jbpm.executor.retries=5
-#jbpm.executor.interval=3
-#jbpm.executor.threadPoolSize=1
-#jbpm.executor.timeUnit=SECONDS
+jbpm:
+    executor:
+        enabled: false
+#       retries: 5
+#       interval: 3
+#       threadPoolSize: 1
+#       timeUnit: SECONDS
 """;
 
 def DBProfilesConfig = """

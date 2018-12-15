@@ -68,7 +68,7 @@
       <directory>src/main/resources</directory>
       <includes>
         <include>**/*.html</include>
-        <include>**/*.properties</include>
+        <include>**/*.yml</include>
         <include>**/*.txt</include>
       </includes>
       <excludes>
@@ -94,7 +94,7 @@
       </includes>
       <excludes>
         <exclude>**/*.html</exclude>
-        <exclude>**/*.properties</exclude>
+        <exclude>**/*.yml</exclude>
         <exclude>**/*.txt</exclude>
       </excludes>
     </fileSet>

@@ -79,7 +79,7 @@ http://localhost:8080/jbpm-console/rest/controller
 ```
 
 If your workbench lives under a different host/port
-you can change this value by editing the src/main/resources/application-dev.properties file in your 
+you can change this value by editing the src/main/resources/application-dev.yml file in your 
 project, specifically change the value:
 ```
 kieserver.controllers=http://localhost:8080/jbpm-console/rest/controller
@@ -156,7 +156,7 @@ Your application comes by default with three db profiles, namely h2 (default), m
 
 Look at your apps generated pom.xml file to see these profiles. 
 Your app also comes with three spring application properties files, namely
-application.properties, application-mysql.properties and application-postgres.properties.
+application.yml, application-mysql.yml and application-postgres.yml.
 These have the predefined db setup for h2, mysql, and postgres respectively.
 
 Note that to run your app with the mysql or postgres db you have to update the
@@ -187,7 +187,7 @@ where APP_NAME and APP-VERSION reflect the real name and version of your app you
 when you generate the app.
 
 This setup allows you to easily add more db setups. Just add your profile with
-needed depends in your apps pom.xml and then create a new application-YOUR_DB.properties
+needed depends in your apps pom.xml and then create a new application-YOUR_DB.yml
 file where you can update the data source configuration to reflect your db values.
 
 Remote debugging
