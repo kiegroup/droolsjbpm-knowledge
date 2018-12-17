@@ -18,6 +18,7 @@ package org.kie.api.internal.utils;
 
 import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.kie.api.internal.assembler.KieAssemblerService;
 import org.kie.api.io.ResourceType;
@@ -26,6 +27,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class ServiceDiscoveryImplTest {
+
+    @Before
+    public void setUp() {
+        ServiceDiscoveryImpl.getInstance().reset();
+        ServiceDiscoveryImpl.getInstance().setKiecConfDiscoveryAllowed(true);
+    }
 
     @Test
     public void testServiceAndChildServiceInSameKieConf() {
@@ -41,5 +48,32 @@ public class ServiceDiscoveryImplTest {
         assertTrue(childServices.size() == 1);
         assertNotNull(childServices.get(ResourceType.DRL));
         assertTrue(childServices.get(ResourceType.DRL) instanceof MockChildAssemblerService);
+    }
+
+    @Test
+    public void testAdditionalServiceRegistry() {
+        // Test adding an extra configuration file to the Service discovery and assert that we can find the other service
+        final ServiceDiscoveryImpl serviceDiscovery = ServiceDiscoveryImpl.getInstance();
+        serviceDiscovery.registerConfs(serviceDiscovery.getClass().getClassLoader(), serviceDiscovery.getClass().getClassLoader().getResource("META-INF/extra.conf"));
+        final Map<String, Object> services = serviceDiscovery.getServices();
+        assertTrue(services.size() == 2);
+ 
+        final Object service = services.get("org.kie.api.io.KieResources");
+        assertNotNull(service);
+        assertTrue(service instanceof MockKieResources);
+    }
+
+    @Test
+    public void testAdditionalServiceRegistryWithoutDefaults() {
+        // Add the extra configuration but prevent using the default conf discovery algorithm
+        final ServiceDiscoveryImpl serviceDiscovery = ServiceDiscoveryImpl.getInstance();
+        serviceDiscovery.registerConfs(serviceDiscovery.getClass().getClassLoader(), serviceDiscovery.getClass().getClassLoader().getResource("META-INF/extra.conf"));
+        serviceDiscovery.setKiecConfDiscoveryAllowed(false);
+        final Map<String, Object> services = serviceDiscovery.getServices();
+        assertTrue(services.size() == 1);
+ 
+        final Object service = services.get("org.kie.api.io.KieResources");
+        assertNotNull(service);
+        assertTrue(service instanceof MockKieResources);
     }
 }

@@ -77,6 +77,8 @@ public class ServiceDiscoveryImpl {
 
     public synchronized void reset() {
         cachedServices = new HashMap<String, Object>();
+        services = new HashMap<>();
+        childServices = new HashMap<>();
         sealed = false;
     }
 
@@ -94,8 +96,8 @@ public class ServiceDiscoveryImpl {
                         registerConfs( getClassLoader(), confResources.nextElement() );
                     }
                 }
-                buildMap();
             }
+            buildMap();
 
             cachedServices = Collections.unmodifiableMap( cachedServices );
             sealed = true;
