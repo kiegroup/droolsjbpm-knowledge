@@ -119,12 +119,14 @@
       </includes>
       <excludes>
         <exclude>__artifactId__.xml</exclude>
+        <exclude>**/*.gradle</exclude>
       </excludes>
     </fileSet>
     <fileSet filtered="true" encoding="UTF-8">
       <directory></directory>
       <includes>
         <include>__artifactId__.xml</include>
+        <include>**/*.gradle</include>
       </includes>
       <excludes>
         <exclude>**/*.sh</exclude>

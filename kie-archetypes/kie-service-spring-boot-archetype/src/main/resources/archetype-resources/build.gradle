@@ -1,0 +1,76 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.12.RELEASE'
+        kieVersion = '${kieVersion}'
+        narayanaVersion = '5.9.0.Final'
+
+        my_groupId = '${groupId}'
+        my_artifactId = '${artifactId}'
+        my_version = '${version}'
+
+        commonDependencies = {
+            compile "org.kie:kie-server-spring-boot-starter:${kieVersion}"
+            testCompile "org.springframework.boot:spring-boot-starter-test"
+        }
+
+        h2Dependencies = {
+            compile "com.h2database:h2"
+        }
+
+        mysqlDependencies = {
+            compile "mysql:mysql-connector-java"
+            testCompile "com.h2database:h2"
+        }
+
+        postgresDependencies = {
+            compile "org.postgresql:postgresql"
+            testCompile "com.h2database:h2"
+        }
+
+        repositories {
+            maven { url 'https://repository.jboss.org/nexus/content/groups/public' }
+            mavenCentral()
+            jcenter()
+        }
+
+        profile = findProperty('profile') ?: "h2"
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven'
+
+group = my_groupId;
+version = my_version
+description = my_artifactId
+sourceCompatibility = '1.8'
+
+
+jar {
+    from sourceSets.main.output
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = 'https://repository.jboss.org/nexus/content/groups/public/'
+    }
+
+    maven {
+        url = 'http://repo.maven.apache.org/maven2'
+    }
+}
+
+dependencies project.commonDependencies
+dependencies project."${profile}Dependencies"
+
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

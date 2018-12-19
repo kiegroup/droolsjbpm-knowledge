@@ -37,6 +37,10 @@ def launchFile = new File(moduleDir, "launch.sh");
 def devLaunchFile = new File(moduleDir, "launch-dev.sh");
 def batLaunchFile = new File(moduleDir, "launch.bat");
 def batDevLaunchFile = new File(moduleDir, "launch-dev.bat");
+def gradleLaunchFileSh = new File(moduleDir, "gradle.sh");
+def gradleLaunchFileBat = new File(moduleDir, "gradle.bat");
+def gradleDevLaunchFileSh = new File(moduleDir, "gradle-dev.sh");
+def gradleDevLaunchFileBat = new File(moduleDir, "gradle-dev.bat");
 def kieServerStateFile = new File(moduleDir, myAppArtifactId + ".xml");
 
 def kieServerCapabilitiesMarker = 'KIE_SERVER_CAPABILITIES_MARKER';
@@ -349,11 +353,16 @@ if( appType == "bpm" ) {
 logOut("Updating launch scripts...", quietMode);
 def launchFileContent = launchFile.getText('UTF-8');
 def devLaunchFileContent = devLaunchFile.getText('UTF-8');
+def gradleLaunchFileShContent = gradleLaunchFileSh.getText('UTF-8');
+def gradleDevLaunchFileShContent = gradleDevLaunchFileSh.getText('UTF-8');
 
 launchFileContent = launchFileContent.replaceAll(myServiceNameMarker, myAppArtifactId);
 launchFileContent = launchFileContent.replaceAll(myServiceVersionMarker, myAppVersion);
 launchFileContent = launchFileContent.replaceAll(myServicePortMarker, myAppPortId);
 devLaunchFileContent = devLaunchFileContent.replaceAll(myServiceNameMarker, myAppArtifactId);
+gradleLaunchFileShContent = gradleLaunchFileShContent.replaceAll(myServiceNameMarker, myAppArtifactId);
+gradleDevLaunchFileShContent = gradleDevLaunchFileShContent.replaceAll(myServiceNameMarker, myAppArtifactId);
+
 
 launchFile.newWriter().withWriter { w ->
     w << launchFileContent
@@ -363,14 +372,28 @@ devLaunchFile.newWriter().withWriter { w ->
     w << devLaunchFileContent
 }
 
+gradleLaunchFileSh.newWriter().withWriter { w ->
+    w << gradleLaunchFileShContent
+}
+
+gradleDevLaunchFileSh.newWriter().withWriter { w ->
+    w << gradleDevLaunchFileShContent
+}
+
 logOut("Updating bat launch scripts...", quietMode);
 def batLaunchFileContent = batLaunchFile.getText('UTF-8');
 def batDevLaunchFileContent = batDevLaunchFile.getText('UTF-8');
+def gradleLaunchFileBatContent = gradleLaunchFileBat.getText('UTF-8');
+def gradleDevLaunchFileBatContent = gradleDevLaunchFileBat.getText('UTF-8');
 
 batLaunchFileContent = batLaunchFileContent.replaceAll(myServiceNameMarker, myAppArtifactId);
 batLaunchFileContent = batLaunchFileContent.replaceAll(myServiceVersionMarker, myAppVersion);
 batLaunchFileContent = batLaunchFileContent.replaceAll(myServicePortMarker, myAppPortId);
 batDevLaunchFileContent = batDevLaunchFileContent.replaceAll(myServiceNameMarker, myAppArtifactId);
+gradleLaunchFileBatContent = gradleLaunchFileBatContent.replaceAll(myServiceNameMarker, myAppArtifactId);
+gradleDevLaunchFileBatContent = gradleDevLaunchFileBatContent.replaceAll(myServiceNameMarker, myAppArtifactId);
+
+
 
 batLaunchFile.newWriter().withWriter { w ->
     w << batLaunchFileContent
@@ -378,6 +401,14 @@ batLaunchFile.newWriter().withWriter { w ->
 
 batDevLaunchFile.newWriter().withWriter { w ->
     w << batDevLaunchFileContent
+}
+
+gradleLaunchFileBat.newWriter().withWriter { w ->
+    w << gradleLaunchFileBatContent
+}
+
+gradleDevLaunchFileBat.newWriter().withWriter { w ->
+    w << gradleDevLaunchFileBatContent
 }
 
 logOut("Updating kie server state info...", quietMode);

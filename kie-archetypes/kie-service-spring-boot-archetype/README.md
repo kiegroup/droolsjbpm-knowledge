@@ -28,7 +28,7 @@ mvn clean install
 ```
 mvn clean spring-boot:run
 ```
-6. Access your app in browser
+7. Access your app in browser
 ```
 http://localhost:8090
 ```
@@ -46,7 +46,6 @@ as well as batch scripts for Windows environments:
 launch.bat
 launch-dev.bat
 ```
-
 
 These script will try to find the apps model and kjar projects (in parent folder) and build
 those before building and starting your application.
@@ -85,6 +84,48 @@ project, specifically change the value:
 kieserver.controllers=http://localhost:8080/jbpm-console/rest/controller
 ```
 to whatever you have set up locally.
+
+Building with Gradle (Experimental!)
+-----------------------------------
+As you may have noticed the archetype you used has also generated gradle build scripts for Unix environments:
+```
+gradle.sh
+gradle-dev.sh
+```
+
+and fow Windows:
+```
+gradle.bat
+gradle-dev.bat
+```
+
+You can use them to build your application using Gradle, for example:
+
+```
+chmod 755 gradle.sh
+./gradle.sh build install
+```
+
+or
+
+```
+./gradle.bat build install
+```
+
+You can also directly build your application using the gradle command:
+
+```
+gradle build install
+```
+
+Please note that building your application with Gradle is an experimental feature and not supported. 
+Since the fabric8 plugin for Gradle does currently not exist, building with Gradle is limited 
+to local builds only. Support for docker or openshift builds is not available currently and Maven build
+scripts must be used instead. 
+
+We would love it if building jBPM Business apps with Gradle (beyond this minimal support) could 
+be lead and extended by our community in the future.
+
 
 Default Basic Authentication
 -----------------------------------
