@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -86,10 +87,11 @@ public class ServiceDiscoveryImpl {
     public synchronized Map<String, Object> getServices() {
         if (!sealed) {
             if (kiecConfDiscoveryAllowed) {
-                KieConfs kieConfs = getKieConfs();
-                while (kieConfs.resources.hasMoreElements()) {
-                    registerConfs( kieConfs.classLoader, kieConfs.resources.nextElement() );
-                }
+                getKieConfs().ifPresent( kieConfs -> {
+                    while (kieConfs.resources.hasMoreElements()) {
+                        registerConfs( kieConfs.classLoader, kieConfs.resources.nextElement() );
+                    }
+                } );
                 buildMap();
             }
 
@@ -151,12 +153,11 @@ public class ServiceDiscoveryImpl {
         }
     }
 
-    private KieConfs getKieConfs() {
+    private Optional<KieConfs> getKieConfs() {
         return Stream.of(this.getClass().getClassLoader(), Thread.currentThread().getContextClassLoader(), ClassLoader.getSystemClassLoader())
                 .map(this::loadKieConfs)
                 .filter( Objects::nonNull )
-                .findFirst()
-                .orElseThrow( () -> new IllegalStateException("Discovery started, but no kie.conf's found") );
+                .findFirst();
     }
 
     private KieConfs loadKieConfs(ClassLoader cl) {
