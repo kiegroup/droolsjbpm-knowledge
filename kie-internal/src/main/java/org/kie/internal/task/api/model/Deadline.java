@@ -44,4 +44,8 @@ public interface Deadline extends Externalizable {
 
     void setEscalations(List<Escalation> escalations);
 
+    int getRepeatCount();
+
+    void setRepeatCount(int repeatCount);
+
 }
