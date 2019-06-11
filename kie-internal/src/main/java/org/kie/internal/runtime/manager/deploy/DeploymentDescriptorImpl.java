@@ -70,7 +70,7 @@ public class DeploymentDescriptorImpl implements DeploymentDescriptor, Serializa
     private PersistenceMode persistenceMode = PersistenceMode.JPA;
 
     @XmlElement(name = "runtime-strategy")
-    private RuntimeStrategy runtimeStrategy = RuntimeStrategy.SINGLETON;
+    private RuntimeStrategy runtimeStrategy = RuntimeStrategy.PER_PROCESS_INSTANCE;
 
     @XmlElement(name = "marshalling-strategy")
     @XmlElementWrapper(name = "marshalling-strategies")
@@ -397,7 +397,7 @@ public class DeploymentDescriptorImpl implements DeploymentDescriptor, Serializa
         if (persistenceMode != PersistenceMode.JPA) {
             return false;
         }
-        if (runtimeStrategy != RuntimeStrategy.SINGLETON) {
+        if (runtimeStrategy != RuntimeStrategy.PER_PROCESS_INSTANCE) {
             return false;
         }
         if (marshallingStrategies != null && !marshallingStrategies.isEmpty()) {

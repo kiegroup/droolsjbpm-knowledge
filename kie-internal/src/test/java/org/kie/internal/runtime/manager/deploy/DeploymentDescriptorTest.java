@@ -64,7 +64,7 @@ public class DeploymentDescriptorTest {
         assertEquals("org.jbpm.domain", fromXml.getAuditPersistenceUnit());
         assertEquals(AuditMode.JPA, fromXml.getAuditMode());
         assertEquals(PersistenceMode.JPA, fromXml.getPersistenceMode());
-        assertEquals(RuntimeStrategy.SINGLETON, fromXml.getRuntimeStrategy());
+        assertEquals(RuntimeStrategy.PER_PROCESS_INSTANCE, fromXml.getRuntimeStrategy());
         assertEquals(1, fromXml.getMarshallingStrategies().size());
         assertEquals(0, fromXml.getConfiguration().size());
         assertEquals(0, fromXml.getEnvironmentEntries().size());
@@ -162,7 +162,7 @@ public class DeploymentDescriptorTest {
         assertEquals("org.jbpm.domain", descriptor.getAuditPersistenceUnit());
         assertEquals(AuditMode.JMS, descriptor.getAuditMode());
         assertEquals(PersistenceMode.JPA, descriptor.getPersistenceMode());
-        assertEquals(RuntimeStrategy.SINGLETON, descriptor.getRuntimeStrategy());
+        assertEquals(RuntimeStrategy.PER_PROCESS_INSTANCE, descriptor.getRuntimeStrategy());
         assertEquals(1, descriptor.getMarshallingStrategies().size());
         assertEquals(0, descriptor.getConfiguration().size());
         assertEquals(0, descriptor.getEnvironmentEntries().size());
@@ -207,7 +207,7 @@ public class DeploymentDescriptorTest {
         assertEquals("org.jbpm.domain", fromXml.getAuditPersistenceUnit());
         assertEquals(AuditMode.JPA, fromXml.getAuditMode());
         assertEquals(PersistenceMode.JPA, fromXml.getPersistenceMode());
-        assertEquals(RuntimeStrategy.SINGLETON, fromXml.getRuntimeStrategy());
+        assertEquals(RuntimeStrategy.PER_PROCESS_INSTANCE, fromXml.getRuntimeStrategy());
         assertEquals(0, fromXml.getMarshallingStrategies().size());
         assertEquals(0, fromXml.getConfiguration().size());
         assertEquals(0, fromXml.getEnvironmentEntries().size());
@@ -245,7 +245,7 @@ public class DeploymentDescriptorTest {
         assertEquals("org.jbpm.domain", descriptor.getAuditPersistenceUnit());
         assertEquals(AuditMode.JMS, descriptor.getAuditMode());
         assertEquals(PersistenceMode.JPA, descriptor.getPersistenceMode());
-        assertEquals(RuntimeStrategy.SINGLETON, descriptor.getRuntimeStrategy());
+        assertEquals(RuntimeStrategy.PER_PROCESS_INSTANCE, descriptor.getRuntimeStrategy());
         assertEquals(1, descriptor.getMarshallingStrategies().size());
         assertEquals(0, descriptor.getConfiguration().size());
         assertEquals(0, descriptor.getEnvironmentEntries().size());
@@ -304,7 +304,7 @@ public class DeploymentDescriptorTest {
         assertEquals("org.jbpm.domain", fromXml.getAuditPersistenceUnit());
         assertEquals(AuditMode.JPA, fromXml.getAuditMode());
         assertEquals(PersistenceMode.JPA, fromXml.getPersistenceMode());
-        assertEquals(RuntimeStrategy.SINGLETON, fromXml.getRuntimeStrategy());
+        assertEquals(RuntimeStrategy.PER_PROCESS_INSTANCE, fromXml.getRuntimeStrategy());
         assertEquals(0, fromXml.getMarshallingStrategies().size());
         assertEquals(0, fromXml.getConfiguration().size());
         assertEquals(0, fromXml.getEnvironmentEntries().size());
@@ -338,7 +338,7 @@ public class DeploymentDescriptorTest {
         assertNull(fromXml.getAuditPersistenceUnit());
         assertEquals(AuditMode.JPA, fromXml.getAuditMode());
         assertEquals(PersistenceMode.JPA, fromXml.getPersistenceMode());
-        assertEquals(RuntimeStrategy.SINGLETON, fromXml.getRuntimeStrategy());
+        assertEquals(RuntimeStrategy.PER_PROCESS_INSTANCE, fromXml.getRuntimeStrategy());
         assertEquals(0, fromXml.getMarshallingStrategies().size());
         assertEquals(0, fromXml.getConfiguration().size());
         assertEquals(0, fromXml.getEnvironmentEntries().size());
