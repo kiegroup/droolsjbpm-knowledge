@@ -133,5 +133,5 @@ public interface InternalRule extends Rule {
      * Returns true if the rule is part of default agenda group. False otherwise
      * @return
      */
-    boolean isDefaultGroup();
+    boolean isMainAgendaGroup();
 }
