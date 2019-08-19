@@ -29,9 +29,9 @@ public class PredictionOutcome {
 
     private boolean present;
 
-    private double confidenceLevel;
+    private double confidenceLevel = 0.0;
     
-    private double confidenceThreshold;
+    private double confidenceThreshold = 0.0;
 
     private Map<String, Object> data;
 
@@ -52,7 +52,7 @@ public class PredictionOutcome {
      * @param data A map containing the outcome names and values (respectively as map keys and values)
      */
     public PredictionOutcome(double confidenceLevel, double confidenceThreshold, Map<String, Object> data) {
-        this.present = data != null;        
+        this.present = data != null;
         this.confidenceLevel = confidenceLevel;
         this.confidenceThreshold = confidenceThreshold;
         this.data = data;
@@ -63,7 +63,7 @@ public class PredictionOutcome {
     }
 
     /**
-     * Returns whether a prediction has a confidence level above the specified threshold
+     * Returns true if a prediction has a confidence level above the specified threshold otherwise false
      */
     public boolean isCertain() {
         return this.present && confidenceLevel > confidenceThreshold;
@@ -71,6 +71,10 @@ public class PredictionOutcome {
 
     public double getConfidenceLevel() {
         return confidenceLevel;
+    }
+
+    public double getConfidenceThreshold() {
+        return confidenceThreshold;
     }
 
     public Map<String, Object> getData() {
