@@ -126,7 +126,7 @@ public class ServiceDiscoveryImpl {
                     childServices.computeIfAbsent( serviceName, k -> new ArrayList<>() )
                             .add( newInstance( classLoader, value.substring( 1 ) ) );
                 } else {
-                    services.put( serviceName, newInstance( classLoader, value ) );
+                    services.computeIfAbsent( serviceName, (service) -> newInstance( classLoader, value ) );
                 }
             } catch (RuntimeException e) {
                 if (optional) {
