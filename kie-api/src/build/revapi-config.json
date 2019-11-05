@@ -42,7 +42,7 @@
           "methodName": "getKieModule",
           "elementKind": "method",
           "justification": "Need an overload to avoid defaulting to executable model"
-        }
+        },
          {
            "code": "java.method.addedToInterface",
            "new": "method org.kie.api.conf.SessionsPoolOption org.kie.api.builder.model.KieBaseModel::getSessionsPool()",
