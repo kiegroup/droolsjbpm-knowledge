@@ -33,4 +33,5 @@ public interface RuleUnitComponentFactory {
     ApplyPmmlModelCommandExecutor newApplyPmmlModelCommandExecutor();
 
     boolean isRuleUnitClass( Class<?> ruleUnitClass );
+    boolean isDataSourceClass( Class<?> ruleUnitClass );
 }
