@@ -25,14 +25,12 @@ import static org.kie.api.internal.utils.ServiceUtil.instanceFromNames;
 /**
  * This is an internal class, not for public consumption.
  */
-public class ServiceRegistryImpl
-        implements
-        ServiceRegistry {
+public class ServiceRegistryImpl implements ServiceRegistry {
 
-    private static final String DYNAMIC_IMPL = "org.drools.dynamic.common.DynamicServiceRegistrySupplier";
-    private static final String STATIC_IMPL = "org.drools.statics.common.StaticServiceRegistrySupplier";
+    private static final String DYNAMIC_IMPL = "org.drools.dynamic.DynamicServiceRegistrySupplier";
+    private static final String STATIC_IMPL = "org.drools.statics.StaticServiceRegistrySupplier";
 
-    private static Supplier<ServiceRegistry> supplier = instanceFromNames(DYNAMIC_IMPL, STATIC_IMPL);
+    private static Supplier<ServiceRegistry> supplier;
 
     private Map<String, Object> registry;
 
@@ -54,6 +52,13 @@ public class ServiceRegistryImpl
     }
 
     public static ServiceRegistry getServiceRegistry() {
+        if (supplier == null) {
+            supplier = instanceFromNames(DYNAMIC_IMPL, STATIC_IMPL);
+        }
         return supplier.get();
+    }
+
+    public static void setSupplier( Supplier<ServiceRegistry> supplier ) {
+        ServiceRegistryImpl.supplier = supplier;
     }
 }
