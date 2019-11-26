@@ -15,6 +15,10 @@
  */
 package org.kie.internal.runtime.manager;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.kie.api.runtime.manager.Context;
 
 /**
@@ -46,6 +50,15 @@ public interface Mapper {
     Long findMapping(Context<?> context, String ownerId);
 
     /**
+     * Finds ksession for given context
+     * @param context instance of the context
+     * @return returns map where the key is the process id and value is ksession identifier when found otherwise null
+     */
+    default Map<Long, Long> findMappings(List<Context<?>> availableContext, String identifier) {
+        return availableContext.stream().collect(Collectors.toMap(k -> (Long) k.getContextId(), v -> findMapping(v, identifier)));
+    }
+
+    /**
      * Finds context by ksession identifier
      * @param ksessionId identifier of ksession
      * @return context instance when wound otherwise null
@@ -57,4 +70,5 @@ public interface Mapper {
      * @param context context instance that mapping shall be removed for
      */
     void removeMapping(Context<?> context, String ownerId);
+
 }

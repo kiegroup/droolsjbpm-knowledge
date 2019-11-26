@@ -15,11 +15,16 @@
  */
 package org.kie.internal.runtime.manager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.Context;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.internal.runtime.conf.DeploymentDescriptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Extension to stable API of RuntimeManager that provides additional capabilities
@@ -28,6 +33,8 @@ import org.kie.internal.runtime.conf.DeploymentDescriptor;
  */
 public interface InternalRuntimeManager extends RuntimeManager {
 
+    static final Logger logger = LoggerFactory.getLogger(InternalRuntimeManager.class);
+
     /**
      * Validates if given <code>KieSession</code> is eligible to be used with given context.
      * @param ksession instance of <code>KieSession</code>
@@ -35,6 +42,29 @@ public interface InternalRuntimeManager extends RuntimeManager {
      * @throws IllegalStateException in case validation fails
      */
     void validate(KieSession ksession, Context<?> context) throws IllegalStateException;
+
+    /**
+     * Validates if given <code>KieSession</code> is eligible to be used with given contexts.
+     * @param ksession instance of <code>KieSession</code>
+     * @param contexts list of instance of <code>Context</code>
+     * @return a list of ids validated
+     */
+    default List<Long> validate(KieSession ksession, List<Context<?>> contexts) {
+        List<Long> validated = new ArrayList<>();
+        for (Context<?> context : contexts) {
+            try {
+                validate(ksession, context);
+                validated.add((Long) context.getContextId());
+            } catch (IllegalStateException e) {
+                // IllegalStateException can be thrown when using RuntimeManager
+                // and invalid ksession was used for given context
+            } catch (RuntimeException e) {
+                logger.warn("Exception when loading process instance for signal '{}', instance with id {} will not be signaled",
+                            e.getMessage(), context.getContextId());
+            }
+        }
+        return validated;
+    }
 
     /**
      * Returns the actual environment used by the <code>RuntimeManager</code>
@@ -106,4 +136,5 @@ public interface InternalRuntimeManager extends RuntimeManager {
      * Determines if there is security manager configured
      */  
     boolean hasSecurityManager();
+
 }
