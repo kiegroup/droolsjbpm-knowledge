@@ -1,9 +1,11 @@
 package org.kie.api.pmml;
 
+import java.util.List;
+
 import org.kie.api.KieBase;
 
 public interface ModelApplier {
 
-    public PMML4Result applyModel(PMMLRequestData request, KieBase kbase, PMMLRuleUnit ruleUnit);
+    public List<PMML4Result> applyModel(PMMLRequestData request, KieBase kbase, PMMLRuleUnit ruleUnit);
 
 }
