@@ -32,6 +32,10 @@ public interface RuleUnitDescription {
         return getRuleUnitClass().getName();
     }
 
+    default String getCanonicalName() {
+        return getRuleUnitClass().getCanonicalName();
+    }
+
     String getSimpleName();
 
     String getPackageName();
