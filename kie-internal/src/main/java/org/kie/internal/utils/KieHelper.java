@@ -154,7 +154,9 @@ public class KieHelper {
         if (resource.getSourcePath() == null && resource.getTargetPath() == null) {
             resource.setSourcePath(generateResourceName(type));
         }
-        resource.setResourceType( type );
+        if (resource.getResourceType() == null) {
+            resource.setResourceType( type );
+        }
         return addResource(resource);
     }
 
