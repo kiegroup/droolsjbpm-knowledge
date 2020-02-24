@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.kie.internal.builder.conf;
+package org.kie.api.conf;
 
 /**
  * An Enum for ExternaliseCanonicalModelLambda option.
@@ -23,7 +23,7 @@ package org.kie.internal.builder.conf;
  *
  * DEFAULT = true
  */
-public enum ExternaliseCanonicalModelLambdaOption implements SingleValueKnowledgeBuilderOption {
+public enum ExternaliseCanonicalModelLambdaOption implements SingleValueKieBaseOption {
 
     ENABLED(true),
     DISABLED(false);
