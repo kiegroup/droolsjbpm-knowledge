@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package org.kie.api.conf;
+package org.kie.internal.builder.conf;
 
 /**
  * An Enum for ExternaliseCanonicalModelLambda option.
  *
  * drools.externaliseCanonicalModelLambda = &lt;true|false&gt;
  *
- * DEFAULT = true
+ * DEFAULT = false
  */
-public enum ExternaliseCanonicalModelLambdaOption implements SingleValueKieBaseOption {
+public enum ExternaliseCanonicalModelLambdaOption implements SingleValueKnowledgeBuilderOption {
 
     ENABLED(true),
     DISABLED(false);
