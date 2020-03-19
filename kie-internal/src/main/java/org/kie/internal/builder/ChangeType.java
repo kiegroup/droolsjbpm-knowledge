@@ -16,7 +16,7 @@
 package org.kie.internal.builder;
 
 public enum ChangeType {
-    REMOVED, UPDATED, ADDED;
+    REMOVED, UPDATED, ADDED, MERGED;
 
     public String toString() {
         return super.toString().toLowerCase();
