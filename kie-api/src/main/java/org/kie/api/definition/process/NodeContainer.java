@@ -36,11 +36,4 @@ public interface NodeContainer {
      */
     Node getNode(long id);
 
-    /** 
-     * the node in this NodeContainer with the give unique id
-     * @param nodeId
-     * @return
-     */
-    Node getNodeByUniqueId(String nodeId);
-
 }
