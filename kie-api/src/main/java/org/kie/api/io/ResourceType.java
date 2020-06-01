@@ -40,18 +40,18 @@ public class ResourceType
 
     private final String defaultPath;
 
-    private final boolean isNative;
+    private final boolean fullyCoveredByExecModel;
 
     private static final Map<String, ResourceType> CACHE = Collections.synchronizedMap(new HashMap<String, ResourceType>());
 
     public ResourceType(String name,
-                        boolean isNative,
+                        boolean fullyCoveredByExecModel,
                         String description,
                         String defaultPath,
                         String defaultExtension,
                         String... otherExtensions) {
         this.name = name;
-        this.isNative = isNative;
+        this.fullyCoveredByExecModel = fullyCoveredByExecModel;
         this.description = description;
         this.defaultPath = defaultPath;
         this.defaultExtension = defaultExtension;
@@ -82,7 +82,12 @@ public class ResourceType
                                                   otherExtensions );
 
         CACHE.put( resourceType, resource );
-        resource.getAllExtensions().forEach( ext -> CACHE.put( "." + ext, resource ) );
+        resource.getAllExtensions().forEach( ext -> {
+            if (ext.contains( "." )) {
+                throw new IllegalArgumentException( "A resource extension cannot contain a dot. Found: " + ext );
+            }
+            CACHE.put( "." + ext, resource );
+        } );
         return resource;
     }
 
@@ -287,8 +292,8 @@ public class ResourceType
         return false;
     }
 
-    public boolean isNative() {
-        return isNative;
+    public boolean isFullyCoveredByExecModel() {
+        return fullyCoveredByExecModel;
     }
 
     public String getDefaultPath() {
