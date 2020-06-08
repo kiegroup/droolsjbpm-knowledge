@@ -17,16 +17,17 @@ package org.kie.api.pmml;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Constants used by  PMML implementations
  */
-public enum  PMMLConstants {
+public enum PMMLConstants {
 
     KIE_PMML_IMPLEMENTATION("kie-pmml-implementation"),
     LEGACY("legacy"),
     NEW("new");
-
 
     private final String name;
 
@@ -35,11 +36,21 @@ public enum  PMMLConstants {
     }
 
     public static PMMLConstants byName(String name) {
-        return Arrays.stream(PMMLConstants.values()).filter(value -> Objects.equals(name, value.name)).findFirst().orElseThrow(() -> new RuntimeException("Failed to find PMMLConstants with name: " + name));
+        return Arrays.stream(PMMLConstants.values())
+                .filter(getFilterPredicate(name))
+                .findFirst()
+                .orElseThrow(getRuntimeExceptionSupplier(name));
+    }
+
+    private static Predicate<? super PMMLConstants> getFilterPredicate(String name) {
+        return value -> Objects.equals(name, value.name);
+    }
+
+    private static Supplier<? extends RuntimeException> getRuntimeExceptionSupplier(String name) {
+        return () -> new RuntimeException("Failed to find PMMLConstants with name: " + name);
     }
 
     public String getName() {
         return name;
     }
-
 }
