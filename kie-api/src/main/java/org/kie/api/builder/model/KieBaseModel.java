@@ -108,7 +108,7 @@ public interface KieBaseModel {
 
     /**
      * Sets the AlphaNodeOrderingOption for this KieBaseModel.
-     * Default is AlphaNodeOrderingOption.COUNT
+     * Default is AlphaNodeOrderingOption.NONE
      */
     KieBaseModel setAlphaNodeOrdering(AlphaNodeOrderingOption alphaNodeOrderingOption);
 

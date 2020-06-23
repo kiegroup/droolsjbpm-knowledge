@@ -24,7 +24,7 @@ package org.kie.api.conf;
  * count : Reorder alpha nodes based on usage count
  * none  : Leave alpha node order as written in rules
  *
- * DEFAULT = count
+ * DEFAULT = none
  */
 public enum AlphaNodeOrderingOption implements SingleValueKieBaseOption {
 
