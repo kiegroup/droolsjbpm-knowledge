@@ -19,22 +19,29 @@ package org.kie.api.conf;
 /**
  * An Enum for AlphaNodeOrdering option.
  *
- * drools.alphaNodeOrdering = &lt;count|none&gt;
+ * drools.alphaNodeOrdering = &lt;count|custom|none&gt;
  *
- * count : Reorder alpha nodes based on usage count
- * none  : Leave alpha node order as written in rules
+ * count  : Reorder alpha nodes based on usage count
+ * custom : Custom class implementation. Experimental.
+ * none   : Leave alpha node order as written in rules
  *
  * DEFAULT = none
  */
 public enum AlphaNodeOrderingOption implements SingleValueKieBaseOption {
 
     COUNT("count"),
+    CUSTOM("custom"),
     NONE("none");
 
     /**
      * The property name for the AlphaNodeOrdering option
      */
     public static final String PROPERTY_NAME = "drools.alphaNodeOrdering";
+
+    /**
+     * Experimental. Specify a custom AlphaNodeOrderingStrategy implementation with FQCN. Enabled when AlphaNodeOrderingOption.CUSTOM
+     */
+    public static final String CUSTOM_CLASS_PROPERTY_NAME = "drools.alphaNodeOrdering.custom.class";
 
     private String value;
 
@@ -56,6 +63,8 @@ public enum AlphaNodeOrderingOption implements SingleValueKieBaseOption {
     public static AlphaNodeOrderingOption determineAlphaNodeOrdering(String option) {
         if (COUNT.getValue().equalsIgnoreCase(option)) {
             return COUNT;
+        } else if (CUSTOM.getValue().equalsIgnoreCase(option)) {
+            return CUSTOM;
         } else if (NONE.getValue().equalsIgnoreCase(option)) {
             return NONE;
         }
