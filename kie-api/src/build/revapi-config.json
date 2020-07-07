@@ -80,6 +80,24 @@
                   "methodName": "<init>",
                   "elementKind": "constructor",
                   "justification": "identify kie native resources"
+                },
+                {
+                  "code": "java.method.addedToInterface",
+                  "new": "method org.kie.api.conf.AlphaNodeOrderingOption org.kie.api.builder.model.KieBaseModel::getAlphaNodeOrdering()",
+                  "package": "org.kie.api.builder.model",
+                  "classSimpleName": "KieBaseModel",
+                  "methodName": "getAlphaNodeOrdering",
+                  "elementKind": "method",
+                  "justification": "New option for optimization. See DROOLS-5378"
+                },
+                {
+                  "code": "java.method.addedToInterface",
+                  "new": "method org.kie.api.builder.model.KieBaseModel org.kie.api.builder.model.KieBaseModel::setAlphaNodeOrdering(org.kie.api.conf.AlphaNodeOrderingOption)",
+                  "package": "org.kie.api.builder.model",
+                  "classSimpleName": "KieBaseModel",
+                  "methodName": "setAlphaNodeOrdering",
+                  "elementKind": "method",
+                  "justification": "New option for optimization. See DROOLS-5378"
                 }
             ]
         }

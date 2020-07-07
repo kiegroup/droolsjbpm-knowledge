@@ -19,6 +19,7 @@ package org.kie.api.builder.model;
 import java.util.List;
 import java.util.Map;
 
+import org.kie.api.conf.AlphaNodeOrderingOption;
 import org.kie.api.conf.DeclarativeAgendaOption;
 import org.kie.api.conf.EqualityBehaviorOption;
 import org.kie.api.conf.EventProcessingOption;
@@ -99,6 +100,17 @@ public interface KieBaseModel {
      * Default is EqualityBehaviorOption.IDENTITY
      */
     KieBaseModel setEqualsBehavior(EqualityBehaviorOption equalsBehaviour);
+
+    /**
+     * Returns the AlphaNodeOrderingOption of this KieBaseModel
+     */
+    AlphaNodeOrderingOption getAlphaNodeOrdering();
+
+    /**
+     * Sets the AlphaNodeOrderingOption for this KieBaseModel.
+     * Default is AlphaNodeOrderingOption.NONE
+     */
+    KieBaseModel setAlphaNodeOrdering(AlphaNodeOrderingOption alphaNodeOrderingOption);
 
     /**
      * Returns the session pool configuration of this KieBaseModel

@@ -66,6 +66,7 @@
       <xsd:attribute name="eventProcessingMode" type="eventModeEnum"/>
       <xsd:attribute name="declarativeAgenda" type="declarativeAgendaEnum"/>
       <xsd:attribute name="sessionsPool" type="xsd:int"/>
+      <xsd:attribute name="alphaNodeOrdering" type="xsd:string"/>
     </xsd:complexType>
   </xsd:element>
 
