@@ -41,8 +41,33 @@
                   "methodName": "getMetadata",
                   "elementKind": "method",
                   "justification": "required metadata in the event for passing data among listeners"
+                },
+                {
+                  "code": "java.method.removed",
+                  "old": "method boolean org.kie.api.internal.utils.ServiceDiscoveryImpl::isKiecConfDiscoveryAllowed()",
+                  "package": "org.kie.api.internal.utils",
+                  "classSimpleName": "ServiceDiscoveryImpl",
+                  "methodName": "isKiecConfDiscoveryAllowed",
+                  "elementKind": "method",
+                  "justification": "service discovery refactor"
+                },
+                {
+                  "code": "java.method.removed",
+                  "old": "method void org.kie.api.internal.utils.ServiceDiscoveryImpl::setKiecConfDiscoveryAllowed(boolean)",
+                  "package": "org.kie.api.internal.utils",
+                  "classSimpleName": "ServiceDiscoveryImpl",
+                  "methodName": "setKiecConfDiscoveryAllowed",
+                  "elementKind": "method",
+                  "justification": "service discovery refactor"
+                },
+                {
+                  "code": "java.class.removed",
+                  "old": "class org.kie.api.internal.utils.ServiceRegistryImpl",
+                  "package": "org.kie.api.internal.utils",
+                  "classSimpleName": "ServiceRegistryImpl",
+                  "elementKind": "class",
+                  "justification": "service discovery refactor"
                 }
-
             ]
         }
     }
