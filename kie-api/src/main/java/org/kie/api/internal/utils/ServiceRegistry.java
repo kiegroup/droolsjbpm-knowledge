@@ -16,7 +16,12 @@
 
 package org.kie.api.internal.utils;
 
+import java.util.Map;
+import java.util.function.Supplier;
+
 import org.kie.api.Service;
+
+import static org.kie.api.internal.utils.ServiceUtil.instanceFromNames;
 
 /**
  * Internal Interface
@@ -24,9 +29,55 @@ import org.kie.api.Service;
  */
 public interface ServiceRegistry extends Service {
 
+    static <T> T getService(Class<T> cls) {
+        return getInstance().get( cls );
+    }
+
     static ServiceRegistry getInstance() {
-        return ServiceRegistryImpl.getServiceRegistry();
+        return ServiceRegistryHolder.serviceRegistry;
     }
 
     <T> T get(Class<T> cls);
+
+    class ServiceRegistryHolder {
+        private static ServiceRegistry serviceRegistry = Impl.getServiceRegistry();
+    }
+
+    class Impl implements ServiceRegistry {
+
+        private static final String DYNAMIC_IMPL = "org.drools.dynamic.DynamicServiceRegistrySupplier";
+        private static final String STATIC_IMPL = "org.drools.statics.StaticServiceRegistrySupplier";
+
+        private static Supplier<ServiceRegistry> supplier;
+
+        private Map<String, Object> registry;
+
+        public Impl() {
+            registry = ServiceDiscoveryImpl.getInstance().getServices();
+        }
+
+        public synchronized void reset() {
+            ServiceDiscoveryImpl.getInstance().reset();
+        }
+
+        public synchronized void reload() {
+            registry = ServiceDiscoveryImpl.getInstance().getServices();
+        }
+
+        public synchronized <T> T get(Class<T> cls) {
+            Object service = this.registry.get( cls.getCanonicalName() );
+            return cls.isInstance( service ) ? (T) service : null;
+        }
+
+        public static ServiceRegistry getServiceRegistry() {
+            if (supplier == null) {
+                supplier = instanceFromNames(DYNAMIC_IMPL, STATIC_IMPL);
+            }
+            return supplier.get();
+        }
+
+        public static void setSupplier( Supplier<ServiceRegistry> supplier ) {
+            Impl.supplier = supplier;
+        }
+    }
 }

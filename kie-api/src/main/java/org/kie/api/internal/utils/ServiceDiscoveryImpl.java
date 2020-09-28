@@ -41,9 +41,7 @@ public class ServiceDiscoveryImpl {
 
     private static final String CONF_FILE_PATH =  "META-INF/" + CONF_FILE_NAME;
 
-//    private ClassLoader classloader;
-
-    private ServiceDiscoveryImpl() {}
+    ServiceDiscoveryImpl() {}
 
     private static class LazyHolder {
         static final ServiceDiscoveryImpl INSTANCE = new ServiceDiscoveryImpl();
@@ -53,19 +51,11 @@ public class ServiceDiscoveryImpl {
         return LazyHolder.INSTANCE;
     }
 
-    private Map<String, Object>     services   = new HashMap<>();
-    private Map<String, List<?>>    childServices = new HashMap<>();
-    private boolean                 sealed     = false;
-    private boolean                 kiecConfDiscoveryAllowed = true;
-    private Map<String, Object>     cachedServices = new HashMap<String, Object>();
+    private final PriorityMap<String, Object> services = new PriorityMap<>();
+    private final Map<String, List<?>> childServices = new HashMap<>();
 
-    public synchronized boolean isKiecConfDiscoveryAllowed() {
-        return kiecConfDiscoveryAllowed;
-    }
-
-    public synchronized void setKiecConfDiscoveryAllowed(boolean kiecConfDiscoveryAllowed) {
-        this.kiecConfDiscoveryAllowed = kiecConfDiscoveryAllowed;
-    }
+    private Map<String, Object>     cachedServices;
+    private boolean sealed = false;
 
     public <T> void addService(Class<T> serviceClass, T service) {
         addService( serviceClass.getCanonicalName(), service );
@@ -80,22 +70,19 @@ public class ServiceDiscoveryImpl {
     }
 
     public synchronized void reset() {
-        cachedServices = new HashMap<String, Object>();
+        cachedServices = null;
         sealed = false;
     }
 
     public synchronized Map<String, Object> getServices() {
         if (!sealed) {
-            if (kiecConfDiscoveryAllowed) {
-                getKieConfs().ifPresent( kieConfs -> {
-                    while (kieConfs.resources.hasMoreElements()) {
-                        registerConfs( kieConfs.classLoader, kieConfs.resources.nextElement() );
-                    }
-                } );
-                buildMap();
-            }
+            getKieConfs().ifPresent( kieConfs -> {
+                while (kieConfs.resources.hasMoreElements()) {
+                    registerConfs( kieConfs.classLoader, kieConfs.resources.nextElement() );
+                }
+            } );
 
-            cachedServices = Collections.unmodifiableMap( cachedServices );
+            cachedServices = Collections.unmodifiableMap( buildMap() );
             sealed = true;
         }
         return cachedServices;
@@ -126,7 +113,12 @@ public class ServiceDiscoveryImpl {
                     childServices.computeIfAbsent( serviceName, k -> new ArrayList<>() )
                             .add( newInstance( classLoader, value.substring( 1 ) ) );
                 } else {
-                    services.put( serviceName, newInstance( classLoader, value ) );
+                    int priority = 0;
+                    if ( value.charAt( 0 ) >= '0' && value.charAt( 0 ) <= '9' ) {
+                        priority = value.charAt( 0 ) - '0';
+                        value = value.substring( 1 );
+                    }
+                    services.put( priority, serviceName, newInstance( classLoader, value ) );
                 }
             } catch (RuntimeException e) {
                 if (optional) {
@@ -140,17 +132,31 @@ public class ServiceDiscoveryImpl {
         }
     }
 
-    @FunctionalInterface
-    private interface ServiceProcessor {
-        boolean process(ClassLoader classLoader, String key, String value);
-    }
-
     private <T> T newInstance( ClassLoader classLoader, String className ) {
         try {
-            return (T) Class.forName( className, true, classLoader ).newInstance();
+            return (T) Class.forName( className, true, classLoader ).getConstructor().newInstance();
         } catch (Throwable t) {
             throw new RuntimeException( "Cannot create instance of class: " + className, t );
         }
+    }
+
+    private Map<String, Object> buildMap() {
+        Map<String, Object> servicesMap = new HashMap<>();
+        for (Map.Entry<String, Object> serviceEntry : services.entrySet()) {
+            servicesMap.put(serviceEntry.getKey(), serviceEntry.getValue());
+            List<?> children = childServices.remove( serviceEntry.getKey() );
+            if (children != null) {
+                for (Object child : children) {
+                    ( (Consumer) serviceEntry.getValue() ).accept( child );
+                }
+            }
+        }
+
+        if (!childServices.isEmpty()) {
+            throw new RuntimeException("Child services " + childServices.keySet() + " have no parent");
+        }
+
+        return servicesMap;
     }
 
     private Optional<KieConfs> getKieConfs() {
@@ -182,19 +188,25 @@ public class ServiceDiscoveryImpl {
         }
     }
 
-    private void buildMap() {
-        for (Map.Entry<String, Object> serviceEntry : services.entrySet()) {
-            cachedServices.put(serviceEntry.getKey(), serviceEntry.getValue());
-            List<?> children = childServices.remove( serviceEntry.getKey() );
-            if (children != null) {
-                for (Object child : children) {
-                    ( (Consumer) serviceEntry.getValue() ).accept( child );
-                }
-            }
+    private static class PriorityMap<K,V> extends HashMap<K,V> {
+        private final Map<K, Integer> priorityMap = new HashMap<>();
+
+        @Override
+        public V put(K key, V value) {
+            return put(0, key, value);
         }
 
-        if (!childServices.isEmpty()) {
-            throw new RuntimeException("Child services " + childServices.keySet() + " have no parent");
+        public V put(int priority, K key, V value) {
+            Integer currentPriority = priorityMap.get(key);
+            if (currentPriority == null || priority > currentPriority) {
+                priorityMap.put(key, priority);
+                return super.put(key, value);
+            }
+
+            if (priority < currentPriority) {
+                return get(key);
+            }
+            throw new RuntimeException("There already exists an implementation for service " + key + " with same priority " + priority);
         }
     }
 }
