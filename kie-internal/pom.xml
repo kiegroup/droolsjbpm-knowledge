@@ -120,7 +120,7 @@
                 <goal>jar</goal>
               </goals>
               <configuration>
-                <source>${maven.compiler.source}</source>
+                <source>${maven.compiler.source.jdk8}</source>
               </configuration>
             </execution>
           </executions>
