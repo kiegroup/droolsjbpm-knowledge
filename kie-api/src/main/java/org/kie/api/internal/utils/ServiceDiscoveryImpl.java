@@ -116,9 +116,12 @@ public class ServiceDiscoveryImpl {
                     childServices.computeIfAbsent( serviceName, k -> new ArrayList<>() )
                             .add( newInstance( classLoader, value.substring( 1 ) ) );
                 } else {
-                    Object service = newInstance( classLoader, value );
-                    ServicePriority servicePriority = service.getClass().getAnnotation( ServicePriority.class );
-                    int priority = servicePriority != null ? servicePriority.value() : 0;
+                    int priority = 0;
+                    int separatorPos = value.indexOf( ';' );
+                    if (separatorPos > 0) {
+                        priority = Integer.parseInt( value.substring( separatorPos+1 ).trim() );
+                        value = value.substring( 0, separatorPos ).trim();
+                    }
                     services.put( priority, serviceName, newInstance( classLoader, value ) );
                     log.debug( "Added Service " + value + " with priority " + priority );
                 }
@@ -144,6 +147,7 @@ public class ServiceDiscoveryImpl {
     private Map<String, List<Object>> buildMap() {
         Map<String, List<Object>> servicesMap = new HashMap<>();
         for (Map.Entry<String, List<Object>> serviceEntry : services.entrySet()) {
+            log.debug( "Service " + serviceEntry.getKey() + " is implemented by " + serviceEntry.getValue().get(0) );
             servicesMap.put(serviceEntry.getKey(), serviceEntry.getValue());
             List<?> children = childServices.remove( serviceEntry.getKey() );
             if (children != null) {

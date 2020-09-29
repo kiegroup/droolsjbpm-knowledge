@@ -14,6 +14,5 @@
 
 package org.kie.api.internal.utils;
 
-@ServicePriority( 4 )
 public class AnotherMockAssemblersImpl extends MockAssemblersImpl {
 }
