@@ -67,6 +67,27 @@
                   "classSimpleName": "ServiceRegistryImpl",
                   "elementKind": "class",
                   "justification": "service discovery refactor"
+                },
+                {
+                  "code": "java.method.returnTypeTypeParametersChanged",
+                  "old": "method java.util.Map<java.lang.String, java.lang.Object> org.kie.api.internal.utils.ServiceDiscoveryImpl::getServices()",
+                  "new": "method java.util.Map<java.lang.String, java.util.List<java.lang.Object>> org.kie.api.internal.utils.ServiceDiscoveryImpl::getServices()",
+                  "oldType": "java.util.Map<java.lang.String, java.lang.Object>",
+                  "newType": "java.util.Map<java.lang.String, java.util.List<java.lang.Object>>",
+                  "package": "org.kie.api.internal.utils",
+                  "classSimpleName": "ServiceDiscoveryImpl",
+                  "methodName": "getServices",
+                  "elementKind": "method",
+                  "justification": "service discovery refactor"
+                },
+                {
+                  "code": "java.method.addedToInterface",
+                  "new": "method <T> java.util.List<T> org.kie.api.internal.utils.ServiceRegistry::getAll(java.lang.Class<T>)",
+                  "package": "org.kie.api.internal.utils",
+                  "classSimpleName": "ServiceRegistry",
+                  "methodName": "getAll",
+                  "elementKind": "method",
+                  "justification": "service discovery refactor"
                 }
             ]
         }
