@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -54,7 +55,7 @@ public class ServiceDiscoveryImpl {
     private final PriorityMap<String, Object> services = new PriorityMap<>();
     private final Map<String, List<?>> childServices = new HashMap<>();
 
-    private Map<String, Object>     cachedServices;
+    private Map<String, List<Object>> cachedServices;
     private boolean sealed = false;
 
     public <T> void addService(Class<T> serviceClass, T service) {
@@ -63,7 +64,7 @@ public class ServiceDiscoveryImpl {
 
     public synchronized void addService(String serviceName, Object object) {
         if (!sealed) {
-            cachedServices.put(serviceName, object);
+            cachedServices.computeIfAbsent(serviceName, n -> new ArrayList<>()).add(object);
         } else {
             throw new IllegalStateException("Unable to add service '" + serviceName + "'. Services cannot be added once the ServiceDiscoverys is sealed");
         }
@@ -74,7 +75,7 @@ public class ServiceDiscoveryImpl {
         sealed = false;
     }
 
-    public synchronized Map<String, Object> getServices() {
+    public synchronized Map<String, List<Object>> getServices() {
         if (!sealed) {
             getKieConfs().ifPresent( kieConfs -> {
                 while (kieConfs.resources.hasMoreElements()) {
@@ -99,8 +100,10 @@ public class ServiceDiscoveryImpl {
                     processKieService( classLoader, entry[0].trim(), entry[1].trim() );
                 }
             }
-        } catch (Exception exc) {
-            throw new RuntimeException( "Unable to build kie service url = " + url.toExternalForm(), exc );
+        } catch (RuntimeException re) {
+            throw re;
+        } catch (Exception e) {
+            throw new RuntimeException( "Unable to build kie service url = " + url.toExternalForm(), e );
         }
     }
 
@@ -113,22 +116,20 @@ public class ServiceDiscoveryImpl {
                     childServices.computeIfAbsent( serviceName, k -> new ArrayList<>() )
                             .add( newInstance( classLoader, value.substring( 1 ) ) );
                 } else {
-                    int priority = 0;
-                    if ( value.charAt( 0 ) >= '0' && value.charAt( 0 ) <= '9' ) {
-                        priority = value.charAt( 0 ) - '0';
-                        value = value.substring( 1 );
-                    }
+                    Object service = newInstance( classLoader, value );
+                    ServicePriority servicePriority = service.getClass().getAnnotation( ServicePriority.class );
+                    int priority = servicePriority != null ? servicePriority.value() : 0;
                     services.put( priority, serviceName, newInstance( classLoader, value ) );
+                    log.debug( "Added Service " + value + " with priority " + priority );
                 }
             } catch (RuntimeException e) {
                 if (optional) {
                     log.info("Cannot load service: " + serviceName);
                 } else {
-                    System.out.println("Loading failed because " + e.getMessage());
+                    log.error("Loading failed because " + e.getMessage());
                     throw e;
                 }
             }
-            log.debug( "Adding Service {}\n", value );
         }
     }
 
@@ -140,14 +141,16 @@ public class ServiceDiscoveryImpl {
         }
     }
 
-    private Map<String, Object> buildMap() {
-        Map<String, Object> servicesMap = new HashMap<>();
-        for (Map.Entry<String, Object> serviceEntry : services.entrySet()) {
+    private Map<String, List<Object>> buildMap() {
+        Map<String, List<Object>> servicesMap = new HashMap<>();
+        for (Map.Entry<String, List<Object>> serviceEntry : services.entrySet()) {
             servicesMap.put(serviceEntry.getKey(), serviceEntry.getValue());
             List<?> children = childServices.remove( serviceEntry.getKey() );
             if (children != null) {
                 for (Object child : children) {
-                    ( (Consumer) serviceEntry.getValue() ).accept( child );
+                    for (Object service : serviceEntry.getValue()) {
+                        (( Consumer ) service).accept( child );
+                    }
                 }
             }
         }
@@ -188,25 +191,32 @@ public class ServiceDiscoveryImpl {
         }
     }
 
-    private static class PriorityMap<K,V> extends HashMap<K,V> {
-        private final Map<K, Integer> priorityMap = new HashMap<>();
+    private static class PriorityMap<K,V> {
+        private final Map<K, TreeMap<Integer, V>> priorityMap = new HashMap<>();
 
-        @Override
-        public V put(K key, V value) {
-            return put(0, key, value);
+        public void put(int priority, K key, V value) {
+            TreeMap<Integer, V> treeMap = priorityMap.get(key);
+            if ( treeMap == null ) {
+                treeMap = new TreeMap<>();
+                priorityMap.put( key, treeMap );
+            } else {
+                if ( treeMap.get( priority ) != null ) {
+                    throw new RuntimeException("There already exists an implementation for service " + key + " with same priority " + priority);
+                }
+            }
+            treeMap.put( priority, value );
         }
 
-        public V put(int priority, K key, V value) {
-            Integer currentPriority = priorityMap.get(key);
-            if (currentPriority == null || priority > currentPriority) {
-                priorityMap.put(key, priority);
-                return super.put(key, value);
+        public Iterable<? extends Map.Entry<K, List<V>>> entrySet() {
+            Map<K, List<V>> map = new HashMap<>();
+            for (Map.Entry<K, TreeMap<Integer, V>> entry : priorityMap.entrySet()) {
+                List<V> list = new ArrayList<>();
+                for (V value : entry.getValue().values()) {
+                    list.add(0, value);
+                }
+                map.put( entry.getKey(), list );
             }
-
-            if (priority < currentPriority) {
-                return get(key);
-            }
-            throw new RuntimeException("There already exists an implementation for service " + key + " with same priority " + priority);
+            return map.entrySet();
         }
     }
 }

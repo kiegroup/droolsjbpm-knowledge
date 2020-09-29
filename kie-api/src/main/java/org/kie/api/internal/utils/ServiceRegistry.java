@@ -16,6 +16,8 @@
 
 package org.kie.api.internal.utils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -39,6 +41,8 @@ public interface ServiceRegistry extends Service {
 
     <T> T get(Class<T> cls);
 
+    <T> List<T> getAll(Class<T> cls);
+
     class ServiceRegistryHolder {
         private static ServiceRegistry serviceRegistry = Impl.getServiceRegistry();
     }
@@ -50,7 +54,7 @@ public interface ServiceRegistry extends Service {
 
         private static Supplier<ServiceRegistry> supplier;
 
-        private Map<String, Object> registry;
+        private Map<String, List<Object>> registry;
 
         public Impl() {
             registry = ServiceDiscoveryImpl.getInstance().getServices();
@@ -64,9 +68,17 @@ public interface ServiceRegistry extends Service {
             registry = ServiceDiscoveryImpl.getInstance().getServices();
         }
 
-        public synchronized <T> T get(Class<T> cls) {
-            Object service = this.registry.get( cls.getCanonicalName() );
-            return cls.isInstance( service ) ? (T) service : null;
+        public <T> T get(Class<T> cls) {
+            for ( Object service : getAll( cls ) ) {
+                if ( cls.isInstance( service ) ) {
+                    return (T) service;
+                }
+            }
+            return null;
+        }
+
+        public <T> List<T> getAll(Class<T> cls) {
+            return (List<T>) this.registry.getOrDefault( cls.getCanonicalName(), Collections.emptyList() );
         }
 
         public static ServiceRegistry getServiceRegistry() {

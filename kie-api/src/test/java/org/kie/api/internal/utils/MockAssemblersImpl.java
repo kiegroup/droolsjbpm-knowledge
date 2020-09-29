@@ -28,6 +28,7 @@ import org.kie.api.io.ResourceConfiguration;
 import org.kie.api.io.ResourceType;
 import org.kie.api.io.ResourceWithConfiguration;
 
+@ServicePriority( 3 )
 public class MockAssemblersImpl implements KieAssemblers,
                                            Consumer<KieAssemblerService> {
 
