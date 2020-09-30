@@ -100,8 +100,6 @@ public class ServiceDiscoveryImpl {
                     processKieService( classLoader, entry[0].trim(), entry[1].trim() );
                 }
             }
-        } catch (RuntimeException re) {
-            throw re;
         } catch (Exception e) {
             throw new RuntimeException( "Unable to build kie service url = " + url.toExternalForm(), e );
         }
@@ -115,10 +113,11 @@ public class ServiceDiscoveryImpl {
                 if ( value.startsWith( "+" ) ) {
                     childServices.computeIfAbsent( serviceName, k -> new ArrayList<>() )
                             .add( newInstance( classLoader, value.substring( 1 ) ) );
+                    log.debug( "Added child Service " + value );
                 } else {
                     int priority = 0;
                     int separatorPos = value.indexOf( ';' );
-                    if (separatorPos > 0) {
+                    if (separatorPos > 0 && separatorPos < value.length()-1) {
                         priority = Integer.parseInt( value.substring( separatorPos+1 ).trim() );
                         value = value.substring( 0, separatorPos ).trim();
                     }
@@ -161,6 +160,16 @@ public class ServiceDiscoveryImpl {
 
         if (!childServices.isEmpty()) {
             throw new RuntimeException("Child services " + childServices.keySet() + " have no parent");
+        }
+
+        if (log.isTraceEnabled()) {
+            for (Map.Entry<String, List<Object>> serviceEntry : servicesMap.entrySet()) {
+                if (serviceEntry.getValue().size() == 1) {
+                    log.trace( "Service " + serviceEntry.getKey() + " is implemented by " + serviceEntry.getValue().get(0) );
+                } else {
+                    log.trace( "Service " + serviceEntry.getKey() + " is implemented (in order of priority) by " + serviceEntry.getValue() );
+                }
+            }
         }
 
         return servicesMap;
