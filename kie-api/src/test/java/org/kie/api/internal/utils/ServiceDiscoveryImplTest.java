@@ -28,7 +28,6 @@ import org.kie.api.io.ResourceType;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class ServiceDiscoveryImplTest {
 
@@ -51,19 +50,14 @@ public class ServiceDiscoveryImplTest {
         assertTrue(childServices.get(ResourceType.DRL) instanceof MockChildAssemblerService);
     }
 
-    @Test
+    @Test(expected = Exception.class)
     public void testDuplicatedServiceShouldFail() {
         ServiceDiscoveryImpl serviceDiscovery = new ServiceDiscoveryImpl();
         ClassLoader cl = ServiceDiscoveryImplTest.class.getClassLoader();
 
-        try {
-            serviceDiscovery.registerConfs( cl, getUrl( cl, "META-INF/kie.conf.test1" ) );
-            serviceDiscovery.registerConfs( cl, getUrl( cl, "META-INF/kie.conf.test2" ) );
-            serviceDiscovery.getServices();
-            fail( "Trying to load a duplicated service should fail" );
-        } catch (Exception e) {
-            System.out.println( e.getMessage() );
-        }
+        serviceDiscovery.registerConfs( cl, getUrl( cl, "META-INF/kie.conf.test1" ) );
+        serviceDiscovery.registerConfs( cl, getUrl( cl, "META-INF/kie.conf.test2" ) );
+        serviceDiscovery.getServices();
     }
 
     @Test
