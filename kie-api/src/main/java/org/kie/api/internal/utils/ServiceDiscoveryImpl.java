@@ -115,13 +115,12 @@ public class ServiceDiscoveryImpl {
                             .add( newInstance( classLoader, value.substring( 1 ) ) );
                     log.debug( "Added child Service " + value );
                 } else {
-                    int priority = 0;
-                    int separatorPos = value.indexOf( ';' );
-                    if (separatorPos > 0 && separatorPos < value.length()-1) {
-                        priority = Integer.parseInt( value.substring( separatorPos+1 ).trim() );
-                        value = value.substring( 0, separatorPos ).trim();
+                    String[] splitValues = value.split( ";" );
+                    if (splitValues.length > 2) {
+                        throw new RuntimeException( "Invalid kie.conf entry: " + value );
                     }
-                    services.put( priority, serviceName, newInstance( classLoader, value ) );
+                    int priority = splitValues.length == 2 ? Integer.parseInt( splitValues[1].trim() ) : 0;
+                    services.put( priority, serviceName, newInstance( classLoader, splitValues[0].trim() ) );
                     log.debug( "Added Service " + value + " with priority " + priority );
                 }
             } catch (RuntimeException e) {
