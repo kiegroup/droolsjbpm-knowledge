@@ -19,24 +19,31 @@ package org.kie.internal.builder.conf;
 /**
  * An Enum for AlphaNetworkCompilerOption option.
  *
- * drools.alphaNetworkCompiler = &lt;true|false&gt;
+ * drools.alphaNetworkCompiler = &lt;disabled|inmemory|compiled&gt;
  *
- * DEFAULT = false
+ * Disabled: do not generate compiled alpha network
+ * InMemory: generate compiled alpha network after creation of the kiebase and compile it in-memory
+ * Compiled: assume compiled alpha network is already compiled in the kjar. To be used with the executable model
+ *
+ * DEFAULT = disabled
  */
 public enum AlphaNetworkCompilerOption implements SingleValueKnowledgeBuilderOption {
 
-    ENABLED(true),
-    DISABLED(false);
+    DISABLED("disabled"),
+    INMEMORY("inmemory"),
+    COMPILED("compiled");
 
-    /**
-     * The property name for the sequential mode option
-     */
+
     public static final String PROPERTY_NAME = "drools.alphaNetworkCompiler";
 
-    private boolean value;
+    private String value;
 
-    AlphaNetworkCompilerOption(final boolean value ) {
+    AlphaNetworkCompilerOption(final String value ) {
         this.value = value;
+    }
+
+    public String getMode() {
+        return value;
     }
 
     /**
@@ -46,8 +53,14 @@ public enum AlphaNetworkCompilerOption implements SingleValueKnowledgeBuilderOpt
         return PROPERTY_NAME;
     }
 
-    public boolean isAlphaNetworkCompilerEnabled() {
-        return this.value;
+    public static AlphaNetworkCompilerOption determineAlphaNetworkCompilerMode(String mode) {
+        if ( INMEMORY.getMode().equalsIgnoreCase( mode ) ) {
+            return INMEMORY;
+        } else if ( DISABLED.getMode().equalsIgnoreCase( mode ) ) {
+            return DISABLED;
+        } else if ( COMPILED.getMode().equalsIgnoreCase( mode ) ) {
+            return COMPILED;
+        }
+        throw new IllegalArgumentException( "Illegal enum value '" + mode + "' for AlphaNetworkCompilerOption" );
     }
-
 }
