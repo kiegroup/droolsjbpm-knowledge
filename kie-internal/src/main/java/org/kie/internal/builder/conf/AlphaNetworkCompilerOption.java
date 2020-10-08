@@ -31,7 +31,8 @@ public enum AlphaNetworkCompilerOption implements SingleValueKnowledgeBuilderOpt
 
     DISABLED("disabled"),
     INMEMORY("inmemory"),
-    COMPILED("compiled");
+    COMPILE("compile"),
+    LOAD("load");
 
 
     public static final String PROPERTY_NAME = "drools.alphaNetworkCompiler";
@@ -58,8 +59,10 @@ public enum AlphaNetworkCompilerOption implements SingleValueKnowledgeBuilderOpt
             return INMEMORY;
         } else if ( DISABLED.getMode().equalsIgnoreCase( mode ) ) {
             return DISABLED;
-        } else if ( COMPILED.getMode().equalsIgnoreCase( mode ) ) {
-            return COMPILED;
+        } else if ( COMPILE.getMode().equalsIgnoreCase(mode ) ) {
+            return COMPILE;
+        } else if ( LOAD.getMode().equalsIgnoreCase(mode ) ) {
+            return LOAD;
         }
         throw new IllegalArgumentException( "Illegal enum value '" + mode + "' for AlphaNetworkCompilerOption" );
     }
