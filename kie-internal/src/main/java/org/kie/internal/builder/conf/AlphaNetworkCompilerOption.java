@@ -19,11 +19,11 @@ package org.kie.internal.builder.conf;
 /**
  * An Enum for AlphaNetworkCompilerOption option.
  *
- * drools.alphaNetworkCompiler = &lt;disabled|inmemory|compiled&gt;
+ * drools.alphaNetworkCompiler = &lt;disabled|inmemory|load&gt;
  *
- * Disabled: do not generate compiled alpha network
- * InMemory: generate compiled alpha network after creation of the kiebase and compile it in-memory
- * Compiled: assume compiled alpha network is already compiled in the kjar. To be used with the executable model
+ * Disabled: Do not generate compiled alpha network
+ * InMemory: Generate compiled alpha network after creation of the kiebase and compile it in-memory
+ * Load    : Assume compiled alpha network is already compiled in the kjar, load it from the classpath
  *
  * DEFAULT = disabled
  */
@@ -31,9 +31,7 @@ public enum AlphaNetworkCompilerOption implements SingleValueKnowledgeBuilderOpt
 
     DISABLED("disabled"),
     INMEMORY("inmemory"),
-    COMPILE("compile"),
     LOAD("load");
-
 
     public static final String PROPERTY_NAME = "drools.alphaNetworkCompiler";
 
@@ -59,8 +57,6 @@ public enum AlphaNetworkCompilerOption implements SingleValueKnowledgeBuilderOpt
             return INMEMORY;
         } else if ( DISABLED.getMode().equalsIgnoreCase( mode ) ) {
             return DISABLED;
-        } else if ( COMPILE.getMode().equalsIgnoreCase(mode ) ) {
-            return COMPILE;
         } else if ( LOAD.getMode().equalsIgnoreCase(mode ) ) {
             return LOAD;
         }
