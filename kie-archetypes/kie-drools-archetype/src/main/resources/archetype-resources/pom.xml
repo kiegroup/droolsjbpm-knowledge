@@ -19,12 +19,23 @@
     <junit-version>${junitVersion}</junit-version>
   </properties>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.drools</groupId>
+        <artifactId>drools-bom</artifactId>
+        <type>pom</type>
+        <version>${drools-version}</version>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
 
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-engine-classic</artifactId>
-      <version>${droolsVersion}</version>
     </dependency>
 
     <dependency>
