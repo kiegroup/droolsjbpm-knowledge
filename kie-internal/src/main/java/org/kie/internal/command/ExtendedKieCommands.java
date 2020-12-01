@@ -2,7 +2,6 @@ package org.kie.internal.command;
 
 import org.kie.api.command.Command;
 import org.kie.api.command.KieCommands;
-import org.kie.api.pmml.PMMLRequestData;
 
 public interface ExtendedKieCommands extends KieCommands {
 
