@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import static org.kie.api.pmml.PMMLConstants.KIE_PMML_IMPLEMENTATION;
 import static org.kie.api.pmml.PMMLConstants.LEGACY;
+import static org.kie.api.pmml.PMMLConstants.NEW;
 
 /**
  * Class used to provide utility methods to manage implementation to be invoked
@@ -28,30 +29,46 @@ import static org.kie.api.pmml.PMMLConstants.LEGACY;
 public class PMMLImplementationsUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PMMLImplementationsUtil.class);
+    private static final String LEGACY_IMPL = "org.kie.pmml.assembler.PMMLAssemblerService";
+    private static final String TRUSTY_IMPL = "org.kie.pmml.evaluator.assembler.service.PMMLAssemblerService";
 
     /**
      * @param classLoader
-     * @return <code>true</code> if the <b>otherImplementationFullName</b> is not found in the given <code>ClassLoader</code> <b>OR</b>
-     * if the  <code>KIE_PMML_IMPLEMENTATION</code> property is equals to the given <b>requestingImplementation</b>;
-     * return <code>false</code> otherwise
+     * @return the <b>PMML</b> implementation to enable
      */
-    public static boolean isToEnable(final String otherImplementationFullName, final ClassLoader classLoader, final String requestingImplementation) {
-        if (!isOtherImplementationPresent(otherImplementationFullName, classLoader)) {
-            return true;
-        } else {
-            final String property = System.getProperty(KIE_PMML_IMPLEMENTATION.getName(), LEGACY.getName());
-            return property.equals(requestingImplementation);
+    public static PMMLConstants toEnable(final ClassLoader classLoader) {
+        boolean isLegacyPresent = isImplementationPresent(LEGACY_IMPL, classLoader);
+        boolean isTrustyPresent = isImplementationPresent(TRUSTY_IMPL, classLoader);
+        if (!isLegacyPresent && !isTrustyPresent) {
+            throw new IllegalStateException("Could not find PMML implementation");
+        }
+        PMMLConstants pmmlConstants = PMMLConstants.byName(System.getProperty(KIE_PMML_IMPLEMENTATION.getName(), LEGACY.getName()));
+        switch (pmmlConstants) {
+            case LEGACY:
+                if (isLegacyPresent) {
+                    return LEGACY;
+                } else {
+                    return NEW;
+                }
+            case NEW:
+                if (isTrustyPresent) {
+                    return NEW;
+                } else {
+                    return LEGACY;
+                }
+            default:
+                throw new RuntimeException("Unmanaged PMMLConstants " + pmmlConstants);
         }
     }
 
     /**
      * @param classLoader
-     * @return <code>true</code> if the <b>otherImplementationFullName</b> is found in the given <code>ClassLoader</code>,
+     * @return <code>true</code> if the <b>implementationFullName</b> is found in the given <code>ClassLoader</code>,
      * <code>false</code> otherwise
      */
-    public static boolean isOtherImplementationPresent(final String otherImplementationFullName, final ClassLoader classLoader) {
+    private static boolean isImplementationPresent(final String implementationFullName, final ClassLoader classLoader) {
         try {
-            classLoader.loadClass(otherImplementationFullName);
+            classLoader.loadClass(implementationFullName);
             return true;
         } catch (NoClassDefFoundError | ClassNotFoundException e) {
             return false;
