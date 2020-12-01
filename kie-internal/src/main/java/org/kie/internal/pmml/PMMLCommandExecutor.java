@@ -21,10 +21,10 @@ import org.kie.api.pmml.PMMLRequestData;
 public interface PMMLCommandExecutor {
 
     /**
-     * Evaluate the given <&lt;>PMMLRequestData<&gt;>
+     * Evaluate the given <code>PMMLRequestData<code>
      * @param pmmlRequestData : it must contain the pmml file name (in the <i>source</i> property)
      * and the model name
      * @return
      */
-    PMML4Result evaluate(PMMLRequestData pmmlRequestData);
+    PMML4Result execute(PMMLRequestData pmmlRequestData);
 }
