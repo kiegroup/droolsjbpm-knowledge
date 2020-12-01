@@ -17,6 +17,4 @@ public interface ExtendedKieCommands extends KieCommands {
     Command newClearAgendaGroup(String name);
 
     Command newClearRuleFlowGroup(String name);
-    
-    Command newApplyPmmlModel(PMMLRequestData request);
 }
