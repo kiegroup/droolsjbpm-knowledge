@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.api.pmml;
+package org.kie.internal.pmml;
 
+import org.kie.api.pmml.PMMLConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
