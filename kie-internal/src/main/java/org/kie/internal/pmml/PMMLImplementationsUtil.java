@@ -32,6 +32,7 @@ public class PMMLImplementationsUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(PMMLImplementationsUtil.class);
     private static final String LEGACY_IMPL = "org.kie.pmml.assembler.PMMLAssemblerService";
     private static final String TRUSTY_IMPL = "org.kie.pmml.evaluator.assembler.service.PMMLAssemblerService";
+    private static final String JPMML_IMPL = "org.kie.dmn.jpmml.DMNjPMMLInvocationEvaluator";
 
     /**
      * @param classLoader
@@ -46,19 +47,20 @@ public class PMMLImplementationsUtil {
         PMMLConstants pmmlConstants = PMMLConstants.byName(System.getProperty(KIE_PMML_IMPLEMENTATION.getName(), LEGACY.getName()));
         switch (pmmlConstants) {
             case LEGACY:
-                if (isLegacyPresent) {
-                    return LEGACY;
-                } else {
-                    return NEW;
-                }
+                return returnImplementation(LEGACY, isLegacyPresent);
             case NEW:
-                if (isTrustyPresent) {
-                    return NEW;
-                } else {
-                    return LEGACY;
-                }
+                return returnImplementation(NEW, isTrustyPresent);
             default:
-                throw new RuntimeException("Unmanaged PMMLConstants " + pmmlConstants);
+                throw new IllegalArgumentException("Unmanaged PMMLConstants " + pmmlConstants);
+        }
+    }
+
+    protected static PMMLConstants returnImplementation(PMMLConstants toReturn, boolean isPresent) {
+        if (isPresent) {
+            LOGGER.info("Using {} implementation", toReturn);
+            return toReturn;
+        } else {
+            throw new IllegalArgumentException(String.format("Required %s PMML implementation missing in Classpath", toReturn));
         }
     }
 
@@ -83,8 +85,8 @@ public class PMMLImplementationsUtil {
      */
     public static boolean isjPMMLAvailableToClassLoader(final ClassLoader classLoader) {
         try {
-            classLoader.loadClass("org.kie.dmn.jpmml.DMNjPMMLInvocationEvaluator");
-            LOGGER.info("jpmml libraries available on classpath, skipping kie-pmml parsing and compilation");
+            classLoader.loadClass(JPMML_IMPL);
+            LOGGER.info("jpmml libraries available on classpath");
             return true;
         } catch (ClassNotFoundException e) {
             return false;
