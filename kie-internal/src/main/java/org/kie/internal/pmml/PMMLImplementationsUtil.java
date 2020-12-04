@@ -30,6 +30,7 @@ import static org.kie.api.pmml.PMMLConstants.NEW;
 public class PMMLImplementationsUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PMMLImplementationsUtil.class);
+
     private static final String LEGACY_IMPL = "org.kie.pmml.assembler.PMMLAssemblerService";
     private static final String TRUSTY_IMPL = "org.kie.pmml.evaluator.assembler.service.PMMLAssemblerService";
     private static final String JPMML_IMPL = "org.kie.dmn.jpmml.DMNjPMMLInvocationEvaluator";
@@ -44,7 +45,19 @@ public class PMMLImplementationsUtil {
         if (!isLegacyPresent && !isTrustyPresent) {
             throw new IllegalStateException("Could not find PMML implementation");
         }
-        PMMLConstants pmmlConstants = PMMLConstants.byName(System.getProperty(KIE_PMML_IMPLEMENTATION.getName(), LEGACY.getName()));
+        return getPMMLConstants(isLegacyPresent, isTrustyPresent);
+    }
+
+    protected static PMMLConstants getPMMLConstants(boolean isLegacyPresent, boolean isTrustyPresent) {
+        String sysProp = System.getProperty(KIE_PMML_IMPLEMENTATION.getName());
+        if (sysProp != null) {
+            return getFromPropertyAndClasspath(PMMLConstants.byName(sysProp), isLegacyPresent, isTrustyPresent);
+        } else {
+            return getFromClassPath(isLegacyPresent, isTrustyPresent);
+        }
+    }
+
+    protected static PMMLConstants getFromPropertyAndClasspath(PMMLConstants pmmlConstants, boolean isLegacyPresent, boolean isTrustyPresent) {
         switch (pmmlConstants) {
             case LEGACY:
                 return returnImplementation(LEGACY, isLegacyPresent);
@@ -52,6 +65,14 @@ public class PMMLImplementationsUtil {
                 return returnImplementation(NEW, isTrustyPresent);
             default:
                 throw new IllegalArgumentException("Unmanaged PMMLConstants " + pmmlConstants);
+        }
+    }
+
+    protected static PMMLConstants getFromClassPath(boolean isLegacyPresent, boolean isTrustyPresent) {
+        if (isTrustyPresent) {
+            return returnImplementation(NEW, true);
+        } else {
+            return returnImplementation(LEGACY, isLegacyPresent);
         }
     }
 
