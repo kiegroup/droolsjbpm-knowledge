@@ -43,10 +43,10 @@ public class KieAssemblersImpl implements KieAssemblers, Consumer<KieAssemblerSe
     public void addResourceAsPackageDescr(Object knowledgeBuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
         KieAssemblerService assembler = assemblers.get(type);
         if (assembler != null) {
-            assembler.addResourceAsPackageDescr(knowledgeBuilder,
-                                                resource,
-                                                type,
-                                                configuration);
+            assembler.addResourceBeforeRules(knowledgeBuilder,
+                                             resource,
+                                             type,
+                                             configuration);
         } else {
             throw new RuntimeException("Unknown resource type: " + type);
         }

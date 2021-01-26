@@ -27,7 +27,7 @@ public interface KieAssemblerService extends KieService {
 
     ResourceType getResourceType();
 
-    default void addResourceAsPackageDescr(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
+    default void addResourceBeforeRules(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
 
     }
 
