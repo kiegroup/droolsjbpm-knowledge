@@ -40,7 +40,7 @@ public class KieAssemblersImpl implements KieAssemblers, Consumer<KieAssemblerSe
     }
 
     @Override
-    public void addResourceAsPackageDescr(Object knowledgeBuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
+    public void addResourceBeforeRules(Object knowledgeBuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
         KieAssemblerService assembler = assemblers.get(type);
         if (assembler != null) {
             assembler.addResourceBeforeRules(knowledgeBuilder,

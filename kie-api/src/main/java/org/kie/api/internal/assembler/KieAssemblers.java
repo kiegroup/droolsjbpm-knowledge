@@ -25,7 +25,7 @@ import org.kie.api.io.ResourceWithConfiguration;
 
 public interface KieAssemblers extends KieService {
 
-    void addResourceAsPackageDescr(
+    void addResourceBeforeRules(
             Object knowledgeBuilder,
             Resource resource,
             ResourceType type,
