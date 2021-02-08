@@ -56,4 +56,7 @@ public interface RuleUnitDescription {
 
     boolean hasDataSource( String name );
 
+//    RuleUnitVariable getVar(String name);
+//
+//    RuleUnitConfig getConfig();
 }
