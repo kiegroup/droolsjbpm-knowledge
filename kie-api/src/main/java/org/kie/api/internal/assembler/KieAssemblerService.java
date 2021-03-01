@@ -27,9 +27,7 @@ public interface KieAssemblerService extends KieService {
 
     ResourceType getResourceType();
 
-    default void addResourceBeforeRules(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
-
-    }
+    default void addResourceBeforeRules(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception { }
 
     default void addResourcesBeforeRules(Object kbuilder, Collection<ResourceWithConfiguration> resources, ResourceType type) throws Exception {
         for (ResourceWithConfiguration rd : resources) {
@@ -39,9 +37,7 @@ public interface KieAssemblerService extends KieService {
         }
     }
 
-    default void addResourceAfterRules(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception {
-
-    }
+    default void addResourceAfterRules(Object kbuilder, Resource resource, ResourceType type, ResourceConfiguration configuration) throws Exception { }
 
     default void addResourcesAfterRules(Object kbuilder, Collection<ResourceWithConfiguration> resources, ResourceType type) throws Exception {
         for (ResourceWithConfiguration rd : resources) {
