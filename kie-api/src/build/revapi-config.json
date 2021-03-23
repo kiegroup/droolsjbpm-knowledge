@@ -122,6 +122,15 @@
                 "methodName": "setThreadSafe",
                 "elementKind": "method",
                 "justification": "support non-thread-safe on KieSession"
+              },
+              {
+                "code": "java.method.addedToInterface",
+                "new": "method org.kie.api.command.Command org.kie.api.command.KieCommands::newQuery(java.lang.String, java.lang.String, boolean, boolean, java.lang.Object[])",
+                "package": "org.kie.api.command",
+                "classSimpleName": "KieCommands",
+                "methodName": "newQuery",
+                "elementKind": "method",
+                "justification": "need two parameters to hide the result maps to reduce the payload size see DROOLS-6177"
               }
             ]
         }

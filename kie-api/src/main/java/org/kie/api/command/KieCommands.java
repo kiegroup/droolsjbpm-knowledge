@@ -111,6 +111,12 @@ public interface KieCommands {
                      String name,
                      Object[] arguments);
 
+    Command newQuery(String identifier,
+                     String name,
+                     boolean showFactHandleMaps,
+                     boolean showResultMaps,
+                     Object[] arguments);
+
     BatchExecutionCommand newBatchExecution(List< ? extends Command> commands);
 
     BatchExecutionCommand newBatchExecution(List< ? extends Command> commands, String lookup);
