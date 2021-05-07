@@ -21,7 +21,7 @@ package org.kie.internal.builder.conf;
  *
  * drools.parallelLambdaExternalization = &lt;true|false&gt;
  *
- * DEFAULT = false
+ * DEFAULT = true
  */
 public enum ParallelLambdaExternalizationOption implements SingleValueKnowledgeBuilderOption {
 
