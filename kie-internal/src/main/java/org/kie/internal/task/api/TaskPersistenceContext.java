@@ -32,14 +32,19 @@ import org.kie.api.task.model.User;
 import org.kie.internal.task.api.model.ContentData;
 import org.kie.internal.task.api.model.Deadline;
 import org.kie.internal.task.api.model.FaultData;
+import org.kie.internal.task.api.model.Operation;
 
 public interface TaskPersistenceContext {
 
     Task findTask(Long taskId);
 
     Task persistTask(Task task);
+    
+    default Task updateTask (Task task) {
+        return updateTask (task, Operation.Update);
+    }
 
-    Task updateTask(Task task);
+    Task updateTask (Task task, Operation operation);
 
     Task removeTask(Task task);
 

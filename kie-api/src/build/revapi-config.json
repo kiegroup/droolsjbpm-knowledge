@@ -140,6 +140,16 @@
                 "methodName": "setAccumulateNullPropagation",
                 "elementKind": "method",
                 "justification": "configuration switch for allowing null propagation in accumulate"
+              },
+              {
+                "code": "java.method.numberOfParametersChanged",
+                "old": "method java.util.List<org.kie.api.task.TaskLifeCycleEventListener> org.kie.api.runtime.manager.RegisterableItemsFactory::getTaskListeners()",
+                "new": "method java.util.List<org.kie.api.task.TaskLifeCycleEventListener> org.kie.api.runtime.manager.RegisterableItemsFactory::getTaskListeners(org.kie.api.runtime.manager.RuntimeEngine)",
+                "package": "org.kie.api.runtime.manager",
+                "classSimpleName": "RegisterableItemsFactory",
+                "methodName": "getTaskListeners",
+                "elementKind": "method",
+                "justification": "https://issues.redhat.com/browse/JBPM-9743"
               }
             ]
         }
