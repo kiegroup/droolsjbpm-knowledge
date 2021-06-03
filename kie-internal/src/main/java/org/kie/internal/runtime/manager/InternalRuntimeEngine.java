@@ -17,7 +17,6 @@ package org.kie.internal.runtime.manager;
 
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
-import org.kie.api.runtime.manager.RuntimeManager;
 
 /**
  * Extension to stable API of RuntimeEngine that provides additional capabilities.
@@ -30,6 +29,4 @@ public interface InternalRuntimeEngine extends RuntimeEngine {
      * @return kie session already created
      */
     KieSession internalGetKieSession();
-    
-    RuntimeManager getManager();
 }

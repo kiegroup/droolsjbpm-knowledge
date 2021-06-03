@@ -82,5 +82,5 @@ public interface RegisterableItemsFactory {
     /**
      * @return new instances of <code>TaskLifeCycleEventListener</code> that will be registered on <code>RuntimeEngine</code>.
      */
-    List<TaskLifeCycleEventListener> getTaskListeners(RuntimeEngine runtime);
+    List<TaskLifeCycleEventListener> getTaskListeners();
 }

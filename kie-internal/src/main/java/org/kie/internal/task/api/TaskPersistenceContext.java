@@ -18,6 +18,7 @@ package org.kie.internal.task.api;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.kie.api.task.UserGroupCallback;
 import org.kie.api.task.model.Attachment;
@@ -43,8 +44,12 @@ public interface TaskPersistenceContext {
     default Task updateTask (Task task) {
         return updateTask (task, Operation.Update);
     }
+    
+    default Task updateTask (Task task, Operation operation) {
+        return updateTask (task, operation, Optional.empty());
+    }
 
-    Task updateTask (Task task, Operation operation);
+    Task updateTask (Task task, Operation operation, Optional<String> targetEntity);
 
     Task removeTask(Task task);
 

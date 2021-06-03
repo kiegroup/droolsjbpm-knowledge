@@ -39,5 +39,5 @@ public enum Operation {
     Archive,
     Update,
     Comment,
-    Attachment;
+    Attach;
 }
