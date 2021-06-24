@@ -34,10 +34,5 @@ public enum Operation {
     Exit,
     Nominate,
     Modify,
-    View,
-    Create,
-    Archive,
-    Update,
-    Comment,
-    Attach;
+    View;
 }

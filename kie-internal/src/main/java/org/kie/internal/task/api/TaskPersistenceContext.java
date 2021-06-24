@@ -18,7 +18,6 @@ package org.kie.internal.task.api;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.kie.api.task.UserGroupCallback;
 import org.kie.api.task.model.Attachment;
@@ -33,25 +32,16 @@ import org.kie.api.task.model.User;
 import org.kie.internal.task.api.model.ContentData;
 import org.kie.internal.task.api.model.Deadline;
 import org.kie.internal.task.api.model.FaultData;
-import org.kie.internal.task.api.model.Operation;
 
 public interface TaskPersistenceContext {
 
     Task findTask(Long taskId);
 
-    Task persistTask(Task task);
+    Task persistTask(Task task, TaskOperationInfo info);
     
-    default Task updateTask (Task task) {
-        return updateTask (task, Operation.Update);
-    }
-    
-    default Task updateTask (Task task, Operation operation) {
-        return updateTask (task, operation, Optional.empty());
-    }
+    Task updateTask(Task task, TaskOperationInfo info);
 
-    Task updateTask (Task task, Operation operation, Optional<String> targetEntity);
-
-    Task removeTask(Task task);
+    Task removeTask(Task task, TaskOperationInfo info);
 
     Group findGroup(String groupId);
 
@@ -95,9 +85,9 @@ public interface TaskPersistenceContext {
 
     Attachment removeAttachment(Attachment attachment);
 
-    Attachment removeAttachmentFromTask(Task task, long attachmentId);
+    Attachment removeAttachmentFromTask(Task task, long attachmentId, String userId);
 
-    Attachment addAttachmentToTask(Attachment attachment, Task task);
+    Attachment addAttachmentToTask(Attachment attachment, Task task, String userId);
 
     Comment findComment(Long commentId);
 
@@ -107,9 +97,9 @@ public interface TaskPersistenceContext {
 
     Comment removeComment(Comment comment);
 
-    Comment removeCommentFromTask(Comment comment, Task task);
+    Comment removeCommentFromTask(Comment comment, Task task, String userId);
 
-    Comment addCommentToTask(Comment comment, Task task);
+    Comment addCommentToTask(Comment comment, Task task, String userId);
 
     Deadline findDeadline(Long deadlineId);
 
