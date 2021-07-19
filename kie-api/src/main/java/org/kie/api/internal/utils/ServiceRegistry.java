@@ -51,6 +51,7 @@ public interface ServiceRegistry extends Service {
 
     class Impl implements ServiceRegistry {
 
+        private static final String HARDWIRED_IMPL = "org.drools.dynamic.HardwiredServiceRegistrySupplier";
         private static final String DYNAMIC_IMPL = "org.drools.dynamic.DynamicServiceRegistrySupplier";
         private static final String STATIC_IMPL = "org.drools.statics.StaticServiceRegistrySupplier";
 
@@ -85,7 +86,7 @@ public interface ServiceRegistry extends Service {
 
         public static ServiceRegistry getServiceRegistry() {
             if (supplier == null) {
-                supplier = instanceFromNames(DYNAMIC_IMPL, STATIC_IMPL);
+                supplier = instanceFromNames(HARDWIRED_IMPL, DYNAMIC_IMPL, STATIC_IMPL);
             }
             return supplier.get();
         }
