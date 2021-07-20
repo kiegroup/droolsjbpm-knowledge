@@ -17,9 +17,12 @@
 package org.kie.api.internal.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.JarURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -30,19 +33,21 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Consumer;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ServiceDiscoveryImpl {
-    private static final Logger log = LoggerFactory.getLogger( ServiceDiscoveryImpl.class );
+    private static final Logger log = LoggerFactory.getLogger(ServiceDiscoveryImpl.class);
 
+    private static final String CONF_FILE_FOLDER = "META-INF";
     private static final String CONF_FILE_NAME = "kie.conf";
 
-    private static final String CONF_FILE_PATH =  "META-INF/" + CONF_FILE_NAME;
-
-    ServiceDiscoveryImpl() {}
+    ServiceDiscoveryImpl() {
+    }
 
     private static class LazyHolder {
         static final ServiceDiscoveryImpl INSTANCE = new ServiceDiscoveryImpl();
@@ -59,7 +64,7 @@ public class ServiceDiscoveryImpl {
     private boolean sealed = false;
 
     public <T> void addService(Class<T> serviceClass, T service) {
-        addService( serviceClass.getCanonicalName(), service );
+        addService(serviceClass.getCanonicalName(), service);
     }
 
     public synchronized void addService(String serviceName, Object object) {
@@ -78,55 +83,55 @@ public class ServiceDiscoveryImpl {
 
     public synchronized Map<String, List<Object>> getServices() {
         if (!sealed) {
-            getKieConfs().ifPresent( kieConfs -> {
+            getKieConfs().ifPresent(kieConfs -> {
                 while (kieConfs.resources.hasMoreElements()) {
-                    registerConfs( kieConfs.classLoader, kieConfs.resources.nextElement() );
+                    registerConfs(kieConfs.classLoader, kieConfs.resources.nextElement());
                 }
-            } );
+            });
 
-            cachedServices = Collections.unmodifiableMap( buildMap() );
+            cachedServices = Collections.unmodifiableMap(buildMap());
             sealed = true;
         }
         return cachedServices;
     }
 
-    public void registerConfs( ClassLoader classLoader, URL url ) {
+    public void registerConfs(ClassLoader classLoader, URL url) {
         log.debug("Loading kie.conf from {} in classloader {}", url, classLoader);
 
-        try ( BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream())) ) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()))) {
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 // DROOLS-2122: parsing with Properties.load a Drools version 6 kie.conf, hence skipping this entry
-                if (line.contains( "=" ) && !line.contains( "[" )) {
-                    String[] entry = line.split( "=" );
-                    processKieService( classLoader, entry[0].trim(), entry[1].trim() );
+                if (line.contains("=") && !line.contains("[")) {
+                    String[] entry = line.split("=");
+                    processKieService(classLoader, entry[0].trim(), entry[1].trim());
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException( "Unable to build kie service url = " + url.toExternalForm(), e );
+            throw new RuntimeException("Unable to build kie service url = " + url.toExternalForm(), e);
         }
     }
 
     private void processKieService(ClassLoader classLoader, String key, String values) {
-        for (String value : values.split( "," )) {
-            boolean optional = key.startsWith( "?" );
-            String serviceName = optional ? key.substring( 1 ) : key;
+        for (String value : values.split(",")) {
+            boolean optional = key.startsWith("?");
+            String serviceName = optional ? key.substring(1) : key;
             try {
-                if ( value.startsWith( "+" ) ) {
-                    childServices.computeIfAbsent( serviceName, k -> new ArrayList<>() )
-                            .add( newInstance( classLoader, value.substring( 1 ) ) );
-                    log.debug("Added child Service {}", value );
+                if (value.startsWith("+")) {
+                    childServices.computeIfAbsent(serviceName, k -> new ArrayList<>())
+                            .add(newInstance(classLoader, value.substring(1)));
+                    log.debug("Added child Service {}", value);
                 } else {
-                    String[] splitValues = value.split( ";" );
+                    String[] splitValues = value.split(";");
                     if (splitValues.length > 2) {
-                        throw new RuntimeException( "Invalid kie.conf entry: " + value );
+                        throw new RuntimeException("Invalid kie.conf entry: " + value);
                     }
-                    int priority = splitValues.length == 2 ? Integer.parseInt( splitValues[1].trim() ) : 0;
-                    services.put( priority, serviceName, newInstance( classLoader, splitValues[0].trim() ) );
-                    log.debug( "Added Service {} with priority {}", value, priority );
+                    int priority = splitValues.length == 2 ? Integer.parseInt(splitValues[1].trim()) : 0;
+                    services.put(priority, serviceName, newInstance(classLoader, splitValues[0].trim()));
+                    log.debug("Added Service {} with priority {}", value, priority);
                 }
             } catch (RuntimeException e) {
                 if (optional) {
-                    log.info("Cannot load service: {}",serviceName);
+                    log.info("Cannot load service: {}", serviceName);
                 } else {
                     log.error("Loading failed because {}", e.getMessage());
                     throw e;
@@ -135,24 +140,24 @@ public class ServiceDiscoveryImpl {
         }
     }
 
-    private <T> T newInstance( ClassLoader classLoader, String className ) {
+    private <T> T newInstance(ClassLoader classLoader, String className) {
         try {
-            return (T) Class.forName( className, true, classLoader ).getConstructor().newInstance();
+            return (T) Class.forName(className, true, classLoader).getConstructor().newInstance();
         } catch (Throwable t) {
-            throw new RuntimeException( "Cannot create instance of class: " + className, t );
+            throw new RuntimeException("Cannot create instance of class: " + className, t);
         }
     }
 
     private Map<String, List<Object>> buildMap() {
         Map<String, List<Object>> servicesMap = new HashMap<>();
         for (Map.Entry<String, List<Object>> serviceEntry : services.entrySet()) {
-            log.debug( "Service {} is implemented by {}",  serviceEntry.getKey(), serviceEntry.getValue().get(0) );
+            log.debug("Service {} is implemented by {}", serviceEntry.getKey(), serviceEntry.getValue().get(0));
             servicesMap.put(serviceEntry.getKey(), serviceEntry.getValue());
-            List<?> children = childServices.remove( serviceEntry.getKey() );
+            List<?> children = childServices.remove(serviceEntry.getKey());
             if (children != null) {
                 for (Object child : children) {
                     for (Object service : serviceEntry.getValue()) {
-                        (( Consumer ) service).accept( child );
+                        ((Consumer) service).accept(child);
                     }
                 }
             }
@@ -165,9 +170,9 @@ public class ServiceDiscoveryImpl {
         if (log.isTraceEnabled()) {
             for (Map.Entry<String, List<Object>> serviceEntry : servicesMap.entrySet()) {
                 if (serviceEntry.getValue().size() == 1) {
-                    log.trace( "Service {} is implemented by {}",  serviceEntry.getKey(), serviceEntry.getValue().get(0) );
+                    log.trace("Service {} is implemented by {}", serviceEntry.getKey(), serviceEntry.getValue().get(0));
                 } else {
-                    log.trace( "Service {} is implemented (in order of priority) by {}", serviceEntry.getKey(), serviceEntry.getValue() );
+                    log.trace("Service {} is implemented (in order of priority) by {}", serviceEntry.getKey(), serviceEntry.getValue());
                 }
             }
         }
@@ -178,7 +183,7 @@ public class ServiceDiscoveryImpl {
     private Optional<KieConfs> getKieConfs() {
         return Stream.of(this.getClass().getClassLoader(), Thread.currentThread().getContextClassLoader(), ClassLoader.getSystemClassLoader())
                 .map(this::loadKieConfs)
-                .filter( Objects::nonNull )
+                .filter(Objects::nonNull)
                 .findFirst();
     }
 
@@ -187,8 +192,8 @@ public class ServiceDiscoveryImpl {
             return null;
         }
         try {
-            Enumeration<URL> resources = cl.getResources( CONF_FILE_PATH );
-            return resources.hasMoreElements() ? new KieConfs( cl, resources ) : null;
+            Enumeration<URL> resources = findKieConfUrls(cl);
+            return resources.hasMoreElements() ? new KieConfs(cl, resources) : null;
         } catch (IOException e) {
             return null;
         }
@@ -198,13 +203,13 @@ public class ServiceDiscoveryImpl {
         private final ClassLoader classLoader;
         private final Enumeration<URL> resources;
 
-        private KieConfs( ClassLoader classLoader, Enumeration<URL> confResources ) {
+        private KieConfs(ClassLoader classLoader, Enumeration<URL> confResources) {
             this.classLoader = classLoader;
             this.resources = confResources;
         }
     }
 
-    private static class PriorityMap<K,V> {
+    private static class PriorityMap<K, V> {
         private final Map<K, TreeMap<Integer, V>> priorityMap = new HashMap<>();
 
 
@@ -214,15 +219,15 @@ public class ServiceDiscoveryImpl {
 
         public void put(int priority, K key, V value) {
             TreeMap<Integer, V> treeMap = priorityMap.get(key);
-            if ( treeMap == null ) {
+            if (treeMap == null) {
                 treeMap = new TreeMap<>();
-                priorityMap.put( key, treeMap );
+                priorityMap.put(key, treeMap);
             } else {
-                if ( treeMap.get( priority ) != null ) {
+                if (treeMap.get(priority) != null) {
                     throw new RuntimeException("There already exists an implementation for service " + key + " with same priority " + priority);
                 }
             }
-            treeMap.put( priority, value );
+            treeMap.put(priority, value);
         }
 
         public Iterable<? extends Map.Entry<K, List<V>>> entrySet() {
@@ -232,9 +237,56 @@ public class ServiceDiscoveryImpl {
                 for (V value : entry.getValue().values()) {
                     list.add(0, value);
                 }
-                map.put( entry.getKey(), list );
+                map.put(entry.getKey(), list);
             }
             return map.entrySet();
         }
+    }
+
+    public static Enumeration<URL> findKieConfUrls(ClassLoader cl) throws IOException {
+        List<URL> kieConfsUrls = new ArrayList<>();
+
+        Enumeration<URL> metaInfs = cl.getResources(CONF_FILE_FOLDER);
+        while (metaInfs.hasMoreElements()) {
+            URL metaInf = metaInfs.nextElement();
+            URLConnection con = metaInf.openConnection();
+            if (con instanceof JarURLConnection) {
+                collectKieConfsInJar(kieConfsUrls, metaInf, (JarURLConnection) con);
+            } else {
+                collectKieConfsInFile(kieConfsUrls, new File(metaInf.getFile()));
+            }
+        }
+
+        if (log.isTraceEnabled()) {
+            log.trace("Discovered kie.conf files: " + kieConfsUrls);
+        }
+
+        return Collections.enumeration(kieConfsUrls);
+    }
+
+    private static void collectKieConfsInJar(List<URL> kieConfsUrls, URL metaInf, JarURLConnection con) throws IOException {
+        JarURLConnection jarCon = con;
+        JarFile jarFile = jarCon.getJarFile();
+        Enumeration<JarEntry> entries = jarFile.entries();
+        while (entries.hasMoreElements()) {
+            JarEntry entry = entries.nextElement();
+            if (entry.getName().endsWith(CONF_FILE_NAME)) {
+                String metaInfString = metaInf.toString();
+                kieConfsUrls.add(new URL(metaInfString.substring(0, metaInfString.length() - CONF_FILE_FOLDER.length()) + entry.getName()));
+            }
+        }
+    }
+
+    private static void collectKieConfsInFile(List<URL> kieConfsUrls, File file) throws IOException {
+        if (file.isDirectory()) {
+            for (File child : file.listFiles()) {
+                collectKieConfsInFile(kieConfsUrls, child);
+            }
+        } else {
+            if (file.toString().endsWith(CONF_FILE_NAME)) {
+                kieConfsUrls.add(file.toURI().toURL());
+            }
+        }
+
     }
 }
