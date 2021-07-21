@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
 
 public class ServiceDiscoveryImpl {
 
-    public static final String[] KIE_MODULES = new String[] {
+    private static final String[] KIE_MODULES = new String[] {
             "", "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
             "drools-metric", "drools-model-compiler", "drools-mvel", "drools-persistence-jpa", "drools-ruleunit",
             "drools-scorecards", "drools-serialization-protobuf", "drools-traits", "drools-workbench-model-guided-dtable",
@@ -276,10 +276,7 @@ public class ServiceDiscoveryImpl {
 
         if (kieConfsUrls.isEmpty()) {
             // no kie-conf found so fallback to the hardcoded lookup
-            kieConfsUrls = Stream.of(KIE_MODULES)
-                    .map( module -> cl.getResource(CONF_FILE_FOLDER + "/" + module + (module.length() > 0 ? "/" : "") + CONF_FILE_NAME) )
-                    .filter( Objects::nonNull )
-                    .collect(Collectors.toList());
+            kieConfsUrls = getKieConfsFromKnownModules(cl).collect(Collectors.toList());
         } else {
 
             // check if all discovered kie.conf file are in known modules
@@ -293,6 +290,12 @@ public class ServiceDiscoveryImpl {
         }
 
         return Collections.enumeration(kieConfsUrls);
+    }
+
+    public static Stream<URL> getKieConfsFromKnownModules(ClassLoader cl) {
+        return Stream.of(KIE_MODULES)
+                .map(module -> cl.getResource(CONF_FILE_FOLDER + "/" + module + (module.length() > 0 ? "/" : "") + CONF_FILE_NAME))
+                .filter(Objects::nonNull);
     }
 
     private static void collectKieConfsInJar(List<URL> kieConfsUrls, URL metaInf, JarURLConnection con) throws IOException {
