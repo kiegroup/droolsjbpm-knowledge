@@ -260,10 +260,8 @@ public class ServiceDiscoveryImpl {
         while (metaInfs.hasMoreElements()) {
             URL metaInf = metaInfs.nextElement();
             if (metaInf.getProtocol().startsWith("vfs")) {
-                kieConfsUrls = Stream.of(KIE_MODULES)
-                        .map( module -> cl.getResource(CONF_FILE_FOLDER + "/" + module + (module.length() > 0 ? "/" : "") + CONF_FILE_NAME) )
-                        .filter( Objects::nonNull )
-                        .collect(Collectors.toList());
+                // the kie.conf discovery mechanism doesn't work under OSGi
+                kieConfsUrls.clear();
                 break;
             }
 
@@ -273,6 +271,14 @@ public class ServiceDiscoveryImpl {
             } else {
                 collectKieConfsInFile(kieConfsUrls, new File(metaInf.getFile()));
             }
+        }
+
+        if (kieConfsUrls.isEmpty()) {
+            // no kie-conf found so fallback to the hardcoded lookup
+            kieConfsUrls = Stream.of(KIE_MODULES)
+                    .map( module -> cl.getResource(CONF_FILE_FOLDER + "/" + module + (module.length() > 0 ? "/" : "") + CONF_FILE_NAME) )
+                    .filter( Objects::nonNull )
+                    .collect(Collectors.toList());
         }
 
         if (log.isTraceEnabled()) {
