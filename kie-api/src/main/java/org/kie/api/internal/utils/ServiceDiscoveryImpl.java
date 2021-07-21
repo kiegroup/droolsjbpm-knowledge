@@ -44,16 +44,17 @@ import org.slf4j.LoggerFactory;
 public class ServiceDiscoveryImpl {
 
     public static final String[] KIE_MODULES = new String[] {
-            "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
+            "", "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
             "drools-metric", "drools-model-compiler", "drools-mvel", "drools-persistence-jpa", "drools-ruleunit",
             "drools-scorecards", "drools-serialization-protobuf", "drools-traits", "drools-workbench-model-guided-dtable",
             "drools-workbench-model-guided-scorecard", "drools-workbench-model-guided-template", "kie-internal", "kie-ci",
-            "kie-dmn-core", "kie-dmn-feel", "kie-dmn-model", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core"
+            "kie-dmn-core", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core", "jbpm-bpmn2",
+            "jbpm-case-mgmt-cmmn", "jbpm-flow", "jbpm-flow-builder", "jbpm-human-task-jpa"
     };
 
     private static final Logger log = LoggerFactory.getLogger(ServiceDiscoveryImpl.class);
 
-    private static final String CONF_FILE_FOLDER = "META-INF";
+    private static final String CONF_FILE_FOLDER = "META-INF/kie";
     private static final String CONF_FILE_NAME = "kie.conf";
 
     ServiceDiscoveryImpl() {}
@@ -260,7 +261,7 @@ public class ServiceDiscoveryImpl {
             URL metaInf = metaInfs.nextElement();
             if (metaInf.getProtocol().startsWith("vfs")) {
                 kieConfsUrls = Stream.of(KIE_MODULES)
-                        .map( module -> cl.getResource("META-INF/" + module + "/kie.conf") )
+                        .map( module -> cl.getResource(CONF_FILE_FOLDER + "/" + module + (module.length() > 0 ? "/" : "") + CONF_FILE_NAME) )
                         .filter( Objects::nonNull )
                         .collect(Collectors.toList());
                 break;
