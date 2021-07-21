@@ -28,15 +28,9 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
-public abstract class BaseActivator implements BundleActivator {
+import static org.kie.api.internal.utils.ServiceDiscoveryImpl.KIE_MODULES;
 
-    private static final String[] KIE_MODULES = new String[] {
-            "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
-            "drools-metric", "drools-model-compiler", "drools-mvel", "drools-persistence-jpa", "drools-ruleunit",
-            "drools-scorecards", "drools-serialization-protobuf", "drools-traits", "drools-workbench-model-guided-dtable",
-            "drools-workbench-model-guided-scorecard", "drools-workbench-model-guided-template", "kie-internal", "kie-ci",
-            "kie-dmn-core", "kie-dmn-feel", "kie-dmn-model", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core"
-    };
+public abstract class BaseActivator implements BundleActivator {
 
     private final ClassLoader classLoader;
 

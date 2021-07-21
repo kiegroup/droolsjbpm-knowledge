@@ -35,12 +35,22 @@ import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ServiceDiscoveryImpl {
+
+    public static final String[] KIE_MODULES = new String[] {
+            "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
+            "drools-metric", "drools-model-compiler", "drools-mvel", "drools-persistence-jpa", "drools-ruleunit",
+            "drools-scorecards", "drools-serialization-protobuf", "drools-traits", "drools-workbench-model-guided-dtable",
+            "drools-workbench-model-guided-scorecard", "drools-workbench-model-guided-template", "kie-internal", "kie-ci",
+            "kie-dmn-core", "kie-dmn-feel", "kie-dmn-model", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core"
+    };
+
     private static final Logger log = LoggerFactory.getLogger(ServiceDiscoveryImpl.class);
 
     private static final String CONF_FILE_FOLDER = "META-INF";
@@ -248,6 +258,14 @@ public class ServiceDiscoveryImpl {
         Enumeration<URL> metaInfs = cl.getResources(CONF_FILE_FOLDER);
         while (metaInfs.hasMoreElements()) {
             URL metaInf = metaInfs.nextElement();
+            if (metaInf.getProtocol().startsWith("vfs")) {
+                kieConfsUrls = Stream.of(KIE_MODULES)
+                        .map( module -> cl.getResource("META-INF/" + module + "/kie.conf") )
+                        .filter( Objects::nonNull )
+                        .collect(Collectors.toList());
+                break;
+            }
+
             URLConnection con = metaInf.openConnection();
             if (con instanceof JarURLConnection) {
                 collectKieConfsInJar(kieConfsUrls, metaInf, (JarURLConnection) con);
@@ -286,6 +304,5 @@ public class ServiceDiscoveryImpl {
                 kieConfsUrls.add(file.toURI().toURL());
             }
         }
-
     }
 }
