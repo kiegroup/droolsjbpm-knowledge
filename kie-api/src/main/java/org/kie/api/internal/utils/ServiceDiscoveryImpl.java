@@ -24,6 +24,7 @@ import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -47,9 +48,9 @@ public class ServiceDiscoveryImpl {
             "", "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
             "drools-metric", "drools-model-compiler", "drools-mvel", "drools-persistence-jpa", "drools-ruleunit",
             "drools-scorecards", "drools-serialization-protobuf", "drools-traits", "drools-workbench-model-guided-dtable",
-            "drools-workbench-model-guided-scorecard", "drools-workbench-model-guided-template", "kie-internal", "kie-ci",
-            "kie-dmn-core", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core", "jbpm-bpmn2",
-            "jbpm-case-mgmt-cmmn", "jbpm-flow", "jbpm-flow-builder", "jbpm-human-task-jpa"
+            "drools-workbench-model-guided-scorecard", "drools-workbench-model-guided-template",
+            "jbpm-bpmn2", "jbpm-case-mgmt-cmmn", "jbpm-flow", "jbpm-flow-builder", "jbpm-human-task-jpa",
+            "kie-ci", "kie-dmn-core", "kie-internal", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core"
     };
 
     private static final Logger log = LoggerFactory.getLogger(ServiceDiscoveryImpl.class);
@@ -279,10 +280,16 @@ public class ServiceDiscoveryImpl {
                     .map( module -> cl.getResource(CONF_FILE_FOLDER + "/" + module + (module.length() > 0 ? "/" : "") + CONF_FILE_NAME) )
                     .filter( Objects::nonNull )
                     .collect(Collectors.toList());
+        } else {
+
+            // check if all discovered kie.conf file are in known modules
+            kieConfsUrls.stream().map(ServiceDiscoveryImpl::getModuleName)
+                    .filter(module -> Arrays.binarySearch(KIE_MODULES, module) < 0)
+                    .forEach(module -> log.warn("kie.conf file discovered for '" + module + "' but not listed among the known modules. This will not work under OSGi or jboss vfs."));
         }
 
-        if (log.isTraceEnabled()) {
-            log.trace("Discovered kie.conf files: " + kieConfsUrls);
+        if (log.isDebugEnabled()) {
+            log.debug("Discovered kie.conf files: " + kieConfsUrls);
         }
 
         return Collections.enumeration(kieConfsUrls);
@@ -311,5 +318,11 @@ public class ServiceDiscoveryImpl {
                 kieConfsUrls.add(file.toURI().toURL());
             }
         }
+    }
+
+    private static String getModuleName(URL url) {
+        String s = url.toString();
+        int moduleStart = s.indexOf(CONF_FILE_FOLDER) + CONF_FILE_FOLDER.length() + 1;
+        return s.substring(moduleStart, s.length() - (CONF_FILE_NAME.length()+1));
     }
 }
