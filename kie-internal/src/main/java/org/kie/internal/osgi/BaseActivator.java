@@ -16,9 +16,10 @@
 
 package org.kie.internal.osgi;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.Enumeration;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.kie.api.internal.utils.ServiceDiscoveryImpl;
 import org.osgi.framework.BundleActivator;
@@ -27,9 +28,15 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
-import static org.kie.api.internal.utils.ServiceDiscoveryImpl.findKieConfUrls;
-
 public abstract class BaseActivator implements BundleActivator {
+
+    private static final String[] KIE_MODULES = new String[] {
+            "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
+            "drools-metric", "drools-model-compiler", "drools-mvel", "drools-persistence-jpa", "drools-ruleunit",
+            "drools-scorecards", "drools-serialization-protobuf", "drools-traits", "drools-workbench-model-guided-dtable",
+            "drools-workbench-model-guided-scorecard", "drools-workbench-model-guided-template", "kie-internal", "kie-ci",
+            "kie-dmn-core", "kie-dmn-feel", "kie-dmn-model", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core"
+    };
 
     private final ClassLoader classLoader;
 
@@ -62,15 +69,15 @@ public abstract class BaseActivator implements BundleActivator {
         @Override
         public ServiceDiscoveryImpl addingService(ServiceReference<ServiceDiscoveryImpl> ref ) {
             ServiceDiscoveryImpl service = context.getService( ref );
-            try {
-                Enumeration<URL> confUrls = findKieConfUrls(classLoader);
-                while (confUrls.hasMoreElements()) {
-                    service.registerConfs( classLoader, confUrls.nextElement() );
-                }
-            } catch (IOException e) {
-                // ignore
-            }
+            findKieConf().ifPresent( confUrl -> service.registerConfs( classLoader, confUrl ) );
             return service;
+        }
+
+        private Optional<URL> findKieConf() {
+            return Stream.of(KIE_MODULES)
+                    .map( module -> classLoader.getResource("META-INF/" + module + "/kie.conf") )
+                    .filter( Objects::nonNull )
+                    .findFirst();
         }
 
         @Override
