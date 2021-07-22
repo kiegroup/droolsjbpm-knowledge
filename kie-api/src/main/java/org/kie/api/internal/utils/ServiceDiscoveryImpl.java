@@ -25,6 +25,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -44,13 +45,16 @@ import org.slf4j.LoggerFactory;
 
 public class ServiceDiscoveryImpl {
 
+    // keep this in alphabetical order
     private static final String[] KIE_MODULES = new String[] {
-            "", "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
+            "", // This is to reserve the path META-INF/kie/kie.conf for user specific customizations
+            "drools-alphanetwork-compiler", "drools-beliefs", "drools-compiler", "drools-core", "drools-decisiontables",
             "drools-metric", "drools-model-compiler", "drools-mvel", "drools-persistence-jpa", "drools-ruleunit",
             "drools-scorecards", "drools-serialization-protobuf", "drools-traits", "drools-workbench-model-guided-dtable",
             "drools-workbench-model-guided-scorecard", "drools-workbench-model-guided-template",
             "jbpm-bpmn2", "jbpm-case-mgmt-cmmn", "jbpm-flow", "jbpm-flow-builder", "jbpm-human-task-jpa",
-            "kie-ci", "kie-dmn-core", "kie-internal", "kie-pmml", "kie-pmml-evaluator-assembler", "kie-pmml-evaluator-core"
+            "kie-ci", "kie-dmn-core", "kie-dmn-jpmml", "kie-internal", "kie-pmml", "kie-pmml-evaluator-assembler",
+            "kie-pmml-evaluator-core", "kie-server-services-jbpm-cluster"
     };
 
     private static final Logger log = LoggerFactory.getLogger(ServiceDiscoveryImpl.class);
@@ -82,7 +86,7 @@ public class ServiceDiscoveryImpl {
         if (!sealed) {
             cachedServices.computeIfAbsent(serviceName, n -> new ArrayList<>()).add(object);
         } else {
-            throw new IllegalStateException("Unable to add service '" + serviceName + "'. Services cannot be added once the ServiceDiscoverys is sealed");
+            throw new IllegalStateException("Unable to add service '" + serviceName + "'. Services cannot be added once the ServiceDiscovery is sealed");
         }
     }
 
@@ -95,8 +99,8 @@ public class ServiceDiscoveryImpl {
     public synchronized Map<String, List<Object>> getServices() {
         if (!sealed) {
             getKieConfs().ifPresent( kieConfs -> {
-                while (kieConfs.resources.hasMoreElements()) {
-                    registerConfs( kieConfs.classLoader, kieConfs.resources.nextElement() );
+                for (URL kieConfUrl : kieConfs.resources) {
+                    registerConfs( kieConfs.classLoader, kieConfUrl );
                 }
             } );
 
@@ -203,8 +207,8 @@ public class ServiceDiscoveryImpl {
             return null;
         }
         try {
-            Enumeration<URL> resources = findKieConfUrls( cl );
-            return resources.hasMoreElements() ? new KieConfs( cl, resources ) : null;
+            Collection<URL> resources = findKieConfUrls( cl );
+            return resources.isEmpty() ? null : new KieConfs( cl, resources );
         } catch (IOException e) {
             return null;
         }
@@ -212,9 +216,9 @@ public class ServiceDiscoveryImpl {
 
     private static class KieConfs {
         private final ClassLoader classLoader;
-        private final Enumeration<URL> resources;
+        private final Collection<URL> resources;
 
-        private KieConfs( ClassLoader classLoader, Enumeration<URL> confResources ) {
+        private KieConfs( ClassLoader classLoader, Collection<URL> confResources ) {
             this.classLoader = classLoader;
             this.resources = confResources;
         }
@@ -254,7 +258,7 @@ public class ServiceDiscoveryImpl {
         }
     }
 
-    public static Enumeration<URL> findKieConfUrls(ClassLoader cl) throws IOException {
+    private static Collection<URL> findKieConfUrls(ClassLoader cl) throws IOException {
         List<URL> kieConfsUrls = new ArrayList<>();
 
         Enumeration<URL> metaInfs = cl.getResources(CONF_FILE_FOLDER);
@@ -278,18 +282,23 @@ public class ServiceDiscoveryImpl {
             // no kie-conf found so fallback to the hardcoded lookup
             kieConfsUrls = getKieConfsFromKnownModules(cl).collect(Collectors.toList());
         } else {
-
             // check if all discovered kie.conf file are in known modules
             kieConfsUrls.stream().map(ServiceDiscoveryImpl::getModuleName)
                     .filter(module -> Arrays.binarySearch(KIE_MODULES, module) < 0)
-                    .forEach(module -> log.warn("kie.conf file discovered for '" + module + "' but not listed among the known modules. This will not work under OSGi or jboss vfs."));
+                    .forEach(module -> log.warn("kie.conf file discovered for '" + module + "' but not listed among the known modules. This will not work under OSGi or JBoss vfs."));
+        }
+
+        // also check the legacy META-INF/kie.conf for backward compatibility
+        Enumeration<URL> kieConfEnum = cl.getResources("META-INF/kie.conf");
+        while (kieConfEnum.hasMoreElements()) {
+            kieConfsUrls.add(kieConfEnum.nextElement());
         }
 
         if (log.isDebugEnabled()) {
             log.debug("Discovered kie.conf files: " + kieConfsUrls);
         }
 
-        return Collections.enumeration(kieConfsUrls);
+        return kieConfsUrls;
     }
 
     public static Stream<URL> getKieConfsFromKnownModules(ClassLoader cl) {
