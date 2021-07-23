@@ -62,6 +62,8 @@ public class ServiceDiscoveryImpl {
     private static final String CONF_FILE_FOLDER = "META-INF/kie";
     private static final String CONF_FILE_NAME = "kie.conf";
 
+    public static final String LEGACY_CONF_FILE = "META-INF/kie.conf";
+
     ServiceDiscoveryImpl() {}
 
     private static class LazyHolder {
@@ -265,7 +267,7 @@ public class ServiceDiscoveryImpl {
         while (metaInfs.hasMoreElements()) {
             URL metaInf = metaInfs.nextElement();
             if (metaInf.getProtocol().startsWith("vfs")) {
-                // the kie.conf discovery mechanism doesn't work under OSGi
+                // the kie.conf discovery mechanism doesn't work under JBoss vfs
                 kieConfsUrls.clear();
                 break;
             }
@@ -283,13 +285,17 @@ public class ServiceDiscoveryImpl {
             kieConfsUrls = getKieConfsFromKnownModules(cl).collect(Collectors.toList());
         } else {
             // check if all discovered kie.conf file are in known modules
-            kieConfsUrls.stream().map(ServiceDiscoveryImpl::getModuleName)
+            List<String> notRegisteredModules = kieConfsUrls.stream().map(ServiceDiscoveryImpl::getModuleName)
                     .filter(module -> Arrays.binarySearch(KIE_MODULES, module) < 0)
-                    .forEach(module -> log.warn("kie.conf file discovered for '" + module + "' but not listed among the known modules. This will not work under OSGi or JBoss vfs."));
+                    .collect(Collectors.toList());
+            if (!notRegisteredModules.isEmpty()) {
+                throw new IllegalStateException("kie.conf file discovered for modules " + notRegisteredModules +
+                        " but not listed among the known modules. This will not work under OSGi or JBoss vfs.");
+            }
         }
 
         // also check the legacy META-INF/kie.conf for backward compatibility
-        Enumeration<URL> kieConfEnum = cl.getResources("META-INF/kie.conf");
+        Enumeration<URL> kieConfEnum = cl.getResources(LEGACY_CONF_FILE);
         while (kieConfEnum.hasMoreElements()) {
             kieConfsUrls.add(kieConfEnum.nextElement());
         }

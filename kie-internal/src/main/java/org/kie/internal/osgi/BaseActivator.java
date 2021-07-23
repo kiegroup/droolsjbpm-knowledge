@@ -16,6 +16,8 @@
 
 package org.kie.internal.osgi;
 
+import java.net.URL;
+
 import org.kie.api.internal.utils.ServiceDiscoveryImpl;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -23,6 +25,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
+import static org.kie.api.internal.utils.ServiceDiscoveryImpl.LEGACY_CONF_FILE;
 import static org.kie.api.internal.utils.ServiceDiscoveryImpl.getKieConfsFromKnownModules;
 
 public abstract class BaseActivator implements BundleActivator {
@@ -58,8 +61,11 @@ public abstract class BaseActivator implements BundleActivator {
         @Override
         public ServiceDiscoveryImpl addingService(ServiceReference<ServiceDiscoveryImpl> ref ) {
             ServiceDiscoveryImpl service = context.getService( ref );
-            getKieConfsFromKnownModules(classLoader).findFirst()
-                    .ifPresent( confUrl -> service.registerConfs( classLoader, confUrl ) );
+            URL kieConfUrl = getKieConfsFromKnownModules(classLoader).findFirst()
+                    .orElse(classLoader.getResource(LEGACY_CONF_FILE));
+            if (kieConfUrl != null) {
+                service.registerConfs( classLoader, kieConfUrl );
+            }
             return service;
         }
 
