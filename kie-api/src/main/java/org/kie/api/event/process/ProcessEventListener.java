@@ -114,4 +114,11 @@ public interface ProcessEventListener
      * @param event
      */
     default void onMessage(MessageEvent event) {}
+
+    /**
+     * This listener method is invoked when async node is entered triggering
+     * a scheduled job for executing this node.
+     * @param event
+     */
+    default void onAsyncNodeScheduledEvent(ProcessAsyncNodeScheduledEvent event) {}
 }

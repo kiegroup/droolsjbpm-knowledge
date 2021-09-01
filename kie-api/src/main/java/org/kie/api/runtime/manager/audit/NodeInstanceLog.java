@@ -59,6 +59,11 @@ public interface NodeInstanceLog {
     public static final int TYPE_ERROR = 5;
 
     /**
+     * Indicates that node instance was triggered
+     */
+    public static final int TYPE_ASYNC_ENTER = 6;
+
+    /**
      * @return process instance identifier
      */
     Long getProcessInstanceId();

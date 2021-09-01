@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2021 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,30 +16,11 @@
 
 package org.kie.api.event.process;
 
-import java.util.Collections;
-import java.util.Map;
-
-import org.kie.api.runtime.process.NodeInstance;
-
 /**
- * An event related to the execution of a node instance within a process instance.
+ * An event when a node inside a process instance has been triggered.
  */
-public interface ProcessNodeEvent
+public interface ProcessAsyncNodeScheduledEvent 
     extends
-    ProcessEvent {
+    ProcessNodeEvent {
 
-    /**
-     * The node instance this event is related to.
-     *
-     * @return the node instance
-     */
-    NodeInstance getNodeInstance();
-
-    /**
-     * This allow to add some extra data across node events
-     * @return
-     */
-    default Map<String, Object> getExtraData() {
-        return Collections.emptyMap();
-    }
 }
