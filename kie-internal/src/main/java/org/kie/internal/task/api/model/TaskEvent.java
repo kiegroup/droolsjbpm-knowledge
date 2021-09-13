@@ -43,6 +43,8 @@ public interface TaskEvent {
     String getCorrelationKey();
 
     Integer getProcessType();
+    
+    String getCurrentOwner();
 
     void setCorrelationKey(String correlationKey);
 
