@@ -32,8 +32,17 @@
                 "methodName": "setAccumulateNullPropagation",
                 "elementKind": "method",
                 "justification": "configuration switch for allowing null propagation in accumulate"
+              },
+              {
+                "code": "java.method.addedToInterface",
+                "new": "method java.util.List<org.kie.api.executor.RequestInfo> org.kie.api.executor.ExecutorStoreService::loadRequestsOlderThan(long)",
+                "package": "org.kie.api.executor",
+                "classSimpleName": "ExecutorStoreService",
+                "methodName": "loadRequestsOlderThan",
+                "elementKind": "method",
+                "justification": "[JBPM-9900] RequestInfo.owner is null even if org.kie.executor.id is defined"
               }
-            ]
+             ]
         }
     }
 }
