@@ -30,6 +30,13 @@ public interface ExecutorStoreService {
     
     List<RequestInfo> loadRequests();
 
+    /**
+     * load request that the scheduled timer are older that a certain amount in time units time
+     * @param olderThan
+     * @return a list of jobs overdue by certain amount of time
+     */
+    List<RequestInfo> loadRequestsOlderThan(long olderThan); 
+
     void persistError(ErrorInfo error);
 
     void updateError(ErrorInfo error);
