@@ -2177,7 +2177,10 @@
   </profiles>
 
   <modules>
-    <module>kie-bom</module>
+    <module>kie-core-bom</module>
+    <module>drools-bom</module>
+    <module>kie-dmn-bom</module>
+    <module>kie-pmml-bom</module>
     <module>kie-api</module>
     <module>kie-internal</module>
     <module>kie-archetypes</module>
