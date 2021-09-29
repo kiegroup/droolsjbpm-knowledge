@@ -13,7 +13,7 @@
   <groupId>org.kie</groupId>
   <artifactId>kie-parent</artifactId>
   <packaging>pom</packaging>
-  <version>8.0.0-SNAPSHOT</version>
+  <version>8.13.0-SNAPSHOT</version>
 
   <name>KIE (Drools, jBPM, OptaPlanner) parent</name>
   <description>
@@ -286,7 +286,7 @@
     <version.xpp3>${version.xmlpull}</version.xpp3>
 
     <!-- Internal dependencies -->
-    <version.org.kie>8.0.0-SNAPSHOT</version.org.kie>
+    <version.org.kie>8.13.0-SNAPSHOT</version.org.kie>
     <version.org.drools>${version.org.kie}</version.org.drools>
     <version.org.optaplanner>${version.org.kie}</version.org.optaplanner>
     <version.org.jbpm>${version.org.kie}</version.org.jbpm>
@@ -440,7 +440,7 @@
 
 
     <!-- Latest release to be used by api-compatibility-check to check backwards compatibility of the Kie API. -->
-    <revapi.oldKieVersion>8.0.0-SNAPSHOT</revapi.oldKieVersion>
+    <revapi.oldKieVersion>8.13.0-SNAPSHOT</revapi.oldKieVersion>
     <revapi.newKieVersion>${project.version}</revapi.newKieVersion>
 
     <version.org.apache.maven.plugins.dependency>3.0.2</version.org.apache.maven.plugins.dependency>
@@ -6454,7 +6454,7 @@
 
       <dependency>
         <groupId>org.kie</groupId>
-        <artifactId>kie-bom</artifactId>
+        <artifactId>kie-core-bom</artifactId>
         <version>${version.org.kie}</version>
         <type>pom</type>
         <scope>import</scope>
