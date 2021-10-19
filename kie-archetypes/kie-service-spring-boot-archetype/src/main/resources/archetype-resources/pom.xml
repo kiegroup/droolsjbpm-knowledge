@@ -6,13 +6,7 @@
   <version>\${version}</version>
   <packaging>jar</packaging>
   <name>\${artifactId}</name>
-
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>\${springbootVersion}</version>
-  </parent>
-
+  
   <properties>
     <version.org.kie>${kieVersion}</version.org.kie>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -21,6 +15,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <narayana.version>5.9.0.Final</narayana.version>
     <fabric8.version>3.5.40</fabric8.version>
+    <version.com.h2database>1.4.197</version.com.h2database>
   </properties>
 
   <dependencies>
@@ -28,6 +23,7 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+      <version>${version.org.springframework.boot}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -37,6 +33,7 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <version>${version.org.springframework.boot}</version>
         REMOTE_DEBUG_MARKER
       </plugin>
     </plugins>

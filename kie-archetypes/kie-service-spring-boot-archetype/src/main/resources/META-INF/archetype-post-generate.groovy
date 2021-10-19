@@ -120,7 +120,8 @@ def DBProfilesConfig = """
   <dependencies>
     <dependency>
       <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
+      <artifactId>h2</artifactId>      
+      <version>\${version.com.h2database}</version>
     </dependency>
   </dependencies>
 </profile>
@@ -140,6 +141,7 @@ def DBProfilesConfig = """
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+      <version>\${version.com.h2database}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -160,6 +162,7 @@ def DBProfilesConfig = """
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+      <version>\${version.com.h2database}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
