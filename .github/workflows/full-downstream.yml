@@ -2,7 +2,9 @@ name: Build Chain
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+    types: [labeled]
+    branches:
+      - main
     paths-ignore:
       - 'LICENSE*'
       - '.gitignore'
@@ -11,37 +13,37 @@ on:
 
 jobs:
   build-chain:
+    if: contains(github.event.pull_request.labels.*.name, 'run_fdb')
     concurrency:
-      group: pull_request-${{ github.head_ref }}
+      group: fdb-${{ github.head_ref }}
       cancel-in-progress: true
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        java-version: [8, 11]
+        os: [ubuntu-latest]
+        java-version: [11]
         maven-version: ['3.8.1']
-      fail-fast: true
+      fail-fast: false
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} - Java ${{ matrix.java-version }} - Maven
+    name: Full downstream build
     steps:
       - name: Clean Disk Space
-        uses: kiegroup/kogito-pipelines/.ci/actions/disk-space@main
+        uses: kiegroup/kogito-pipelines/.ci/actions/ubuntu-disk-space@main
+        if: ${{ matrix.os == 'ubuntu-latest' }}
       - name: Support long paths
         if: ${{ matrix.os == 'windows-latest' }}
         uses: kiegroup/kogito-pipelines/.ci/actions/long-paths@main
       - name: Java and Maven Setup
-        uses: kiegroup/kogito-pipelines/.ci/actions/java@main
+        uses: kiegroup/kogito-pipelines/.ci/actions/maven@main
         with:
           java-version: ${{ matrix.java-version }}
           maven-version: ${{ matrix.maven-version }}
-      - name: Cache Maven
-        uses: kiegroup/kogito-pipelines/.ci/actions/cache-maven@main
-        with:
-          key-prefix: ${{ runner.os }}-${{ matrix.java-version }}-maven${{ matrix.maven-version }}
+          cache-key-prefix: ${{ runner.os }}-${{ matrix.java-version }}-maven${{ matrix.maven-version }}
       - name: Build Chain
         uses: kiegroup/kogito-pipelines/.ci/actions/build-chain@main
         with:
           annotations-prefix: ${{ runner.os }}-${{ matrix.java-version }}/${{ matrix.maven-version }}
           github-token: "${{ secrets.GITHUB_TOKEN }}"
+          flow-type: full-downstream
       - name: Surefire Report
         uses: kiegroup/kogito-pipelines/.ci/actions/surefire-report@main
         if: ${{ always() }}
