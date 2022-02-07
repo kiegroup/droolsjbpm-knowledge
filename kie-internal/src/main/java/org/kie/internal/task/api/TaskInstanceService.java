@@ -83,6 +83,8 @@ public interface TaskInstanceService extends CommandExecutor {
 
     void suspend(long taskId, String userId);
 
+    void suspend(long taskId, String userId, Map<String, Object> parameters);
+
     void nominate(long taskId, String userId, List<OrganizationalEntity> potentialOwners);
 
     void setFault(long taskId, String userId, FaultData fault);
