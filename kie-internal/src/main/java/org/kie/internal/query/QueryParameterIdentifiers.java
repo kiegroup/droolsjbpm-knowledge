@@ -148,4 +148,6 @@ public interface QueryParameterIdentifiers {
     public static final String SUBQUERY_DEPLOYMENT = String.valueOf(idGen.getAndIncrement());
     public static final String SUBQUERY_CASE = String.valueOf(idGen.getAndIncrement());
 
+    // execution error info
+    public static final String ERROR_DATE_LIST = String.valueOf(idGen.getAndIncrement());
 }
