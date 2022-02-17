@@ -43,6 +43,16 @@
     <requiredProperty key="kieVersion">
       <defaultValue>${project.version}</defaultValue>
     </requiredProperty>
+    <!-- swagger deps version -->
+    <requiredProperty key="swaggerVersion">
+      <defaultValue>${version.io.swagger}</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="cxfVersion">
+      <defaultValue>${version.org.apache.cxf}</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="webjarVersion">
+      <defaultValue>${version.org.webjars.swagger-ui}</defaultValue>
+    </requiredProperty>
     <!-- appType options are bpm,brm,planner -->
     <requiredProperty key="appType">
       <defaultValue>bpm</defaultValue>
@@ -57,7 +67,11 @@
     </requiredProperty>
     <!-- springboot version -->
     <requiredProperty key="springbootVersion">
-      <defaultValue>2.2.2.RELEASE</defaultValue>
+      <defaultValue>${version.org.springframework.boot}</defaultValue>
+    </requiredProperty>
+    <!-- swagger enabled -->
+    <requiredProperty key="swaggerEnabled">
+      <defaultValue>true</defaultValue>
     </requiredProperty>
   </requiredProperties>
 
