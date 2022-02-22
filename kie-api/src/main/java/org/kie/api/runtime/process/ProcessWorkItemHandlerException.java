@@ -20,7 +20,7 @@ public class ProcessWorkItemHandlerException extends RuntimeException {
 
     private static final long serialVersionUID = 328927887939759492L;
 
-    private static final int MAX_NUMBER_OF_RETRIES = 3;
+    private static int MAX_NUMBER_OF_RETRIES = Integer.parseInt(System.getProperty("org.jbpm.exception.handling_strategy.retry.count", "3"));
     public enum HandlingStrategy {
         RETRY, COMPLETE, ABORT, RETHROW
     }
