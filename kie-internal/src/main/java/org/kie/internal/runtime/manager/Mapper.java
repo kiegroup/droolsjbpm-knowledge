@@ -15,6 +15,8 @@
  */
 package org.kie.internal.runtime.manager;
 
+import java.util.List;
+
 import org.kie.api.runtime.manager.Context;
 
 /**
@@ -46,6 +48,13 @@ public interface Mapper {
     Long findMapping(Context<?> context, String ownerId);
 
     /**
+     * Finds all context Id for given session
+     * @param context instance of the context
+     * @return ksession identifier when found otherwise null
+     */
+    List<String> findMapping(String ownerId);
+
+    /**
      * Finds context by ksession identifier
      * @param ksessionId identifier of ksession
      * @return context instance when wound otherwise null
@@ -57,4 +66,5 @@ public interface Mapper {
      * @param context context instance that mapping shall be removed for
      */
     void removeMapping(Context<?> context, String ownerId);
+
 }

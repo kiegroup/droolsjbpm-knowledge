@@ -15,6 +15,8 @@
  */
 package org.kie.internal.runtime.manager;
 
+import java.util.List;
+
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.Context;
@@ -106,4 +108,26 @@ public interface InternalRuntimeManager extends RuntimeManager {
      * Determines if there is security manager configured
      */  
     boolean hasSecurityManager();
+
+    /**
+     * get all process for a certain kie session
+     * @param kieSessionId
+     * @return
+     */
+    List<Long> findProcessInstancesForKieSession(long kieSessionId);
+
+    /**
+     * tells if there is more that one process per kie session
+     * @return
+     */
+    default boolean hasMultipleProcessIntancePerKieSession() {
+        return false;
+    }
+
+    /** 
+     * find all active instances for a runtime manager
+     * @return
+     */
+    List<Long> findProcessInstances();
+
 }
