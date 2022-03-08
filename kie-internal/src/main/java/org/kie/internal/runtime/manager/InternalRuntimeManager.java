@@ -106,4 +106,8 @@ public interface InternalRuntimeManager extends RuntimeManager {
      * Determines if there is security manager configured
      */  
     boolean hasSecurityManager();
+
+    default boolean useContextMapping() {
+        return true;
+    }
 }
