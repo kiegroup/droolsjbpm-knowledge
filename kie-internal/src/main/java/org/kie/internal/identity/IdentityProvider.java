@@ -24,9 +24,19 @@ public interface IdentityProvider {
 
     String getName();
 
+    default List<String> getRolesFor(String userId) {
+        return getRoles(); // current identity (you cannot bypass)
+    }
+
+    default boolean hasRoleFor(String userId, String role) {
+        return getRolesFor(userId).contains(role);
+    }
+
     List<String> getRoles();
 
-    boolean hasRole(String role);
+    default boolean hasRole(String role) {
+        return getRoles().contains(role);
+    }
 
     default void setContextIdentity(String userId) {
         // do nothing
