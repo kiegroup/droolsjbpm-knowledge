@@ -88,6 +88,8 @@ public interface TaskService extends CommandExecutor {
 
     void suspend(long taskId, String userId);
 
+    void suspend(long taskId, String userId, Map<String, Object> parameters);
+
     void nominate(long taskId, String userId, List<OrganizationalEntity> potentialOwners);
 
     Content getContentById(long contentId);

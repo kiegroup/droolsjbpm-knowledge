@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 import org.kie.api.runtime.manager.RuntimeManagerFactory.Factory;
 import org.kie.api.runtime.query.QueryContext;
@@ -48,6 +49,8 @@ public interface ExecutorService {
      * of the classpath to provide application scoped id instead of JVM scoped (system property)
      */
     public static final String EXECUTOR_ID = IdProvider.get();
+
+    public static final Supplier<String> EXECUTOR_ID_GET = () -> IdProvider.get();
 
     List<RequestInfo> getQueuedRequests(QueryContext queryContext);
 
@@ -133,6 +136,11 @@ public interface ExecutorService {
                 EXECUTOR_ID = create();
             }
             return EXECUTOR_ID;
+        }
+
+        public static synchronized void reset() {
+           initialized = false;
+           EXECUTOR_ID = null;
         }
 
         private static synchronized String create() {

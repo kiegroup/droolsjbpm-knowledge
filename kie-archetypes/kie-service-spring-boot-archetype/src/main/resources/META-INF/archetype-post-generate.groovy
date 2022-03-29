@@ -20,6 +20,7 @@ def kjarArtifactId = "${kjarArtifactId}";
 def kjarVersion = "${kjarVersion}";
 def kjarContainerId = "";
 def remoteDebugEnabled = "${remoteDebugEnabled}";
+def swaggerEnabled = "${swaggerEnabled}";
 
 if( kjarArtifactId != "none" && kjarVersion != "none") {
     kjarContainerId = kjarArtifactId + "-" + kjarVersion.replaceAll("\\.", "_");
@@ -42,6 +43,7 @@ def kieServerStateFile = new File(moduleDir, myAppArtifactId + ".xml");
 def kieServerCapabilitiesMarker = 'KIE_SERVER_CAPABILITIES_MARKER';
 def jbpmConfigMarker = 'JBPM_CONFIG_MARKER';
 def springBootStarterMarker = 'KIE_SPRING_BOOT_STARTER_MARKER';
+def swaggerDependenciesMarker = 'SWAGGER_DEPENDENCIES_MARKER';
 def indexCSSMarkerBA = "INDEX_CSS_MARKER_BA";
 def indexIconMarkerBA = "INDEX_ICON_MARKER_BA";
 def indexCSSMarkerDM = "INDEX_CSS_MARKER_DM";
@@ -56,27 +58,52 @@ def dbProfilesMarker = "DB_PROFILES_MARKER";
 def remoteDebugMarker = "REMOTE_DEBUG_MARKER";
 
 def BPMSpringBootStarterDepends = """
-<dependency>
-    <groupId>org.kie</groupId>
-    <artifactId>kie-server-spring-boot-starter</artifactId>
-    <version>\${version.org.kie}</version>
-</dependency>
+    <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-server-spring-boot-starter</artifactId>
+        <version>\${version.org.kie}</version>
+    </dependency>
 """;
 
 def BRMSpringBootStarterDepends = """
-<dependency>
-    <groupId>org.kie</groupId>
-    <artifactId>kie-server-spring-boot-starter-drools</artifactId>
-    <version>\${version.org.kie}</version>
-</dependency>
+    <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-server-spring-boot-starter-drools</artifactId>
+        <version>\${version.org.kie}</version>
+    </dependency>
 """;
 
 def PlannerSpringBootStarterDepends = """
-<dependency>
-    <groupId>org.kie</groupId>
-    <artifactId>kie-server-spring-boot-starter-optaplanner</artifactId>
-    <version>\${version.org.kie}</version>
-</dependency>
+    <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-server-spring-boot-starter-optaplanner</artifactId>
+        <version>\${version.org.kie}</version>
+    </dependency>
+""";
+
+def SwaggerDependencies = """
+    <!-- Swagger -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+      <version>\${version.org.apache.cxf}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-jaxrs</artifactId>
+      <version>\${version.io.swagger}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.ws.rs</groupId>
+          <artifactId>jsr311-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>swagger-ui</artifactId>
+      <version>\${version.org.webjars.swagger-ui}</version>
+    </dependency>
 """;
 
 def serverCapabilitiesBPM = """
@@ -225,6 +252,13 @@ if( appType == "bpm" ) {
         pomContent = pomContent.replace(remoteDebugMarker, '');
     }
 
+    if (swaggerEnabled == "true") {
+        logOut("- adding swagger dependencies", quietMode);
+        pomContent = pomContent.replace(swaggerDependenciesMarker, SwaggerDependencies);
+    } else {
+        pomContent = pomContent.replace(swaggerDependenciesMarker, '');
+    }
+
     pomFile.newWriter().withWriter { w ->
         w << pomContent
     }
@@ -278,6 +312,13 @@ if( appType == "bpm" ) {
         pomContent = pomContent.replace(remoteDebugMarker, '');
     }
 
+    if (swaggerEnabled == "true") {
+        logOut("- adding swagger dependencies", quietMode);
+        pomContent = pomContent.replace(swaggerDependenciesMarker, SwaggerDependencies);
+    } else {
+        pomContent = pomContent.replace(swaggerDependenciesMarker, '');
+    }
+
     pomFile.newWriter().withWriter { w ->
         w << pomContent
     }
@@ -329,6 +370,13 @@ if( appType == "bpm" ) {
         pomContent = pomContent.replace(remoteDebugMarker, remoteDebugSettings);
     } else {
         pomContent = pomContent.replace(remoteDebugMarker, '');
+    }
+
+    if (swaggerEnabled == "true") {
+        logOut("- adding swagger dependencies", quietMode);
+        pomContent = pomContent.replace(swaggerDependenciesMarker, SwaggerDependencies);
+    } else {
+        pomContent = pomContent.replace(swaggerDependenciesMarker, '');
     }
 
     pomFile.newWriter().withWriter { w ->

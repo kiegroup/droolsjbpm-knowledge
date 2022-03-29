@@ -16,10 +16,14 @@
     <narayana.version>5.9.0.Final</narayana.version>
     <fabric8.version>3.5.40</fabric8.version>
     <version.com.h2database>1.4.197</version.com.h2database>
+    <version.io.swagger>${swaggerVersion}</version.io.swagger>
+    <version.org.apache.cxf>${cxfVersion}</version.org.apache.cxf>
+    <version.org.webjars.swagger-ui>${webjarVersion}</version.org.webjars.swagger-ui>
   </properties>
 
   <dependencies>
     KIE_SPRING_BOOT_STARTER_MARKER
+    SWAGGER_DEPENDENCIES_MARKER
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>

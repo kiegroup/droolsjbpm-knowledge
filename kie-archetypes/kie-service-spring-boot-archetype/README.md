@@ -13,13 +13,13 @@ Archetype used to build new KIE Service Spring Boot Applications.
 mvn archetype:generate
    -DarchetypeGroupId=org.kie
    -DarchetypeArtifactId=kie-service-spring-boot-archetype
-   -DarchetypeVersion=7.60.0-SNAPSHOT
+   -DarchetypeVersion=7.68.0-SNAPSHOT
 ```
 
 or use this one-liner
 
 ```
-mvn archetype:generate -DarchetypeGroupId=org.kie -DarchetypeArtifactId=kie-service-spring-boot-archetype -DarchetypeVersion=7.60.0-SNAPSHOT
+mvn archetype:generate -DarchetypeGroupId=org.kie -DarchetypeArtifactId=kie-service-spring-boot-archetype -DarchetypeVersion=7.68.0-SNAPSHOT
 ```
 
 4. Change the prompted values during the generation as needed (or leave the defaults)
@@ -139,7 +139,7 @@ So to build an "planner" service app you would use the command:
 mvn archetype:generate
    -DarchetypeGroupId=org.kie
    -DarchetypeArtifactId=kie-service-spring-boot-archetype
-   -DarchetypeVersion=7.60.0-SNAPSHOT
+   -DarchetypeVersion=7.68.0-SNAPSHOT
    -DappType=planner
 ```
 
@@ -167,7 +167,7 @@ The default value of this property is the archetype groupId.
 
 ## Changing your apps address and port number
 
-You can change your applications address and port with the following proerties
+You can change your applications address and port with the following properties
 
 ```
 -DappServerAddress=YOUR_SERFVER_ADDRESS
@@ -247,6 +247,57 @@ find your apps pom.xml file and make sure you have there:
 ```
 
 and change the remote debug address as you wish or leave the default as is.
+
+## Disabling Swagger
+
+By default, your generated application will have Swagger enabled for REST API endpoints. If you want
+to generate an application with Swagger disabled add the following option when
+running mvn archetype:generate:
+
+```
+    -DswaggerEnabled=false
+```
+
+If you have already generated you application and would like to disable Swagger afterwards,
+find your apps pom.xml file and remove the following dependencies:
+
+```
+  <dependencies>
+    ...
+    <!-- Swagger -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
+      <version>${version.org.apache.cxf}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-jaxrs</artifactId>
+      <version>${version.io.swagger}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.ws.rs</groupId>
+          <artifactId>jsr311-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>swagger-ui</artifactId>
+      <version>${version.org.webjars.swagger-ui}</version>
+    </dependency>
+    ...
+  </dependencies>
+```
+
+Don't forget to change the following property to your application.properties file as well
+```
+kieserver.swagger.enabled=false
+```
+Once done, you shouldn't be able to reach your swagger endpoint by navigating to a similar URL like the one below
+```
+http://localhost:8090/rest/api-docs?url=http://localhost:8090/rest/swagger.json
+```
 
 ## Troubleshooting
 
