@@ -32,8 +32,17 @@
                 "methodName": "suspend",
                 "elementKind": "method",
                 "justification": "[JBPM-10015] Allow to set suspendUntil during user task suspend operation as parameter."
+              },
+              {
+                "code": "java.field.removed",
+                "old": "field org.kie.api.io.ResourceType.PKG",
+                "package": "org.kie.api.io",
+                "classSimpleName": "ResourceType",
+                "fieldName": "PKG",
+                "elementKind": "field",
+                "justification": "remove possibility of using serialized packages as kie resources"
               }
-             ]
+            ]
         }
     }
 }

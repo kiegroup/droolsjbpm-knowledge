@@ -163,12 +163,6 @@ public class ResourceType
                                                                         "src/main/resources",
                                                                         "xls", "xlsx", "csv");
 
-    /** Binary Package */
-    public static final ResourceType PKG = addResourceTypeToRegistry("PKG",
-                                                                     "Binary Package",
-                                                                     "src/main/resources",
-                                                                     "pkg");
-
     /** Drools Business Rule Language */
     public static final ResourceType BRL = addResourceTypeToRegistry("BRL",
                                                                      "Drools Business Rule Language",
