@@ -87,6 +87,12 @@ def SwaggerDependencies = """
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-rs-service-description-swagger</artifactId>
       <version>\${version.org.apache.cxf}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>javax.validation</groupId>
+          <artifactId>validation-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>io.swagger</groupId>
@@ -96,6 +102,10 @@ def SwaggerDependencies = """
         <exclusion>
           <groupId>javax.ws.rs</groupId>
           <artifactId>jsr311-api</artifactId>
+        </exclusion>
+         <exclusion>
+          <groupId>javax.validation</groupId>
+          <artifactId>validation-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
