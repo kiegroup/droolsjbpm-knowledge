@@ -226,7 +226,7 @@
     <version.jakarta.xml.ws-api>2.3.3</version.jakarta.xml.ws-api>
     <version.jakarta.xml.soap-api>1.4.2</version.jakarta.xml.soap-api>
     <version.jakarta.websocket-api>1.1.2</version.jakarta.websocket-api>
-    <version.jakarta.persistence-api>2.2.3</version.jakarta.persistence-api>
+    <version.jakarta.persistence-api>3.1.0</version.jakarta.persistence-api>
     <version.jakarta.servlet-api>4.0.3</version.jakarta.servlet-api>
     <version.jakarta.xml.bind-api>2.3.3</version.jakarta.xml.bind-api>
     <version.jakarta-regexp>1.4</version.jakarta-regexp>
