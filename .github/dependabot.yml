@@ -13,6 +13,15 @@ updates:
   directory: "/"
   schedule:
     interval: daily
+    time: '03:30'
+  open-pull-requests-limit: 0
+  target-branch: "7.x"
+  commit-message:
+    prefix: "[bot][7.x]"    
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
     time: '04:00'
   open-pull-requests-limit: 0
   target-branch: "7.67.x"
