@@ -50,6 +50,9 @@ public interface TaskLifeCycleEventListener extends EventListener {
     public default void beforeTaskInputVariableChangedEvent(TaskEvent event, Map<String, Object> variables){};
     public default void beforeTaskOutputVariableChangedEvent(TaskEvent event, Map<String, Object> variables){};
     public default void beforeTaskAssignmentsAddedEvent(TaskEvent event, AssignmentType type, List<OrganizationalEntity> entities){};
+    public default void beforeTaskAssignmentsAddedEvent(TaskEvent event, AssignmentType type, List<OrganizationalEntity> entities, List<OrganizationalEntity> beforeAssignemntAddedEntities){
+        beforeTaskAssignmentsAddedEvent(event, type, entities);
+    };
     public default void beforeTaskAssignmentsRemovedEvent(TaskEvent event, AssignmentType type, List<OrganizationalEntity> entities){};
     
     public void afterTaskActivatedEvent(TaskEvent event);
@@ -73,6 +76,9 @@ public interface TaskLifeCycleEventListener extends EventListener {
     public default void afterTaskInputVariableChangedEvent(TaskEvent event, Map<String, Object> variables){};
     public default void afterTaskOutputVariableChangedEvent(TaskEvent event, Map<String, Object> variables){};
     public default void afterTaskAssignmentsAddedEvent(TaskEvent event, AssignmentType type, List<OrganizationalEntity> entities){};
+    public default void afterTaskAssignmentsAddedEvent(TaskEvent event, AssignmentType type, List<OrganizationalEntity> entities, List<OrganizationalEntity> afterAssignemntAddedEntities){
+        afterTaskAssignmentsAddedEvent(event, type, entities);
+    };
     public default void afterTaskAssignmentsRemovedEvent(TaskEvent event, AssignmentType type, List<OrganizationalEntity> entities){};
 
 }
