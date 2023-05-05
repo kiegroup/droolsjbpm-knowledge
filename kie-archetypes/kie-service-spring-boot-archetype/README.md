@@ -131,16 +131,15 @@ for this property:
 
 1. bpm: includes BRM, BPM, Case Management, BPM-UI, and DMN
 2. brm: includes BRM and DMN
-3. planner: includes BRM, BRP, and DMN
 
-So to build an "planner" service app you would use the command:
+So to build an "brm" service app you would use the command:
 
 ```
 mvn archetype:generate
    -DarchetypeGroupId=org.kie
    -DarchetypeArtifactId=kie-service-spring-boot-archetype
    -DarchetypeVersion=7.68.0-SNAPSHOT
-   -DappType=planner
+   -DappType=brm
 ```
 
 And similar for the other two available options.

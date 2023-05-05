@@ -53,7 +53,7 @@
     <requiredProperty key="webjarVersion">
       <defaultValue>${version.org.webjars.swagger-ui}</defaultValue>
     </requiredProperty>
-    <!-- appType options are bpm,brm,planner -->
+    <!-- appType options are bpm,brm -->
     <requiredProperty key="appType">
       <defaultValue>bpm</defaultValue>
     </requiredProperty>

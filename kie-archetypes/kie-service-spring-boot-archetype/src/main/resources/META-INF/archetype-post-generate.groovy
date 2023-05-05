@@ -73,14 +73,6 @@ def BRMSpringBootStarterDepends = """
     </dependency>
 """;
 
-def PlannerSpringBootStarterDepends = """
-    <dependency>
-        <groupId>org.kie</groupId>
-        <artifactId>kie-server-spring-boot-starter-optaplanner</artifactId>
-        <version>\${version.org.kie}</version>
-    </dependency>
-""";
-
 def SwaggerDependencies = """
     <!-- Swagger -->
     <dependency>
@@ -130,13 +122,6 @@ def serverCapabilitiesBRM = """
 #kie server capabilities
 kieserver.drools.enabled=true
 kieserver.dmn.enabled=true
-""";
-
-def serverCapabilitiesPlanner = """
-#kie server capabilities
-kieserver.drools.enabled=true
-kieserver.dmn.enabled=true
-kieserver.optaplanner.enabled=true
 """;
 
 def BPMJBPMConfig = """
@@ -338,66 +323,6 @@ if( appType == "bpm" ) {
     indexContent = indexContent.replace(indexIconMarkerBA, 'fa fa-times-circle-o');
     indexContent = indexContent.replace(indexIconMarkerDM, 'fa fa-check-circle-o');
     indexContent = indexContent.replace(indexIconMarkerBO, 'fa fa-times-circle-o');
-    indexFile.newWriter().withWriter { w ->
-        w << indexContent
-    }
-} else if(appType == "planner") {
-    logOut("Updating application properties...", quietMode);
-    def appPropertiesContent = appPropertiesFile.getText('UTF-8');
-    def devAppPropertiesContent = devAppPropertiesFile.getText('UTF-8');
-
-    logOut("- adding server capabilities", quietMode);
-    appPropertiesContent = appPropertiesContent.replace(kieServerCapabilitiesMarker, serverCapabilitiesPlanner);
-    devAppPropertiesContent = devAppPropertiesContent.replace(kieServerCapabilitiesMarker, serverCapabilitiesPlanner);
-
-    logOut("- removing jbpm configuration", quietMode);
-    appPropertiesContent = appPropertiesContent.replace(jbpmConfigMarker, '');
-    devAppPropertiesContent = devAppPropertiesContent.replace(jbpmConfigMarker, '');
-
-    appPropertiesFile.newWriter().withWriter { w ->
-        w << appPropertiesContent
-    }
-
-    devAppPropertiesFile.newWriter().withWriter { w ->
-        w << devAppPropertiesContent
-    }
-        
-    appPropertiesFileMySql.delete();
-    appPropertiesFilePostgres.delete();
-    
-
-    logOut("Updating pom...", quietMode);
-    def pomContent = pomFile.getText('UTF-8');
-
-    logOut("- adding spring boot starter dependency", quietMode);
-    pomContent = pomContent.replace(springBootStarterMarker, PlannerSpringBootStarterDepends);
-    pomContent = pomContent.replace(dbProfilesMarker, '');
-
-    if(remoteDebugEnabled == "true") {
-        pomContent = pomContent.replace(remoteDebugMarker, remoteDebugSettings);
-    } else {
-        pomContent = pomContent.replace(remoteDebugMarker, '');
-    }
-
-    if (swaggerEnabled == "true") {
-        logOut("- adding swagger dependencies", quietMode);
-        pomContent = pomContent.replace(swaggerDependenciesMarker, SwaggerDependencies);
-    } else {
-        pomContent = pomContent.replace(swaggerDependenciesMarker, '');
-    }
-
-    pomFile.newWriter().withWriter { w ->
-        w << pomContent
-    }
-
-    logOut("Updating index.html...", quietMode);
-    def indexContent = indexFile.getText('UTF-8');
-    indexContent = indexContent.replace(indexCSSMarkerBA, 'alert alert-danger');
-    indexContent = indexContent.replace(indexCSSMarkerDM, 'alert alert-success');
-    indexContent = indexContent.replace(indexCSSMarkerBO, 'alert alert-success');
-    indexContent = indexContent.replace(indexIconMarkerBA, 'fa fa-times-circle-o');
-    indexContent = indexContent.replace(indexIconMarkerDM, 'fa fa-check-circle-o');
-    indexContent = indexContent.replace(indexIconMarkerBO, 'fa fa-check-circle-o');
     indexFile.newWriter().withWriter { w ->
         w << indexContent
     }
