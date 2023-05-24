@@ -15,6 +15,8 @@
  */
 package org.kie.api.task;
 
+import java.util.Map;
+
 import org.kie.api.task.model.Task;
 
 public interface TaskContext {
@@ -38,4 +40,12 @@ public interface TaskContext {
      * @return user id of the caller
      */
     String getUserId();
+
+    /**
+     * Returns contextual data related to the task. There can be various usages of this depending on the current needs.
+     *
+     * @return contextual data
+     */
+    Map<String, Object> getContextData();
+
 }

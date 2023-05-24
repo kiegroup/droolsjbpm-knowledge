@@ -41,6 +41,15 @@
                 "fieldName": "PKG",
                 "elementKind": "field",
                 "justification": "remove possibility of using serialized packages as kie resources"
+              },
+              {
+                "code": "java.method.addedToInterface",
+                "new": "method java.util.Map<java.lang.String, java.lang.Object> org.kie.api.task.TaskContext::getContextData()",
+                "package": "org.kie.api.task",
+                "classSimpleName": "TaskContext",
+                "methodName": "getContextData",
+                "elementKind": "method",
+                "justification": "[RHPAM-4446] add possibility to pass additional data through TaskContext"
               }
             ]
         }
