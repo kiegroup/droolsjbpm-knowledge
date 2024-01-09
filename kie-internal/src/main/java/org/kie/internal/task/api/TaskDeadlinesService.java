@@ -42,6 +42,10 @@ public interface TaskDeadlinesService {
 
     }
 
+    default void scheduleNew(long taskId, long deadlineId, long delay, DeadlineType type) {
+        schedule(taskId, deadlineId, delay, type);
+    }
+
     public void schedule(long taskId, long deadlineId, long delay, DeadlineType type);
 
     public void unschedule(long taskId, DeadlineType type);
