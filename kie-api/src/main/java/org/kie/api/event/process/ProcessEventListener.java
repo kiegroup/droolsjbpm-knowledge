@@ -121,4 +121,11 @@ public interface ProcessEventListener
      * @param event
      */
     default void onAsyncNodeScheduledEvent(ProcessAsyncNodeScheduledEvent event) {}
+
+    /**
+     * This listener method is invoked when any process instance's data has been modified.
+     * @param event
+     */
+    default void onProcessDataChangedEvent(ProcessDataChangedEvent event) {}
 }
+
