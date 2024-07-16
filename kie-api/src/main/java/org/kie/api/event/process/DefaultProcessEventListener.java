@@ -59,5 +59,8 @@ public class DefaultProcessEventListener
     public void beforeVariableChanged(ProcessVariableChangedEvent event) {
         // intentionally left blank
     }
+    public void onProcessDataChangedEvent(ProcessDataChangedEvent event) {
+        // intentionally left blank
+    }
 
 }
