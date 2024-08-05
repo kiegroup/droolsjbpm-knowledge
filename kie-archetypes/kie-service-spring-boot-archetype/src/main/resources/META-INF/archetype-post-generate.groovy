@@ -156,8 +156,8 @@ def DBProfilesConfig = """
   </activation>
   <dependencies>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
