@@ -23,6 +23,14 @@
                   "fieldName": "PKG",
                   "elementKind": "field",
                   "justification": "remove possibility of using serialized packages as kie resources"
+                },
+                {
+                  "code": "java.method.addedToInterface",
+                  "new": "method void org.kie.api.runtime.manager.RuntimeManager::disposeRuntimeEngine(org.kie.api.runtime.manager.RuntimeEngine, boolean)",
+                  "package": "org.kie.api.runtime.manager","classSimpleName": "RuntimeManager",
+                  "methodName": "disposeRuntimeEngine",
+                  "elementKind": "method",
+                  "justification": "allow to force disposal"
                 }
             ]
         }
