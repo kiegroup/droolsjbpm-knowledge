@@ -76,7 +76,11 @@ public interface RuntimeManager {
      * the runtime engine will happen automatically on transaction completion.
      * @param runtime
      */
-    void disposeRuntimeEngine(RuntimeEngine runtime);
+    default void disposeRuntimeEngine(RuntimeEngine runtime) {
+        disposeRuntimeEngine (runtime, false);
+    }
+    
+    void disposeRuntimeEngine (RuntimeEngine runtime, boolean force);
 
     /**
      * Closes <code>RuntimeManager</code> and releases it's resources. Shall always be called when
